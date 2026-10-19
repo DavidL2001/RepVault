@@ -18,7 +18,8 @@ Personal gym tracking app. React + SCSS, built with Vite, hosted on GitHub Pages
 
 - Follow `docs/ROADMAP.md` in order. One branch per roadmap step, created from an up-to-date `main`.
 - Stay inside the scope of the current branch. If you notice something for a later step, note it instead of building it.
-- Commit in small, logical steps with clear messages (e.g. `feat: add Stepper component`, `fix: …`, `refactor: …`).
+- The user does all `git add`, `git commit`, `git push` and merges themselves, after testing. Never stage, commit, push or merge. Creating and switching branches is fine.
+- When a branch is done, suggest commit messages for its logical steps (e.g. `feat: add Stepper component`, `fix: …`, `refactor: …`), so the user can commit in small steps.
 - Before finishing a branch: `npm run lint`, `npm run test` and `npm run build` must pass with no errors or warnings. Then check off the boxes in `docs/ROADMAP.md`.
 - When something in the spec is unclear, ask instead of guessing.
 
@@ -27,6 +28,7 @@ Personal gym tracking app. React + SCSS, built with Vite, hosted on GitHub Pages
 Reuse first. Before writing new code, check whether a component, hook, helper, mixin or token already exists for it. If something is written a second time, extract it.
 
 **Components**
+
 - Build small, reusable components in `src/components/` (Button, IconButton, TextField, NumberField, Stepper, Card, Modal, ConfirmDialog, Banner, PageHeader, StickyActionBar, EmptyState, …) and compose pages from them.
 - Pages in `src/pages/` should mostly arrange components and call hooks. Keep logic out of them.
 - One component per file, with its own `.module.scss` next to it.
@@ -34,18 +36,21 @@ Reuse first. Before writing new code, check whether a component, hook, helper, m
 - Document props with JSDoc at the top of each component.
 
 **Logic and helpers**
+
 - All calculations and business rules (volume, 1RM, PRs, progression, date handling, export/import, storage) live as pure functions in `src/lib/`, with unit tests.
 - Reusable stateful logic goes in custom hooks in `src/hooks/`.
 - State changes go through the reducer with named action types. Never write to localStorage from components.
 - No magic numbers or strings: put them in `src/constants/` (storage key, schema version, default values, reminder days, route paths).
 
 **Styling**
+
 - Raw colors exist only in `styles/_colors.scss`. Everything else uses semantic theme variables from `styles/_themes.scss` (`var(--color-surface)`, `var(--color-primary)`, …). Never write a hex, rgb or named color anywhere else, including chart configs.
 - Spacing, font sizes, radii, shadows, z-index, breakpoints and durations come from `styles/_variables.scss`. No hardcoded pixel values for these in components.
 - Repeated style patterns become mixins in `styles/_mixins.scss` (breakpoints, tap target, focus ring, visually hidden, truncate, safe areas).
 - Mobile-first: base styles target phones, larger screens are added with breakpoint mixins.
 
 **Naming**
+
 - Components and pages: PascalCase. Hooks: `useSomething`. Helpers and constants files: camelCase. SCSS partials: `_kebab-case.scss`.
 - Names describe purpose, not looks (`--color-danger`, not `--red`).
 
