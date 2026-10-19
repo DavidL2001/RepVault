@@ -16,15 +16,15 @@ The full feature spec lives in `docs/SPEC.md`.
 
 ## 1. `setup/project-scaffold`
 
-- [ ] Create Vite + React (JavaScript) project
-- [ ] Install `sass`, `react-router-dom`, `chart.js`, `react-chartjs-2`
-- [ ] Install dev tools: `eslint`, `@eslint/js`, `globals`, `eslint-plugin-react`, `eslint-plugin-react-hooks`, `eslint-plugin-jsx-a11y`, `prettier`, `eslint-config-prettier`, `vitest`
-- [ ] Set `base: '/RepVault/'` in `vite.config.js`
-- [ ] Set up `HashRouter` with placeholder pages for every route
-- [ ] Create folder structure: `pages/`, `components/`, `hooks/`, `state/`, `lib/`, `styles/`, `constants/`
-- [ ] `index.html`: `lang="en"`, viewport meta with `viewport-fit=cover`, page title
-- [ ] `.gitignore` (node_modules, dist)
-- [ ] npm scripts: `dev`, `build`, `preview`, `lint`, `format`, `test`
+- [x] Create Vite + React (JavaScript) project
+- [x] Install `sass`, `react-router-dom`, `chart.js`, `react-chartjs-2`
+- [x] Install dev tools: `eslint`, `@eslint/js`, `globals`, `eslint-plugin-react`, `eslint-plugin-react-hooks`, `eslint-plugin-jsx-a11y`, `prettier`, `eslint-config-prettier`, `vitest`
+- [x] Set `base: '/RepVault/'` in `vite.config.js`
+- [x] Set up `HashRouter` with placeholder pages for every route
+- [x] Create folder structure: `pages/`, `components/`, `hooks/`, `state/`, `lib/`, `styles/`, `constants/`
+- [x] `index.html`: `lang="en"`, viewport meta with `viewport-fit=cover`, page title
+- [x] `.gitignore` (node_modules, dist)
+- [x] npm scripts: `dev`, `build`, `preview`, `lint`, `format`, `test`
 
 **Done when:** `npm run dev` shows placeholder pages and you can navigate between all routes.
 
