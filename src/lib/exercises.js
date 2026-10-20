@@ -1,3 +1,4 @@
+import { PROGRESSION_MODES } from '../constants/defaults.js'
 import { bestSet } from './calculations.js'
 import { lastSession } from './history.js'
 import { createId } from './ids.js'
@@ -93,5 +94,43 @@ export function exerciseSummary(exercise, workouts) {
   return {
     bestSet: bestSet(sets),
     dueForIncrease: evaluateProgression(exercise.progression, sets)?.shouldIncrease ?? false,
+  }
+}
+
+/**
+ * A progression rule in words: "Go heavier after 8+ reps on all sets at the heaviest weight."
+ *
+ * @param {import('./model.js').Progression} rule
+ * @returns {string}
+ */
+export function describeProgression({ targetReps, mode }) {
+  const which = mode === PROGRESSION_MODES.any ? 'any set' : 'all sets'
+  return `Go heavier after ${targetReps}+ reps on ${which} at the heaviest weight.`
+}
+
+/**
+ * Deletes an exercise and everything about it: its sets in every workout (the one
+ * in progress too) and its place in templates. A finished workout left without any
+ * exercise is deleted as well, like a workout that ends without sets.
+ *
+ * @param {import('./model.js').AppData} data
+ * @param {string} exerciseId
+ * @returns {import('./model.js').AppData}
+ */
+export function removeExerciseEverywhere(data, exerciseId) {
+  const withoutExercise = (workout) => ({
+    ...workout,
+    entries: workout.entries.filter((entry) => entry.exerciseId !== exerciseId),
+  })
+
+  return {
+    ...data,
+    exercises: data.exercises.filter((exercise) => exercise.id !== exerciseId),
+    templates: data.templates.map((template) => ({
+      ...template,
+      exerciseIds: template.exerciseIds.filter((id) => id !== exerciseId),
+    })),
+    workouts: data.workouts.map(withoutExercise).filter((workout) => workout.entries.length > 0),
+    activeWorkout: data.activeWorkout && withoutExercise(data.activeWorkout),
   }
 }

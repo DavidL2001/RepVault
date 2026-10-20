@@ -1,7 +1,8 @@
 import { useMemo } from 'react'
 import { sessionRecords } from '../lib/calculations.js'
 import { formatNumberInput } from '../lib/format.js'
-import { exerciseSets, lastSession } from '../lib/history.js'
+import { exerciseSessions, exerciseSets } from '../lib/history.js'
+import { progressPoints } from '../lib/progress.js'
 import { evaluateProgression } from '../lib/progression.js'
 import { initialSetValues } from '../lib/sets.js'
 import { editSet, logSet, removeSet } from '../state/actions.js'
@@ -24,16 +25,30 @@ export function useSetLogger(exerciseId) {
     () => workout?.entries.find((entry) => entry.exerciseId === exerciseId)?.sets ?? [],
     [workout, exerciseId],
   )
-  const history = useMemo(
-    () => ({
-      last: lastSession(workouts, exerciseId),
+  const history = useMemo(() => {
+    const sessions = exerciseSessions(workouts, exerciseId)
+    return {
+      sessions,
+      last: sessions[0] ?? null,
       sets: exerciseSets(workouts, exerciseId),
-    }),
-    [workouts, exerciseId],
-  )
+    }
+  }, [workouts, exerciseId])
   const records = useMemo(
     () => sessionRecords(sessionSets, history.sets),
     [sessionSets, history.sets],
+  )
+  // Finished sessions plus today's, so the chart grows as soon as a set is logged.
+  const points = useMemo(
+    () =>
+      progressPoints(
+        workout
+          ? [
+              ...history.sessions,
+              { workoutId: workout.id, startedAt: workout.startedAt, sets: sessionSets },
+            ]
+          : history.sessions,
+      ),
+    [history.sessions, workout, sessionSets],
   )
 
   const lastSets = history.last?.sets ?? []
@@ -48,6 +63,8 @@ export function useSetLogger(exerciseId) {
     records,
     /** The last finished workout with this exercise, or `null`. */
     lastSession: history.last,
+    /** Chart points including today's sets, oldest first. */
+    points,
     progression,
     /** Pre-filled field values, as text. */
     initialFields: { kg: toField(initial.kg), reps: toField(initial.reps) },

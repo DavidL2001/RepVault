@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest'
 import {
   daysBetween,
   formatDate,
+  formatShortDate,
   formatTime,
   isSameWeek,
   startOfDay,
@@ -23,6 +24,16 @@ describe('formatDate', () => {
     expect(formatDate(SUNDAY_11_OCT.toISOString(), 'en-GB')).toBe(
       formatDate(SUNDAY_11_OCT, 'en-GB'),
     )
+  })
+})
+
+describe('formatShortDate', () => {
+  it('shows day and month only', () => {
+    const formatted = formatShortDate(SUNDAY_11_OCT, 'en-GB')
+    expect(formatted).toContain('11')
+    expect(formatted).toContain('Oct')
+    expect(formatted).not.toContain('2026')
+    expect(formatted).not.toContain('Sun')
   })
 })
 

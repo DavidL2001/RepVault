@@ -1,5 +1,6 @@
 import { useId, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { CHART_METRICS } from '../../constants/charts.js'
 import { ROUTES } from '../../constants/routes.js'
 import { useSetLogger } from '../../hooks/useSetLogger.js'
 import { formatDate } from '../../lib/dates.js'
@@ -11,6 +12,7 @@ import ConfirmDialog from '../../components/ConfirmDialog/ConfirmDialog.jsx'
 import List from '../../components/List/List.jsx'
 import Modal from '../../components/Modal/Modal.jsx'
 import PageHeader from '../../components/PageHeader/PageHeader.jsx'
+import ProgressChart from '../../components/ProgressChart/ProgressChart.jsx'
 import SetForm from '../../components/SetForm/SetForm.jsx'
 import SetRow from '../../components/SetRow/SetRow.jsx'
 import StickyActionBar from '../../components/StickyActionBar/StickyActionBar.jsx'
@@ -117,6 +119,15 @@ function SetLogger() {
           <p className={styles.muted}>No sets yet.</p>
         )}
       </section>
+
+      {logger.points.length > 0 && (
+        <section className={styles.section} aria-labelledby="progress-heading">
+          <h2 id="progress-heading" className={styles.heading}>
+            Progress
+          </h2>
+          <ProgressChart points={logger.points} metric={CHART_METRICS.heaviest} size="sm" />
+        </section>
+      )}
 
       <VisuallyHidden aria-live="polite">{message}</VisuallyHidden>
 

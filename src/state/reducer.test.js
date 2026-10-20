@@ -6,6 +6,7 @@ import {
   addExercise,
   addTemplate,
   addWorkoutExercise,
+  deleteExercise,
   deleteTemplate,
   discardWorkout,
   editSet,
@@ -14,13 +15,45 @@ import {
   moveWorkoutExercise,
   removeSet,
   removeWorkoutExercise,
+  renameExercise,
   renameTemplate,
   resetData,
   startWorkout,
+  updateExerciseProgression,
   updateSettings,
   updateTemplateExercises,
 } from './actions.js'
 import { appReducer } from './reducer.js'
+
+describe('appReducer: exercises', () => {
+  const add = addExercise({ name: 'Lat pulldown', progression: null })
+  const withExercise = () => appReducer(createInitialData(), add)
+  const id = add.exercise.id
+
+  it('renames an exercise, cleaning up spaces', () => {
+    const state = appReducer(withExercise(), renameExercise(id, ' Lat  pull down '))
+    expect(state.exercises[0].name).toBe('Lat pull down')
+  })
+
+  it('adds, changes and removes the progression rule', () => {
+    let state = appReducer(
+      withExercise(),
+      updateExerciseProgression(id, { targetReps: 8, mode: 'all' }),
+    )
+    expect(state.exercises[0].progression).toEqual({ targetReps: 8, mode: 'all' })
+    state = appReducer(state, updateExerciseProgression(id, null))
+    expect(state.exercises[0].progression).toBeNull()
+  })
+
+  it('deletes an exercise with its history', () => {
+    let state = appReducer(withExercise(), startWorkout({ name: 'W', exerciseIds: [id] }))
+    state = appReducer(state, logSet(id, { kg: 40, reps: 8 }))
+    state = appReducer(state, endWorkout())
+    state = appReducer(state, deleteExercise(id))
+    expect(state.exercises).toEqual([])
+    expect(state.workouts).toEqual([])
+  })
+})
 
 describe('appReducer', () => {
   it('adds an exercise at the end', () => {

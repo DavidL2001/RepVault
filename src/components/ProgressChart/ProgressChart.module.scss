@@ -1,0 +1,39 @@
+@use 'styles/variables' as *;
+@use 'styles/mixins' as *;
+
+.figure {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  min-width: 0;
+  margin: $space-0;
+}
+
+// Chart.js fills this box (responsive, no fixed aspect ratio), so the height lives here.
+.canvas {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+}
+
+.md {
+  height: $chart-height;
+}
+
+.sm {
+  height: $chart-height-sm;
+}
+
+.summary {
+  color: var(--color-text-muted);
+}
+
+.toggle {
+  @include tap-target;
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  font-weight: $font-weight-semibold;
+  color: var(--color-link);
+  cursor: pointer;
+}

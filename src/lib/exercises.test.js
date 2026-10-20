@@ -3,11 +3,78 @@ import { PROGRESSION_MODES } from '../constants/defaults.js'
 import { makeSet, makeWorkout } from '../test/factories.js'
 import {
   createExercise,
+  describeProgression,
   exerciseSummary,
   parseProgressionFields,
+  removeExerciseEverywhere,
   validateExerciseForm,
   validateExerciseName,
 } from './exercises.js'
+import { createInitialData } from './model.js'
+
+describe('describeProgression', () => {
+  it('puts the rule in words', () => {
+    expect(describeProgression({ targetReps: 8, mode: PROGRESSION_MODES.all })).toBe(
+      'Go heavier after 8+ reps on all sets at the heaviest weight.',
+    )
+    expect(describeProgression({ targetReps: 10, mode: PROGRESSION_MODES.any })).toBe(
+      'Go heavier after 10+ reps on any set at the heaviest weight.',
+    )
+  })
+})
+
+describe('removeExerciseEverywhere', () => {
+  const data = {
+    ...createInitialData(),
+    exercises: [
+      { id: 'lat', name: 'Lat pulldown', createdAt: '', progression: null },
+      { id: 'curl', name: 'Curl', createdAt: '', progression: null },
+    ],
+    templates: [{ id: 't1', name: 'Pull', exerciseIds: ['lat', 'curl'] }],
+    workouts: [
+      makeWorkout({
+        id: 'both',
+        startedAt: '2026-10-13T17:00:00.000Z',
+        entries: { lat: [[40, 8]], curl: [[12.5, 10]] },
+      }),
+      makeWorkout({
+        id: 'latOnly',
+        startedAt: '2026-10-14T17:00:00.000Z',
+        entries: { lat: [[42.5, 8]] },
+      }),
+    ],
+    activeWorkout: makeWorkout({
+      id: 'now',
+      startedAt: '2026-10-20T17:00:00.000Z',
+      entries: { lat: [], curl: [] },
+    }),
+  }
+  const result = removeExerciseEverywhere(data, 'lat')
+
+  it('removes the exercise', () => {
+    expect(result.exercises.map((exercise) => exercise.id)).toEqual(['curl'])
+  })
+
+  it('removes it from templates', () => {
+    expect(result.templates[0].exerciseIds).toEqual(['curl'])
+  })
+
+  it('removes its sets from finished workouts, and workouts left empty', () => {
+    expect(result.workouts.map((workout) => workout.id)).toEqual(['both'])
+    expect(result.workouts[0].entries.map((entry) => entry.exerciseId)).toEqual(['curl'])
+  })
+
+  it('removes it from the workout in progress, which stays even if empty', () => {
+    expect(result.activeWorkout.entries.map((entry) => entry.exerciseId)).toEqual(['curl'])
+    expect(removeExerciseEverywhere(result, 'curl').activeWorkout.entries).toEqual([])
+  })
+
+  it('works without a workout in progress', () => {
+    expect(
+      removeExerciseEverywhere({ ...data, activeWorkout: null }, 'lat').activeWorkout,
+    ).toBeNull()
+  })
+})
 
 const makeExercise = (id, name) => ({ id, name, createdAt: '', progression: null })
 const exercises = [makeExercise('1', 'Lat pulldown'), makeExercise('2', 'Squat')]
