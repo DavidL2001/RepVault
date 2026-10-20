@@ -1,0 +1,16 @@
+@use 'styles/variables' as *;
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+// Indented with a line, so it reads as belonging to the checkbox above.
+.rule {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+  padding-left: $space-4;
+  border-left: $border-width-thick solid var(--color-border-subtle);
+}

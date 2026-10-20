@@ -1,0 +1,24 @@
+@use 'styles/variables' as *;
+@use 'styles/mixins' as *;
+
+.group {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  margin: $space-0;
+  padding: $space-0;
+  border: none;
+}
+
+.legend {
+  padding: $space-0;
+  font-weight: $font-weight-medium;
+}
+
+.row {
+  @include choice-row;
+}
+
+.input {
+  @include choice-input;
+}

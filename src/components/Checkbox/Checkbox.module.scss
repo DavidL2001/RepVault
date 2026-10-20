@@ -1,0 +1,21 @@
+@use 'styles/variables' as *;
+@use 'styles/mixins' as *;
+
+.field {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  @include choice-row;
+  font-weight: $font-weight-medium;
+}
+
+.input {
+  @include choice-input;
+}
+
+.hint {
+  font-size: $font-size-sm;
+  color: var(--color-text-muted);
+}

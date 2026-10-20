@@ -1,6 +1,7 @@
 import { PROGRESSION_MODES } from '../constants/defaults.js'
 import { lastSession } from './history.js'
-import { formatKg, roundNumber } from './numbers.js'
+import { formatKg } from './format.js'
+import { roundNumber } from './numbers.js'
 
 /**
  * Outcome of checking a progression rule against the last session.

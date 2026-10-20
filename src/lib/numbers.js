@@ -27,21 +27,6 @@ export function roundNumber(value) {
 }
 
 /**
- * A weight for display in the browser locale: "42.5 kg", or "42,5 kg" in Swedish.
- *
- * @param {number} kg
- * @param {string} [locale] Defaults to the browser locale.
- * @returns {string}
- */
-export function formatKg(kg, locale) {
-  return new Intl.NumberFormat(locale, {
-    style: 'unit',
-    unit: 'kilogram',
-    maximumFractionDigits: MAX_DECIMALS,
-  }).format(kg)
-}
-
-/**
  * Limits a number to a range. Leave `min` or `max` undefined for no limit on that side.
  *
  * @param {number} value

@@ -13,6 +13,12 @@ export const DEFAULT_PROGRESSION = {
   mode: PROGRESSION_MODES.all,
 }
 
+/** How much the − / + buttons change the progression rule fields. */
+export const PROGRESSION_STEPPER = {
+  targetReps: { step: 1, min: 1 },
+  stepKg: { step: 0.5, min: 0.5 },
+}
+
 /** Show the backup reminder when the last export is older than this. */
 export const BACKUP_REMINDER_DAYS = 14
 

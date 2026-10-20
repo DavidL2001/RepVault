@@ -1,10 +1,20 @@
 import { describe, expect, it } from 'vitest'
 import { THEMES } from '../constants/themes.js'
 import { createInitialData } from '../lib/model.js'
-import { resetData, updateSettings } from './actions.js'
+import { addExercise, resetData, updateSettings } from './actions.js'
 import { appReducer } from './reducer.js'
 
 describe('appReducer', () => {
+  it('adds an exercise at the end', () => {
+    const state = createInitialData()
+    const action = addExercise({ name: 'Squat', progression: null })
+    const next = appReducer(state, action)
+
+    expect(next.exercises).toEqual([action.exercise])
+    expect(action.exercise).toMatchObject({ name: 'Squat', progression: null })
+    expect(state.exercises).toEqual([]) // old state is unchanged
+  })
+
   it('updates settings and keeps the others', () => {
     const state = createInitialData()
     const next = appReducer(state, updateSettings({ theme: THEMES.light }))

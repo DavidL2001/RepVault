@@ -36,6 +36,28 @@
   }
 }
 
+// ---- Form choices ----
+
+/// A label row holding a checkbox or radio: the whole row is the 48px tap target.
+/// Put the input inside the label and style it with `choice-input`.
+@mixin choice-row {
+  @include tap-target;
+  display: flex;
+  gap: $space-3;
+  align-items: center;
+  cursor: pointer;
+}
+
+/// A larger native checkbox or radio in the primary color.
+@mixin choice-input {
+  flex-shrink: 0;
+  width: $icon-size-md;
+  height: $icon-size-md;
+  margin: $space-0;
+  accent-color: var(--color-primary);
+  cursor: pointer;
+}
+
 // ---- Lists ----
 
 /// Removes bullets and indent. Add `role="list"` to the element too:
