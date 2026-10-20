@@ -105,13 +105,13 @@ The full feature spec lives in `docs/SPEC.md`.
 
 ## 9. `feature/active-workout`
 
-- [ ] Header with name, date, running timer (timer not announced every second to screen readers)
-- [ ] Exercise list with set summary and ⬆ indicator
-- [ ] Add-exercise picker (search + create new)
-- [ ] Reorder (up/down buttons) and remove
-- [ ] Sticky "End workout" with confirm
-- [ ] Prompt to update template if exercises changed
-- [ ] Bottom nav hidden; resume after reload
+- [x] Header with name, date, running timer (timer not announced every second to screen readers)
+- [x] Exercise list with set summary and ⬆ indicator
+- [x] Add-exercise picker (search + create new)
+- [x] Reorder (up/down buttons) and remove
+- [x] Sticky "End workout" with confirm
+- [x] Prompt to update template if exercises changed
+- [x] Bottom nav hidden; resume after reload
 
 **Done when:** a full session can be started, edited and ended.
 

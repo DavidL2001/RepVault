@@ -1,14 +1,21 @@
 import { describe, expect, it } from 'vitest'
 import { THEMES } from '../constants/themes.js'
 import { createInitialData } from '../lib/model.js'
+import { makeSet } from '../test/factories.js'
 import {
   addExercise,
   addTemplate,
+  addWorkoutExercise,
   deleteTemplate,
+  discardWorkout,
+  endWorkout,
+  moveWorkoutExercise,
+  removeWorkoutExercise,
   renameTemplate,
   resetData,
   startWorkout,
   updateSettings,
+  updateTemplateExercises,
 } from './actions.js'
 import { appReducer } from './reducer.js'
 
@@ -81,5 +88,58 @@ describe('appReducer: starting a workout', () => {
     const first = appReducer(createInitialData(), startWorkout({ name: 'First' }))
     const second = appReducer(first, startWorkout({ name: 'Second' }))
     expect(second).toBe(first)
+  })
+})
+
+describe('appReducer: editing the workout in progress', () => {
+  const started = () =>
+    appReducer(createInitialData(), startWorkout({ name: 'Leg day', exerciseIds: ['e1'] }))
+  const ids = (state) => state.activeWorkout.entries.map((entry) => entry.exerciseId)
+
+  it('adds, moves and removes exercises', () => {
+    let state = appReducer(started(), addWorkoutExercise('e2'))
+    expect(ids(state)).toEqual(['e1', 'e2'])
+    state = appReducer(state, moveWorkoutExercise('e2', -1))
+    expect(ids(state)).toEqual(['e2', 'e1'])
+    state = appReducer(state, removeWorkoutExercise('e2'))
+    expect(ids(state)).toEqual(['e1'])
+  })
+
+  it('ignores workout edits when no workout is in progress', () => {
+    const state = createInitialData()
+    expect(appReducer(state, addWorkoutExercise('e1'))).toBe(state)
+    expect(appReducer(state, endWorkout())).toBe(state)
+  })
+
+  it('ends a workout: saves it to the history without empty exercises', () => {
+    let state = appReducer(started(), addWorkoutExercise('e2'))
+    state.activeWorkout.entries[1].sets = [makeSet(40, 8)]
+    state = appReducer(state, endWorkout())
+
+    expect(state.activeWorkout).toBeNull()
+    expect(state.workouts).toHaveLength(1)
+    expect(state.workouts[0].endedAt).not.toBeNull()
+    expect(state.workouts[0].entries.map((entry) => entry.exerciseId)).toEqual(['e2'])
+  })
+
+  it('does not save a workout without sets', () => {
+    const state = appReducer(started(), endWorkout())
+    expect(state.activeWorkout).toBeNull()
+    expect(state.workouts).toEqual([])
+  })
+
+  it('discards a workout without saving it', () => {
+    const withSet = started()
+    withSet.activeWorkout.entries[0].sets = [makeSet(40, 8)]
+    const state = appReducer(withSet, discardWorkout())
+    expect(state.activeWorkout).toBeNull()
+    expect(state.workouts).toEqual([])
+  })
+
+  it("updates a template's exercises", () => {
+    const add = addTemplate('Leg day')
+    let state = appReducer(createInitialData(), add)
+    state = appReducer(state, updateTemplateExercises(add.template.id, ['e2', 'e1']))
+    expect(state.templates[0].exerciseIds).toEqual(['e2', 'e1'])
   })
 })

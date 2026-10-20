@@ -17,3 +17,9 @@ export const ROUTES = {
   // Dev only: not registered in production builds.
   designPreview: '/dev/design',
 }
+
+/**
+ * Routes without the BottomNav: during a workout it can't be tapped by accident,
+ * and the sticky action bars would overlap it.
+ */
+export const ROUTES_WITHOUT_NAV = [ROUTES.activeWorkout, ROUTES.setLogger, ROUTES.designPreview]

@@ -1,0 +1,58 @@
+@use 'styles/variables' as *;
+@use 'styles/mixins' as *;
+
+// The link and the buttons share a row when there is room, and wrap on narrow phones.
+.row {
+  flex-flow: row wrap;
+  gap: $space-1;
+  align-items: center;
+  padding: $space-2;
+}
+
+.link {
+  @include tap-target;
+  display: flex;
+  flex: 1 1 $row-text-min-width;
+  gap: $space-2;
+  align-items: center;
+  min-width: 0;
+  padding: $space-2 $space-3;
+  color: var(--color-text);
+  text-decoration: none;
+  border-radius: $radius-md;
+
+  @include motion-safe {
+    transition: background-color $duration-fast $easing-standard;
+  }
+
+  &:hover {
+    background-color: var(--color-surface-hover);
+  }
+}
+
+.text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.name {
+  font-weight: $font-weight-semibold;
+  overflow-wrap: anywhere;
+}
+
+.summary {
+  font-size: $font-size-sm;
+  color: var(--color-text-muted);
+}
+
+.chevron {
+  color: var(--color-text-muted);
+}
+
+.controls {
+  display: flex;
+  gap: $space-1;
+  margin-left: auto;
+}

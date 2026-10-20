@@ -1,4 +1,9 @@
 import { MAX_DECIMALS } from '../constants/numbers.js'
+import { bestSet } from './calculations.js'
+
+const MS_PER_SECOND = 1000
+const SECONDS_PER_MINUTE = 60
+const SECONDS_PER_HOUR = 3600
 
 // Turning values into display text in the browser locale (pass `locale` only in tests).
 
@@ -38,4 +43,32 @@ export function formatSet({ kg, reps }, locale) {
  */
 export function pluralize(count, singular, plural = `${singular}s`) {
   return `${count} ${count === 1 ? singular : plural}`
+}
+
+/**
+ * Elapsed time for the workout timer: "4:05", or "1:04:05" from one hour.
+ *
+ * @param {number} ms
+ * @returns {string}
+ */
+export function formatElapsed(ms) {
+  const totalSeconds = Math.max(0, Math.floor(ms / MS_PER_SECOND))
+  const hours = Math.floor(totalSeconds / SECONDS_PER_HOUR)
+  const minutes = Math.floor((totalSeconds % SECONDS_PER_HOUR) / SECONDS_PER_MINUTE)
+  const seconds = String(totalSeconds % SECONDS_PER_MINUTE).padStart(2, '0')
+  return hours > 0
+    ? `${hours}:${String(minutes).padStart(2, '0')}:${seconds}`
+    : `${minutes}:${seconds}`
+}
+
+/**
+ * Sets logged for an exercise in a workout: "3 sets · best 40 kg × 8", or "No sets yet".
+ *
+ * @param {import('./model.js').WorkoutSet[]} sets
+ * @param {string} [locale] Defaults to the browser locale.
+ * @returns {string}
+ */
+export function formatSetSummary(sets, locale) {
+  if (sets.length === 0) return 'No sets yet'
+  return `${pluralize(sets.length, 'set')} · best ${formatSet(bestSet(sets), locale)}`
 }

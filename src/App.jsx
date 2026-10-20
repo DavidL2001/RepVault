@@ -1,6 +1,6 @@
 import { lazy, Suspense } from 'react'
-import { Navigate, Route, Routes, useMatch } from 'react-router-dom'
-import { ROUTES } from './constants/routes.js'
+import { matchPath, Navigate, Route, Routes, useLocation } from 'react-router-dom'
+import { ROUTES, ROUTES_WITHOUT_NAV } from './constants/routes.js'
 import { STORAGE_STATUS } from './constants/storage.js'
 import { useAppState } from './hooks/useAppState.js'
 import { useDocumentTheme } from './hooks/useDocumentTheme.js'
@@ -27,13 +27,12 @@ function App() {
   const { state, storage } = useAppState()
   useDocumentTheme(state.settings.theme)
 
-  // The preview shows a StickyActionBar, which would overlap the nav.
-  // Step 9 hides the nav during workouts too.
-  const isDesignPreview = useMatch(ROUTES.designPreview)
+  const { pathname } = useLocation()
+  const hideNav = ROUTES_WITHOUT_NAV.some((path) => matchPath(path, pathname))
   const needsRecovery = storage.status !== STORAGE_STATUS.ok
 
   return (
-    <AppShell showNav={!isDesignPreview && !needsRecovery}>
+    <AppShell showNav={!hideNav && !needsRecovery}>
       {storage.saveFailed && (
         <div role="alert">
           <Banner variant="danger" title="Changes can't be saved">
