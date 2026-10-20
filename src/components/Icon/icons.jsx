@@ -8,6 +8,7 @@ export const ICONS = {
   close: <path d="M18 6 6 18M6 6l12 12" />,
   check: <path d="M20 6 9 17l-5-5" />,
   chevronRight: <path d="m9 18 6-6-6-6" />,
+  edit: <path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z" />,
   home: <path d="M3 10.5 12 3l9 7.5M5 9v11h14V9M10 20v-6h4v6" />,
   history: (
     <>

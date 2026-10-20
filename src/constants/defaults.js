@@ -19,6 +19,9 @@ export const PROGRESSION_STEPPER = {
   stepKg: { step: 0.5, min: 0.5 },
 }
 
+/** Name of a workout started without a template. */
+export const DEFAULT_WORKOUT_NAME = 'Workout'
+
 /** Show the backup reminder when the last export is older than this. */
 export const BACKUP_REMINDER_DAYS = 14
 

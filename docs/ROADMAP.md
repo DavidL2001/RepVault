@@ -97,9 +97,9 @@ The full feature spec lives in `docs/SPEC.md`.
 
 ## 8. `feature/start-workout`
 
-- [ ] Start Workout page: template cards, "Empty workout", "+ New template"
-- [ ] Rename / delete templates
-- [ ] Starting a session records date + start time and navigates to Active Workout
+- [x] Start Workout page: template cards, "Empty workout", "+ New template"
+- [x] Rename / delete templates
+- [x] Starting a session records date + start time and navigates to Active Workout
 
 **Done when:** I can create "Leg day" and start a session from it.
 

@@ -1,0 +1,15 @@
+@use 'styles/variables' as *;
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.muted {
+  color: var(--color-text-muted);
+}
+
+.bannerText {
+  margin-bottom: $space-3;
+}

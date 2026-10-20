@@ -13,6 +13,28 @@ export function appReducer(state, action) {
     case ACTION_TYPES.exerciseAdded:
       return { ...state, exercises: [...state.exercises, action.exercise] }
 
+    case ACTION_TYPES.templateAdded:
+      return { ...state, templates: [...state.templates, action.template] }
+
+    case ACTION_TYPES.templateRenamed:
+      return {
+        ...state,
+        templates: state.templates.map((template) =>
+          template.id === action.id ? { ...template, name: action.name } : template,
+        ),
+      }
+
+    case ACTION_TYPES.templateDeleted:
+      return {
+        ...state,
+        templates: state.templates.filter((template) => template.id !== action.id),
+      }
+
+    case ACTION_TYPES.workoutStarted:
+      // Never replace a workout in progress: it would be lost.
+      if (state.activeWorkout) return state
+      return { ...state, activeWorkout: action.workout }
+
     case ACTION_TYPES.settingsUpdated:
       return { ...state, settings: { ...state.settings, ...action.changes } }
 
