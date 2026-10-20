@@ -4,37 +4,13 @@ import { makeSet, makeWorkout } from '../test/factories.js'
 import {
   createExercise,
   exerciseSummary,
-  findDuplicateName,
-  normalizeName,
   parseProgressionFields,
-  searchByName,
-  sortByName,
   validateExerciseForm,
   validateExerciseName,
 } from './exercises.js'
 
 const makeExercise = (id, name) => ({ id, name, createdAt: '', progression: null })
 const exercises = [makeExercise('1', 'Lat pulldown'), makeExercise('2', 'Squat')]
-
-describe('normalizeName', () => {
-  it('trims and collapses spaces', () => {
-    expect(normalizeName('  Lat   pulldown ')).toBe('Lat pulldown')
-  })
-})
-
-describe('findDuplicateName', () => {
-  it('ignores case and spacing', () => {
-    expect(findDuplicateName(exercises, ' lat  PULLDOWN')?.id).toBe('1')
-  })
-
-  it('ignores the exercise being renamed', () => {
-    expect(findDuplicateName(exercises, 'Squat', '2')).toBeUndefined()
-  })
-
-  it('finds nothing for a new name', () => {
-    expect(findDuplicateName(exercises, 'Bench press')).toBeUndefined()
-  })
-})
 
 describe('validateExerciseName', () => {
   it('requires a name', () => {
@@ -95,47 +71,6 @@ describe('createExercise', () => {
     const exercise = createExercise({ name: 'Squat', progression: null })
     expect(exercise.id).toBeTruthy()
     expect(Date.parse(exercise.createdAt)).not.toBeNaN()
-  })
-})
-
-describe('sortByName', () => {
-  it('sorts alphabetically, ignoring case, with numbers in natural order', () => {
-    const list = ['row 10', 'Squat', 'Row 2', 'curl'].map((name, i) => makeExercise(`${i}`, name))
-    expect(sortByName(list, 'en').map((exercise) => exercise.name)).toEqual([
-      'curl',
-      'Row 2',
-      'row 10',
-      'Squat',
-    ])
-  })
-
-  it('follows the locale alphabet', () => {
-    const list = ['Ö-press', 'Axel', 'Zercher'].map((name, i) => makeExercise(`${i}`, name))
-    expect(sortByName(list, 'sv').map((exercise) => exercise.name)).toEqual([
-      'Axel',
-      'Zercher',
-      'Ö-press',
-    ])
-  })
-
-  it('does not change the original list', () => {
-    const list = [makeExercise('1', 'B'), makeExercise('2', 'A')]
-    sortByName(list, 'en')
-    expect(list[0].name).toBe('B')
-  })
-})
-
-describe('searchByName', () => {
-  it('matches part of the name, ignoring case', () => {
-    expect(searchByName(exercises, 'PULL').map((exercise) => exercise.id)).toEqual(['1'])
-  })
-
-  it('returns everything for an empty search', () => {
-    expect(searchByName(exercises, '  ')).toBe(exercises)
-  })
-
-  it('returns nothing when no name matches', () => {
-    expect(searchByName(exercises, 'bench')).toEqual([])
   })
 })
 

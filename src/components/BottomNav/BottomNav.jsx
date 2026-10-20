@@ -6,7 +6,7 @@ import styles from './BottomNav.module.scss'
 
 /** Each item is active on its own route and on the detail pages under it. */
 const ITEMS = [
-  { label: 'Home', icon: 'home', to: ROUTES.home, activeOn: [ROUTES.home] },
+  { label: 'Home', icon: 'home', to: ROUTES.home, activeOn: [ROUTES.home, ROUTES.startWorkout] },
   {
     label: 'History',
     icon: 'history',

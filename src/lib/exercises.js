@@ -2,42 +2,10 @@ import { bestSet } from './calculations.js'
 import { lastSession } from './history.js'
 import { createId } from './ids.js'
 import { parseDecimal } from './numbers.js'
+import { normalizeName, validateName } from './names.js'
 import { evaluateProgression } from './progression.js'
 
-// Rules for the user's exercises: names, duplicates, progression fields, sorting and search.
-
-/**
- * Trims a name and collapses repeated spaces: "  Lat   pulldown " → "Lat pulldown".
- *
- * @param {string} name
- * @returns {string}
- */
-export function normalizeName(name) {
-  return name.trim().replace(/\s+/g, ' ')
-}
-
-/**
- * Key for comparing names regardless of case and spacing.
- *
- * @param {string} name
- * @returns {string}
- */
-function nameKey(name) {
-  return normalizeName(name).toLocaleLowerCase()
-}
-
-/**
- * The existing exercise with the same name (ignoring case and spacing), if any.
- *
- * @param {import('./model.js').Exercise[]} exercises
- * @param {string} name
- * @param {string} [ignoreId] Exercise being renamed, so it doesn't clash with itself.
- * @returns {import('./model.js').Exercise|undefined}
- */
-export function findDuplicateName(exercises, name, ignoreId) {
-  const key = nameKey(name)
-  return exercises.find((exercise) => exercise.id !== ignoreId && nameKey(exercise.name) === key)
-}
+// Rules for the user's exercises: names, progression fields and list summaries.
 
 /**
  * Error message for an exercise name, or `null` when it is fine.
@@ -48,10 +16,7 @@ export function findDuplicateName(exercises, name, ignoreId) {
  * @returns {string|null}
  */
 export function validateExerciseName(name, exercises, ignoreId) {
-  if (!normalizeName(name)) return 'Enter a name.'
-  const duplicate = findDuplicateName(exercises, name, ignoreId)
-  if (duplicate) return `You already have an exercise called “${duplicate.name}”.`
-  return null
+  return validateName(name, exercises, 'an exercise', ignoreId)
 }
 
 /**
@@ -82,32 +47,6 @@ export function parseProgressionFields({ targetReps, stepKg, mode }) {
  */
 export function createExercise({ name, progression }, { id = createId(), now = new Date() } = {}) {
   return { id, name: normalizeName(name), createdAt: now.toISOString(), progression }
-}
-
-/**
- * Exercises in alphabetical order for the locale (so "Ö" sorts last in Swedish),
- * ignoring case, with numbers in natural order ("Row 2" before "Row 10").
- *
- * @param {import('./model.js').Exercise[]} exercises
- * @param {string} [locale] Defaults to the browser locale.
- * @returns {import('./model.js').Exercise[]} A new array.
- */
-export function sortByName(exercises, locale) {
-  const collator = new Intl.Collator(locale, { sensitivity: 'base', numeric: true })
-  return [...exercises].sort((a, b) => collator.compare(a.name, b.name))
-}
-
-/**
- * Exercises whose name contains the search text, ignoring case and extra spaces.
- *
- * @param {import('./model.js').Exercise[]} exercises
- * @param {string} query
- * @returns {import('./model.js').Exercise[]} All exercises when the query is empty.
- */
-export function searchByName(exercises, query) {
-  const key = nameKey(query)
-  if (!key) return exercises
-  return exercises.filter((exercise) => nameKey(exercise.name).includes(key))
 }
 
 /**

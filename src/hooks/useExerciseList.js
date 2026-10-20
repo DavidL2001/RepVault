@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
-import { exerciseSummary, searchByName, sortByName } from '../lib/exercises.js'
+import { exerciseSummary } from '../lib/exercises.js'
+import { searchByName, sortByName } from '../lib/names.js'
 import { useAppState } from './useAppState.js'
 
 /**

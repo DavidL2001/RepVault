@@ -1,0 +1,53 @@
+@use 'styles/variables' as *;
+@use 'styles/mixins' as *;
+
+.card {
+  flex-direction: row;
+  gap: $space-2;
+  align-items: center;
+  padding: $space-2;
+}
+
+// The whole left part is the start button: big and easy to hit.
+.start {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: $space-1;
+  min-width: 0;
+  min-height: $tap-target-lg;
+  padding: $space-3;
+  color: var(--color-text);
+  text-align: left;
+  background-color: transparent;
+  border: none;
+  border-radius: $radius-md;
+
+  @include motion-safe {
+    transition: background-color $duration-fast $easing-standard;
+  }
+
+  &:hover:not(:disabled) {
+    background-color: var(--color-surface-hover);
+  }
+
+  &:disabled {
+    color: var(--color-text-disabled);
+    cursor: not-allowed;
+  }
+}
+
+.name {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  overflow-wrap: anywhere;
+}
+
+.meta {
+  font-size: $font-size-sm;
+  color: var(--color-text-muted);
+
+  .start:disabled & {
+    color: var(--color-text-disabled);
+  }
+}
