@@ -30,26 +30,17 @@ describe('validateExerciseName', () => {
 
 describe('parseProgressionFields', () => {
   it('turns valid fields into a rule', () => {
-    expect(
-      parseProgressionFields({ targetReps: '8', stepKg: '2,5', mode: PROGRESSION_MODES.any }),
-    ).toEqual({
-      progression: { targetReps: 8, stepKg: 2.5, mode: PROGRESSION_MODES.any },
+    expect(parseProgressionFields({ targetReps: '8', mode: PROGRESSION_MODES.any })).toEqual({
+      progression: { targetReps: 8, mode: PROGRESSION_MODES.any },
       errors: {},
     })
   })
 
   it('requires whole reps of at least 1', () => {
     for (const targetReps of ['0', '7.5', '', 'abc']) {
-      const result = parseProgressionFields({ targetReps, stepKg: '2.5', mode: 'all' })
+      const result = parseProgressionFields({ targetReps, mode: 'all' })
       expect(result.progression).toBeNull()
       expect(result.errors.targetReps).toBe('Enter whole reps, 1 or more.')
-    }
-  })
-
-  it('requires a weight step above 0', () => {
-    for (const stepKg of ['0', '-1', '']) {
-      const result = parseProgressionFields({ targetReps: '8', stepKg, mode: 'all' })
-      expect(result.errors.stepKg).toBe('Enter a weight step above 0 kg.')
     }
   })
 })
@@ -79,7 +70,6 @@ describe('validateExerciseForm', () => {
     name: ' Leg extension ',
     hasRule: false,
     targetReps: '8',
-    stepKg: '2.5',
     mode: PROGRESSION_MODES.all,
   }
 
@@ -97,20 +87,20 @@ describe('validateExerciseForm', () => {
   it('returns the rule when it is on', () => {
     expect(
       validateExerciseForm({ ...values, hasRule: true }, exercises).fields.progression,
-    ).toEqual({ targetReps: 8, stepKg: 2.5, mode: PROGRESSION_MODES.all })
+    ).toEqual({ targetReps: 8, mode: PROGRESSION_MODES.all })
   })
 
   it('collects errors from every field', () => {
     const result = validateExerciseForm(
-      { ...values, name: 'squat', hasRule: true, targetReps: '0', stepKg: '' },
+      { ...values, name: 'squat', hasRule: true, targetReps: '0' },
       exercises,
     )
-    expect(Object.keys(result.errors)).toEqual(['name', 'targetReps', 'stepKg'])
+    expect(Object.keys(result.errors)).toEqual(['name', 'targetReps'])
   })
 })
 
 describe('exerciseSummary', () => {
-  const rule = { targetReps: 8, stepKg: 5, mode: PROGRESSION_MODES.all }
+  const rule = { targetReps: 8, mode: PROGRESSION_MODES.all }
   const workouts = [
     makeWorkout({ id: 'old', startedAt: '2026-10-01T17:00:00.000Z', entries: { e1: [[50, 8]] } }),
     makeWorkout({

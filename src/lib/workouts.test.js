@@ -2,12 +2,15 @@ import { describe, expect, it } from 'vitest'
 import { makeSet } from '../test/factories.js'
 import {
   addEntry,
+  addSet,
   countSets,
+  deleteSet,
   createWorkout,
   finishWorkout,
   moveEntry,
   removeEntry,
   templateNeedsUpdate,
+  updateSet,
   workoutExerciseIds,
 } from './workouts.js'
 
@@ -121,5 +124,38 @@ describe('templateNeedsUpdate', () => {
 
   it('is false without a template', () => {
     expect(templateNeedsUpdate(null, workoutWith('e1'))).toBe(false)
+  })
+})
+
+describe('sets', () => {
+  it('adds sets in order', () => {
+    let workout = addSet(workoutWith('e1'), 'e1', makeSet(40, 8))
+    workout = addSet(workout, 'e1', makeSet(42.5, 6))
+    expect(workout.entries[0].sets).toEqual([makeSet(40, 8), makeSet(42.5, 6)])
+  })
+
+  it('adds the exercise when logging a set for one that is not in the workout', () => {
+    const workout = addSet(workoutWith('e1'), 'e2', makeSet(40, 8))
+    expect(workout.entries[1]).toEqual({ exerciseId: 'e2', sets: [makeSet(40, 8)] })
+  })
+
+  it('updates one set and keeps its timestamp', () => {
+    const logged = { kg: 40, reps: 8, timestamp: '2026-10-20T17:05:00.000Z' }
+    let workout = addSet(workoutWith('e1'), 'e1', logged)
+    workout = addSet(workout, 'e1', makeSet(40, 8))
+    workout = updateSet(workout, 'e1', 0, { kg: 45 })
+    expect(workout.entries[0].sets).toEqual([{ ...logged, kg: 45 }, makeSet(40, 8)])
+  })
+
+  it('deletes one set', () => {
+    let workout = addSet(workoutWith('e1'), 'e1', makeSet(40, 8))
+    workout = addSet(workout, 'e1', makeSet(42.5, 6))
+    expect(deleteSet(workout, 'e1', 0).entries[0].sets).toEqual([makeSet(42.5, 6)])
+  })
+
+  it('leaves other exercises alone', () => {
+    let workout = addSet(workoutWith('e1', 'e2'), 'e2', makeSet(10, 10))
+    workout = deleteSet(updateSet(workout, 'e1', 0, { kg: 1 }), 'e1', 0)
+    expect(workout.entries[1].sets).toEqual([makeSet(10, 10)])
   })
 })

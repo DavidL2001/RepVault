@@ -5,10 +5,9 @@ import { SCHEMA_VERSION } from '../constants/storage.js'
 // so exported backups stay readable. Weights are always in kg.
 
 /**
- * Rule for when to go heavier next session.
+ * Rule for when to go heavier next session. It only says *when*; the user picks how much.
  * @typedef {object} Progression
  * @property {number} targetReps Reps to hit, e.g. 8 ("8+ reps").
- * @property {number} stepKg How much heavier to go next time, e.g. 2.5.
  * @property {'all'|'any'} mode `all` sets or `any` set at the heaviest weight must hit the target.
  */
 

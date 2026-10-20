@@ -1,5 +1,14 @@
 import { createInitialData } from '../lib/model.js'
-import { addEntry, countSets, finishWorkout, moveEntry, removeEntry } from '../lib/workouts.js'
+import {
+  addEntry,
+  addSet,
+  countSets,
+  deleteSet,
+  finishWorkout,
+  moveEntry,
+  removeEntry,
+  updateSet,
+} from '../lib/workouts.js'
 import { ACTION_TYPES } from './actions.js'
 
 /**
@@ -70,6 +79,19 @@ export function appReducer(state, action) {
     case ACTION_TYPES.workoutExerciseMoved:
       return updateActiveWorkout(state, (workout) =>
         moveEntry(workout, action.exerciseId, action.offset),
+      )
+
+    case ACTION_TYPES.setLogged:
+      return updateActiveWorkout(state, (workout) => addSet(workout, action.exerciseId, action.set))
+
+    case ACTION_TYPES.setUpdated:
+      return updateActiveWorkout(state, (workout) =>
+        updateSet(workout, action.exerciseId, action.index, action.changes),
+      )
+
+    case ACTION_TYPES.setDeleted:
+      return updateActiveWorkout(state, (workout) =>
+        deleteSet(workout, action.exerciseId, action.index),
       )
 
     case ACTION_TYPES.workoutEnded: {

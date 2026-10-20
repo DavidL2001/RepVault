@@ -1,5 +1,6 @@
 import { createExercise } from '../lib/exercises.js'
 import { normalizeName } from '../lib/names.js'
+import { createSet } from '../lib/sets.js'
 import { createTemplate } from '../lib/templates.js'
 import { createWorkout } from '../lib/workouts.js'
 
@@ -18,6 +19,9 @@ export const ACTION_TYPES = {
   workoutExerciseMoved: 'workouts/exerciseMoved',
   workoutEnded: 'workouts/ended',
   workoutDiscarded: 'workouts/discarded',
+  setLogged: 'sets/logged',
+  setUpdated: 'sets/updated',
+  setDeleted: 'sets/deleted',
   templateExercisesUpdated: 'templates/exercisesUpdated',
   settingsUpdated: 'settings/updated',
   dataReset: 'data/reset',
@@ -98,6 +102,37 @@ export function moveWorkoutExercise(exerciseId, offset) {
 /** Ends the workout in progress now and saves it to the history. */
 export function endWorkout() {
   return { type: ACTION_TYPES.workoutEnded, endedAt: new Date() }
+}
+
+/**
+ * Logs a set (logged now) for an exercise in the workout in progress.
+ *
+ * @param {string} exerciseId
+ * @param {{ kg: number, reps: number }} fields
+ */
+export function logSet(exerciseId, fields) {
+  return { type: ACTION_TYPES.setLogged, exerciseId, set: createSet(fields) }
+}
+
+/**
+ * Changes the weight and reps of a set in the workout in progress.
+ *
+ * @param {string} exerciseId
+ * @param {number} index Position of the set, from 0.
+ * @param {{ kg: number, reps: number }} changes
+ */
+export function editSet(exerciseId, index, changes) {
+  return { type: ACTION_TYPES.setUpdated, exerciseId, index, changes }
+}
+
+/**
+ * Deletes a set from the workout in progress.
+ *
+ * @param {string} exerciseId
+ * @param {number} index Position of the set, from 0.
+ */
+export function removeSet(exerciseId, index) {
+  return { type: ACTION_TYPES.setDeleted, exerciseId, index }
 }
 
 /** Throws away the workout in progress without saving it. */

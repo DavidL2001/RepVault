@@ -1,14 +1,13 @@
 import { PROGRESSION_MODES } from '../constants/defaults.js'
 import { lastSession } from './history.js'
 import { formatKg } from './format.js'
-import { roundNumber } from './numbers.js'
 
 /**
  * Outcome of checking a progression rule against the last session.
+ * The app only says whether to go heavier; the user picks the new weight.
  * @typedef {object} ProgressionResult
  * @property {boolean} shouldIncrease Whether the rule was met, so it's time to go heavier.
  * @property {number} lastKg Heaviest weight used last session.
- * @property {number} nextKg Suggested weight: `lastKg + stepKg` when increasing, else `lastKg`.
  * @property {number} targetReps
  */
 
@@ -30,17 +29,12 @@ export function evaluateProgression(rule, sets) {
   const shouldIncrease =
     rule.mode === PROGRESSION_MODES.any ? topSets.some(hitTarget) : topSets.every(hitTarget)
 
-  return {
-    shouldIncrease,
-    lastKg,
-    nextKg: shouldIncrease ? roundNumber(lastKg + rule.stepKg) : lastKg,
-    targetReps: rule.targetReps,
-  }
+  return { shouldIncrease, lastKg, targetReps: rule.targetReps }
 }
 
 /**
  * Progression for an exercise, based on its last finished workout.
- * Used for the ⬆ marker, the Set Logger banner and the pre-filled weight.
+ * Used for the ⬆ marker, the Set Logger banner and the pre-filled reps.
  *
  * @param {import('./model.js').Exercise} exercise
  * @param {import('./model.js').WorkoutSession[]} workouts Finished workouts.
@@ -52,15 +46,16 @@ export function exerciseProgression(exercise, workouts) {
 
 /**
  * Banner text for a progression result:
- * "Go heavier: 45 kg (you hit 8+ reps at 40 kg last time)" or "Stay at 40 kg — aim for 8+ reps".
+ * "Go heavier (you hit 8+ reps at 40 kg last time)" or "Stay at 40 kg — aim for 8+ reps".
  *
  * @param {ProgressionResult} result
  * @param {string} [locale] Defaults to the browser locale.
  * @returns {string}
  */
-export function progressionMessage({ shouldIncrease, lastKg, nextKg, targetReps }, locale) {
+export function progressionMessage({ shouldIncrease, lastKg, targetReps }, locale) {
   const target = `${targetReps}+ reps`
+  const weight = formatKg(lastKg, locale)
   return shouldIncrease
-    ? `Go heavier: ${formatKg(nextKg, locale)} (you hit ${target} at ${formatKg(lastKg, locale)} last time)`
-    : `Stay at ${formatKg(lastKg, locale)} — aim for ${target}`
+    ? `Go heavier (you hit ${target} at ${weight} last time)`
+    : `Stay at ${weight} — aim for ${target}`
 }

@@ -1,0 +1,18 @@
+@use 'styles/variables' as *;
+
+.badge {
+  display: inline-flex;
+  gap: $space-1;
+  align-items: center;
+  padding: $space-0 $space-2;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-bold;
+  color: var(--color-text);
+  background-color: var(--color-warning-surface);
+  border: $border-width solid var(--color-warning);
+  border-radius: $radius-full;
+}
+
+.icon {
+  color: var(--color-warning);
+}
