@@ -1,0 +1,7 @@
+@use 'styles/variables' as *;
+
+// Equal-width digits, so the time doesn't jitter as it ticks.
+.timer {
+  font-weight: $font-weight-semibold;
+  font-variant-numeric: tabular-nums;
+}

@@ -27,3 +27,6 @@ export const BACKUP_REMINDER_DAYS = 14
 
 /** First day of the week for "this week" counts: 1 = Monday (ISO 8601). */
 export const WEEK_STARTS_ON = 1
+
+/** How often the workout timer updates. */
+export const TIMER_TICK_MS = 1000

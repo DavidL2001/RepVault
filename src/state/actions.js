@@ -13,6 +13,12 @@ export const ACTION_TYPES = {
   templateRenamed: 'templates/renamed',
   templateDeleted: 'templates/deleted',
   workoutStarted: 'workouts/started',
+  workoutExerciseAdded: 'workouts/exerciseAdded',
+  workoutExerciseRemoved: 'workouts/exerciseRemoved',
+  workoutExerciseMoved: 'workouts/exerciseMoved',
+  workoutEnded: 'workouts/ended',
+  workoutDiscarded: 'workouts/discarded',
+  templateExercisesUpdated: 'templates/exercisesUpdated',
   settingsUpdated: 'settings/updated',
   dataReset: 'data/reset',
 }
@@ -59,6 +65,54 @@ export function deleteTemplate(id) {
  */
 export function startWorkout(fields) {
   return { type: ACTION_TYPES.workoutStarted, workout: createWorkout(fields) }
+}
+
+/**
+ * Adds an exercise to the end of the workout in progress.
+ *
+ * @param {string} exerciseId
+ */
+export function addWorkoutExercise(exerciseId) {
+  return { type: ACTION_TYPES.workoutExerciseAdded, exerciseId }
+}
+
+/**
+ * Removes an exercise and its sets from the workout in progress.
+ *
+ * @param {string} exerciseId
+ */
+export function removeWorkoutExercise(exerciseId) {
+  return { type: ACTION_TYPES.workoutExerciseRemoved, exerciseId }
+}
+
+/**
+ * Moves an exercise up (-1) or down (1) in the workout in progress.
+ *
+ * @param {string} exerciseId
+ * @param {-1|1} offset
+ */
+export function moveWorkoutExercise(exerciseId, offset) {
+  return { type: ACTION_TYPES.workoutExerciseMoved, exerciseId, offset }
+}
+
+/** Ends the workout in progress now and saves it to the history. */
+export function endWorkout() {
+  return { type: ACTION_TYPES.workoutEnded, endedAt: new Date() }
+}
+
+/** Throws away the workout in progress without saving it. */
+export function discardWorkout() {
+  return { type: ACTION_TYPES.workoutDiscarded }
+}
+
+/**
+ * Replaces a template's exercise list, e.g. with the exercises of the workout just done.
+ *
+ * @param {string} id
+ * @param {string[]} exerciseIds
+ */
+export function updateTemplateExercises(id, exerciseIds) {
+  return { type: ACTION_TYPES.templateExercisesUpdated, id, exerciseIds }
 }
 
 /**
