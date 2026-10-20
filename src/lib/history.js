@@ -1,3 +1,4 @@
+import { RECENT_WORKOUTS_COUNT } from '../constants/defaults.js'
 import { isSameWeek } from './dates.js'
 
 // Looking things up in the list of finished workouts (`AppData.workouts`).
@@ -76,6 +77,17 @@ export function workoutsBefore(workout, workouts) {
   return workouts.filter(
     (other) => other.id !== workout.id && Date.parse(other.startedAt) < startedAt,
   )
+}
+
+/**
+ * The most recent finished workouts, newest first.
+ *
+ * @param {import('./model.js').WorkoutSession[]} workouts
+ * @param {number} [count]
+ * @returns {import('./model.js').WorkoutSession[]}
+ */
+export function recentWorkouts(workouts, count = RECENT_WORKOUTS_COUNT) {
+  return [...workouts].sort(newestFirst).slice(0, count)
 }
 
 /**

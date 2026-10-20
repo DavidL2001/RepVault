@@ -4,6 +4,7 @@ import {
   exerciseSessions,
   exerciseSets,
   lastSession,
+  recentWorkouts,
   workoutsBefore,
   workoutsThisWeek,
 } from './history.js'
@@ -63,6 +64,22 @@ describe('lastSession', () => {
 describe('exerciseSets', () => {
   it('returns every set, oldest workout first', () => {
     expect(exerciseSets(workouts, 'squat').map((set) => set.kg)).toEqual([95, 100, 105])
+  })
+})
+
+describe('recentWorkouts', () => {
+  it('returns the newest workouts first, up to the count', () => {
+    expect(recentWorkouts(workouts, 2).map((workout) => workout.id)).toEqual(['empty', 'new'])
+  })
+
+  it('returns all when there are fewer, without changing the original list', () => {
+    expect(recentWorkouts(workouts).map((workout) => workout.id)).toEqual([
+      'empty',
+      'new',
+      'mid',
+      'old',
+    ])
+    expect(workouts[0].id).toBe('mid')
   })
 })
 

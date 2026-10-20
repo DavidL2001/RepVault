@@ -58,6 +58,8 @@ import { SCHEMA_VERSION } from '../constants/storage.js'
  * @typedef {object} Settings
  * @property {'dark'|'light'} theme
  * @property {string|null} lastExportAt When the data was last exported as a backup.
+ * @property {string|null} backupReminderDismissedAt When the Home backup reminder was last
+ *   dismissed; it stays hidden for `BACKUP_REMINDER_DAYS` after that.
  */
 
 /**
@@ -85,6 +87,7 @@ export function createInitialData() {
     settings: {
       theme: DEFAULT_THEME,
       lastExportAt: null,
+      backupReminderDismissedAt: null,
     },
   }
 }

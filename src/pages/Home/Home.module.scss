@@ -1,0 +1,51 @@
+@use 'styles/variables' as *;
+@use 'styles/mixins' as *;
+
+// Two lines inside the big Resume button: the action, then what and how long.
+.resume {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+  min-width: 0;
+  padding-block: $space-1;
+}
+
+.resumeMeta {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  overflow-wrap: anywhere;
+}
+
+.reminderText {
+  margin-bottom: $space-3;
+}
+
+.week {
+  font-size: $font-size-md;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.sectionHeader {
+  display: flex;
+  gap: $space-3;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.heading {
+  font-size: $font-size-lg;
+}
+
+// A link, but with a 48px tap area.
+.seeAll {
+  @include tap-target;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  font-weight: $font-weight-semibold;
+}

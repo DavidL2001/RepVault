@@ -31,4 +31,10 @@ export const MIGRATIONS = {
         )
       : data.exercises,
   }),
+
+  /** v2 → v3: remember when the backup reminder was dismissed (never, for old data). */
+  2: (data) => ({
+    ...data,
+    settings: { ...data.settings, backupReminderDismissedAt: null },
+  }),
 }
