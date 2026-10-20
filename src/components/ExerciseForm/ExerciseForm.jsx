@@ -25,7 +25,7 @@ const MODE_OPTIONS = [
  *   e.g. for `Modal initialFocusRef` so typing can start right away.
  */
 function ExerciseForm({ id, exercises, onSubmit, nameRef }) {
-  const { values, errors, setField, handleSubmit, targetRepsRef, stepKgRef } = useExerciseForm({
+  const { values, errors, setField, handleSubmit, targetRepsRef } = useExerciseForm({
     exercises,
     onSubmit,
     nameRef,
@@ -45,7 +45,7 @@ function ExerciseForm({ id, exercises, onSubmit, nameRef }) {
 
       <Checkbox
         label="Add a progression rule"
-        hint="Tells you when to go heavier, based on your last workout."
+        hint="Tells you when to go heavier, based on your last workout. You pick the new weight."
         checked={values.hasRule}
         onChange={setField('hasRule')}
       />
@@ -61,17 +61,6 @@ function ExerciseForm({ id, exercises, onSubmit, nameRef }) {
             onChange={setField('targetReps')}
             error={errors.targetReps}
             {...PROGRESSION_STEPPER.targetReps}
-          />
-          <Stepper
-            ref={stepKgRef}
-            label="Weight step (kg)"
-            hint="How much heavier to go next time."
-            decreaseLabel="Decrease weight step"
-            increaseLabel="Increase weight step"
-            value={values.stepKg}
-            onChange={setField('stepKg')}
-            error={errors.stepKg}
-            {...PROGRESSION_STEPPER.stepKg}
           />
           <RadioGroup
             legend="Applies to"

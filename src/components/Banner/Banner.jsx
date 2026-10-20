@@ -22,6 +22,8 @@ const VARIANT_LABELS = {
  * @param {import('react').ReactNode} [props.children] Message text, links, etc.
  * @param {() => void} [props.onDismiss] Shows a dismiss button when set.
  * @param {string} [props.dismissLabel='Dismiss']
+ * @param {string} [props.icon] Icon name, instead of the variant's icon.
+ * @param {string} [props.srLabel] Screen reader prefix, instead of the variant's ("Warning", …).
  * @param {string} [props.className]
  */
 function Banner({
@@ -30,13 +32,15 @@ function Banner({
   children,
   onDismiss,
   dismissLabel = 'Dismiss',
+  icon = variant,
+  srLabel = VARIANT_LABELS[variant],
   className,
 }) {
   return (
     <div className={cx(styles.banner, styles[variant], className)}>
-      <Icon name={variant} className={styles.icon} />
+      <Icon name={icon} className={styles.icon} />
       <div className={styles.text}>
-        <VisuallyHidden>{VARIANT_LABELS[variant]}: </VisuallyHidden>
+        <VisuallyHidden>{srLabel}: </VisuallyHidden>
         {title && <p className={styles.title}>{title}</p>}
         {children && <div>{children}</div>}
       </div>

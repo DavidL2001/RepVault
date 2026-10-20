@@ -55,7 +55,7 @@ I will use this almost only on my phone in the gym, often one-handed and with sw
 
 - **Exercise:** something I create myself, e.g. "Lat pulldown".
   `{ id, name, createdAt, progression }`
-  `progression` is either `null` or `{ targetReps, stepKg, mode: "all" | "any" }` (see Progression rules).
+  `progression` is either `null` or `{ targetReps, mode: "all" | "any" }` (see Progression rules).
   Exercises are reusable across workouts; all progress is tracked per exercise.
 - **Workout template:** a named routine I create once, e.g. "Leg day". It remembers which exercises it contains and in what order.
   `{ id, name, exerciseIds[] }`
@@ -77,13 +77,12 @@ Format dates with the browser locale (`Intl.DateTimeFormat`) and use 24h time. U
 
 - When creating an exercise (and later from its detail page), I can optionally set a progression rule:
   - Target reps, e.g. 8 ("if I hit 8+ reps...").
-  - Weight step: how much heavier to go next time, e.g. 2.5 kg. Each exercise has its own step, because machines and dumbbells use different increments.
   - Applies to: "all sets" (default) or "any set" at the heaviest weight used that session.
+- The rule only says _when_ to go heavier, never _how much_: the app doesn't suggest a weight, I pick it myself.
 - After a workout ends, check each exercise that has a rule. If the condition was met, mark it for a weight increase next session.
 - Next time I open that exercise in the Set Logger:
-  - Show a clear banner, e.g. "⬆ Go heavier: 45 kg (you hit 8+ reps at 40 kg last time)".
-  - Pre-fill the kg input with the suggested weight instead of last time's weight.
-  - I can still change the weight; the suggestion is only a hint.
+  - Show a clear banner, e.g. "⬆ Go heavier (you hit 8+ reps at 40 kg last time)".
+  - Pre-fill the kg input with last time's heaviest weight and the reps with the target reps; I go heavier from there (e.g. with the + button).
 - If the condition was not met, show "Stay at 40 kg — aim for 8+ reps" instead.
 - Exercises without a rule behave normally (pre-fill last time's values, no banner).
 
@@ -113,7 +112,7 @@ Format dates with the browser locale (`Intl.DateTimeFormat`) and use 24h time. U
 - Each exercise row shows sets logged so far (e.g. "3 sets · best 40 kg × 8") and a small ⬆ icon if it's due for a weight increase.
 - "+ Add exercise" opens a picker:
   - Shows MY created exercises with a search field.
-  - "+ Create new exercise": name field, plus an optional collapsible "Progression rule" section (target reps, weight step, all/any sets).
+  - "+ Create new exercise": name field, plus an optional collapsible "Progression rule" section (target reps, all/any sets).
   - Prevent duplicate names (case-insensitive).
 - Exercises can be reordered (up/down buttons, simpler than drag on phones) and removed from the session.
 - Sticky bottom bar: "End workout" (with confirmation).
@@ -125,7 +124,7 @@ Format dates with the browser locale (`Intl.DateTimeFormat`) and use 24h time. U
 - Exercise name at the top, back button to the Active Workout.
 - Progression banner (see section 4) if a rule exists.
 - "Last time: 3×10 @ 40 kg (date)" so I know what to beat.
-- kg and reps inputs with large − / + steppers, pre-filled with the suggested or last-used values.
+- kg and reps inputs with large − / + steppers, pre-filled with the last-used values (see section 4).
 - Sticky "Log set" button at the bottom.
 - List of sets logged this session; each can be edited or deleted.
 - PR badge: highlight a set when it beats my previous best for this exercise (heaviest weight, or best estimated 1RM).
@@ -135,7 +134,7 @@ Format dates with the browser locale (`Intl.DateTimeFormat`) and use 24h time. U
 
 - Date, duration, exercises done, total sets, total volume (kg × reps).
 - New personal records achieved.
-- "Next time": which exercises earned a step up, e.g. "Lat pulldown → 45 kg".
+- "Next time": which exercises earned a step up, e.g. "Lat pulldown: go heavier" (no suggested weight).
 - "Done" button returns to Home.
 
 ### Page 6 — Exercises (`#/exercises`)
@@ -194,7 +193,7 @@ Format dates with the browser locale (`Intl.DateTimeFormat`) and use 24h time. U
   2. Reload the page: the workout shows in History with today's date.
   3. Start "Leg day" again: both exercises are pre-listed, last-time values show, chart shows 2 points after logging.
   4. Reload mid-workout: the session resumes.
-  5. Create "Lat pulldown" with rule 8+ reps, step 5 kg. Log 3×8 @ 40 kg, end workout. Start a new workout: the logger suggests 45 kg with the "Go heavier" banner, and the summary listed it under "Next time".
+  5. Create "Lat pulldown" with rule 8+ reps. Log 3×8 @ 40 kg, end workout. Start a new workout: the logger shows the "Go heavier" banner with 40 kg pre-filled (no suggested weight), and the summary listed it under "Next time".
   6. Export, delete all data, import: everything is restored.
   7. Refresh on a deep link (e.g. `#/exercise/<id>`): the page loads correctly, no 404.
   8. Check every page at 320px, 375px and 430px widths: no horizontal scrolling, no overlapping elements, all buttons reachable and easy to tap.

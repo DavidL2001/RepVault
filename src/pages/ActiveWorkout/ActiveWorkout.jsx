@@ -55,6 +55,7 @@ function ActiveWorkout() {
     active.removeExercise(row.exercise.id)
     setRemoving(null)
     setMessage(`${row.exercise.name} removed.`)
+    // Without a dialog this moves focus right away; after the confirm dialog, its fallbackFocusRef does.
     addButtonRef.current?.focus()
   }
 
@@ -136,6 +137,7 @@ function ActiveWorkout() {
         confirmLabel="Remove"
         variant="danger"
         onConfirm={() => remove(removing)}
+        fallbackFocusRef={addButtonRef}
         onCancel={() => setRemoving(null)}
       />
 

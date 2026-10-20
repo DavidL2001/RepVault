@@ -80,7 +80,7 @@ The full feature spec lives in `docs/SPEC.md`.
 ## 6. `feature/calculations`
 
 - [x] `lib/calculations.js`: set volume, session volume, Epley 1RM, best set, PR detection
-- [x] `lib/progression.js`: evaluate rule (`all` / `any` sets at heaviest weight), suggested next weight, "stay" message
+- [x] `lib/progression.js`: evaluate rule (`all` / `any` sets at heaviest weight), "go heavier" / "stay" message (no suggested weight, the user picks it)
 - [x] `lib/history.js`: last session for an exercise, sessions per exercise, workouts this week
 - [x] Unit tests with Vitest for all of the above
 
@@ -117,13 +117,13 @@ The full feature spec lives in `docs/SPEC.md`.
 
 ## 10. `feature/set-logger`
 
-- [ ] kg / reps fields with steppers, `inputMode` set correctly
-- [ ] Pre-fill from progression suggestion or last session
-- [ ] "Last time" line
-- [ ] Progression banner ("Go heavier" / "Stay at")
-- [ ] Sticky "Log set"; logged set announced via `aria-live`
-- [ ] Edit / delete sets
-- [ ] PR badge (icon + text, not color only)
+- [x] kg / reps fields with steppers, `inputMode` set correctly
+- [x] Pre-fill from progression suggestion or last session
+- [x] "Last time" line
+- [x] Progression banner ("Go heavier" / "Stay at")
+- [x] Sticky "Log set"; logged set announced via `aria-live`
+- [x] Edit / delete sets
+- [x] PR badge (icon + text, not color only)
 
 **Done when:** logging sets works smoothly one-handed on a phone.
 

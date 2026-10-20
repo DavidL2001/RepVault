@@ -7,8 +7,12 @@ import styles from './Modal.module.scss'
  * - opening moves focus into the dialog (to `initialFocusRef`, or the dialog itself)
  * - focus stays inside while it is open (the page behind is inert)
  * - Escape, the close button or tapping the backdrop calls `onClose`
- * - closing returns focus to the element that opened it
+ * - closing returns focus to the element that opened it, or to `fallbackFocusRef`
+ *   when that element is gone (e.g. the row it was on was just deleted)
  * The content is only rendered while open, so forms inside start fresh each time.
+ *
+ * Don't move focus yourself while closing: the page is inert until the dialog has closed,
+ * so focus calls from a confirm handler are lost. Use `fallbackFocusRef` instead.
  *
  * @param {object} props
  * @param {boolean} props.open
@@ -17,6 +21,8 @@ import styles from './Modal.module.scss'
  * @param {import('react').ReactNode} props.children
  * @param {import('react').ReactNode} [props.footer] Actions shown at the bottom, e.g. Buttons.
  * @param {import('react').RefObject<HTMLElement>} [props.initialFocusRef] Element to focus on open.
+ * @param {import('react').RefObject<HTMLElement>} [props.fallbackFocusRef] Element to focus on
+ *   close when the element that opened the dialog no longer exists.
  * @param {boolean} [props.showCloseButton=true] Show the × button in the header.
  */
 function Modal({
@@ -26,11 +32,14 @@ function Modal({
   children,
   footer,
   initialFocusRef,
+  fallbackFocusRef,
   showCloseButton = true,
 }) {
   const dialogRef = useRef(null)
   const titleId = useId()
   const handleClose = useEffectEvent(() => onClose())
+  // Read when closing, so the ref's latest element is used.
+  const focusFallback = useEffectEvent(() => fallbackFocusRef?.current?.focus())
 
   useEffect(() => {
     if (!open) return
@@ -52,6 +61,7 @@ function Modal({
       dialog.removeEventListener('click', onClick)
       dialog.close()
       if (trigger?.isConnected) trigger.focus()
+      else focusFallback()
     }
   }, [open, initialFocusRef])
 

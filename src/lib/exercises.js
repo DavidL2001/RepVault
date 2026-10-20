@@ -22,20 +22,16 @@ export function validateExerciseName(name, exercises, ignoreId) {
 /**
  * Turns the progression rule fields (as typed) into a rule, or errors per field.
  *
- * @param {{ targetReps: string, stepKg: string, mode: 'all'|'any' }} fields
- * @returns {{ progression: import('./model.js').Progression|null, errors: { targetReps?: string, stepKg?: string } }}
+ * @param {{ targetReps: string, mode: 'all'|'any' }} fields
+ * @returns {{ progression: import('./model.js').Progression|null, errors: { targetReps?: string } }}
  *   `progression` is `null` when there are errors.
  */
-export function parseProgressionFields({ targetReps, stepKg, mode }) {
+export function parseProgressionFields({ targetReps, mode }) {
   const reps = parseDecimal(targetReps)
-  const step = parseDecimal(stepKg)
-  const errors = {}
-
-  if (!Number.isInteger(reps) || reps < 1) errors.targetReps = 'Enter whole reps, 1 or more.'
-  if (Number.isNaN(step) || step <= 0) errors.stepKg = 'Enter a weight step above 0 kg.'
-
-  if (Object.keys(errors).length > 0) return { progression: null, errors }
-  return { progression: { targetReps: reps, stepKg: step, mode }, errors }
+  if (!Number.isInteger(reps) || reps < 1) {
+    return { progression: null, errors: { targetReps: 'Enter whole reps, 1 or more.' } }
+  }
+  return { progression: { targetReps: reps, mode }, errors: {} }
 }
 
 /**
@@ -55,7 +51,6 @@ export function createExercise({ name, progression }, { id = createId(), now = n
  * @property {string} name
  * @property {boolean} hasRule Whether a progression rule is added.
  * @property {string} targetReps
- * @property {string} stepKg
  * @property {'all'|'any'} mode
  */
 
@@ -66,7 +61,7 @@ export function createExercise({ name, progression }, { id = createId(), now = n
  * @param {import('./model.js').Exercise[]} exercises Existing exercises, for the duplicate check.
  * @param {string} [ignoreId] Exercise being edited.
  * @returns {{
- *   errors: { name?: string, targetReps?: string, stepKg?: string },
+ *   errors: { name?: string, targetReps?: string },
  *   fields: { name: string, progression: import('./model.js').Progression|null },
  * }} `fields` is only meaningful when `errors` is empty.
  */

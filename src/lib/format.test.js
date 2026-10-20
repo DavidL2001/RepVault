@@ -1,6 +1,14 @@
 import { describe, expect, it } from 'vitest'
 import { makeSet } from '../test/factories.js'
-import { formatElapsed, formatKg, formatSet, formatSetSummary, pluralize } from './format.js'
+import {
+  formatElapsed,
+  formatKg,
+  formatNumberInput,
+  formatSet,
+  formatSetsShort,
+  formatSetSummary,
+  pluralize,
+} from './format.js'
 
 describe('formatKg', () => {
   it('uses the locale decimal separator', () => {
@@ -57,5 +65,27 @@ describe('formatSetSummary', () => {
 
   it('says when nothing is logged yet', () => {
     expect(formatSetSummary([])).toBe('No sets yet')
+  })
+})
+
+describe('formatNumberInput', () => {
+  it('uses the locale decimal separator without grouping', () => {
+    expect(formatNumberInput(42.5, 'sv-SE')).toBe('42,5')
+    expect(formatNumberInput(42.5, 'en-GB')).toBe('42.5')
+    expect(formatNumberInput(1250, 'en-GB')).toBe('1250')
+  })
+})
+
+describe('formatSetsShort', () => {
+  it('groups identical sets in a row', () => {
+    expect(formatSetsShort([makeSet(40, 10), makeSet(40, 10), makeSet(40, 10)], 'en-GB')).toBe(
+      '3×10 @ 40 kg',
+    )
+  })
+
+  it('lists different sets in order', () => {
+    expect(formatSetsShort([makeSet(40, 10), makeSet(40, 10), makeSet(42.5, 6)], 'sv-SE')).toBe(
+      '2×10 @ 40 kg, 1×6 @ 42,5 kg',
+    )
   })
 })

@@ -15,6 +15,8 @@ import Modal from '../Modal/Modal.jsx'
  * @param {'primary'|'danger'} [props.variant='primary'] Use `danger` for destructive actions.
  * @param {() => void} props.onConfirm
  * @param {() => void} props.onCancel Also called on Escape or a backdrop tap.
+ * @param {import('react').RefObject<HTMLElement>} [props.fallbackFocusRef] Where focus goes
+ *   after confirming when the button that opened the dialog is gone (see Modal).
  */
 function ConfirmDialog({
   open,
@@ -25,6 +27,7 @@ function ConfirmDialog({
   variant = 'primary',
   onConfirm,
   onCancel,
+  fallbackFocusRef,
 }) {
   const cancelRef = useRef(null)
 
@@ -34,6 +37,7 @@ function ConfirmDialog({
       onClose={onCancel}
       title={title}
       initialFocusRef={cancelRef}
+      fallbackFocusRef={fallbackFocusRef}
       showCloseButton={false}
       footer={
         <>

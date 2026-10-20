@@ -1,17 +1,17 @@
 import { useRef, useState } from 'react'
 import { DEFAULT_PROGRESSION } from '../constants/defaults.js'
 import { validateExerciseForm } from '../lib/exercises.js'
+import { formatNumberInput } from '../lib/format.js'
 
 /** Fields in screen order, so focus goes to the first one with an error. */
-const FIELD_ORDER = ['name', 'targetReps', 'stepKg']
+const FIELD_ORDER = ['name', 'targetReps']
 
 /** @returns {import('../lib/exercises.js').ExerciseFormValues} */
 function initialValues() {
   return {
     name: '',
     hasRule: false,
-    targetReps: String(DEFAULT_PROGRESSION.targetReps),
-    stepKg: String(DEFAULT_PROGRESSION.stepKg),
+    targetReps: formatNumberInput(DEFAULT_PROGRESSION.targetReps),
     mode: DEFAULT_PROGRESSION.mode,
   }
 }
@@ -32,7 +32,6 @@ export function useExerciseForm({ exercises, onSubmit, nameRef }) {
   const [submitted, setSubmitted] = useState(false)
 
   const targetRepsRef = useRef(null)
-  const stepKgRef = useRef(null)
 
   const { errors, fields } = validateExerciseForm(values, exercises)
 
@@ -46,7 +45,7 @@ export function useExerciseForm({ exercises, onSubmit, nameRef }) {
     setSubmitted(true)
     const firstError = FIELD_ORDER.find((field) => errors[field])
     if (firstError) {
-      const refs = { name: nameRef, targetReps: targetRepsRef, stepKg: stepKgRef }
+      const refs = { name: nameRef, targetReps: targetRepsRef }
       refs[firstError].current?.focus()
       return
     }
@@ -59,6 +58,5 @@ export function useExerciseForm({ exercises, onSubmit, nameRef }) {
     setField,
     handleSubmit,
     targetRepsRef,
-    stepKgRef,
   }
 }

@@ -1,0 +1,12 @@
+@use 'styles/variables' as *;
+@use 'styles/mixins' as *;
+
+// Stacked on phones (each field gets the full width for big buttons), side by side when there's room.
+.form {
+  display: grid;
+  gap: $space-4;
+
+  @include from(tablet) {
+    grid-template-columns: 1fr 1fr;
+  }
+}

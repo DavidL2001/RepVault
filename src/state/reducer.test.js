@@ -8,8 +8,11 @@ import {
   addWorkoutExercise,
   deleteTemplate,
   discardWorkout,
+  editSet,
   endWorkout,
+  logSet,
   moveWorkoutExercise,
+  removeSet,
   removeWorkoutExercise,
   renameTemplate,
   resetData,
@@ -141,5 +144,31 @@ describe('appReducer: editing the workout in progress', () => {
     let state = appReducer(createInitialData(), add)
     state = appReducer(state, updateTemplateExercises(add.template.id, ['e2', 'e1']))
     expect(state.templates[0].exerciseIds).toEqual(['e2', 'e1'])
+  })
+})
+
+describe('appReducer: sets', () => {
+  it('logs, edits and deletes sets in the workout in progress', () => {
+    let state = appReducer(createInitialData(), startWorkout({ name: 'W', exerciseIds: ['e1'] }))
+    state = appReducer(state, logSet('e1', { kg: 40, reps: 8 }))
+    state = appReducer(state, logSet('e1', { kg: 42.5, reps: 6 }))
+    const sets = () => state.activeWorkout.entries[0].sets
+
+    expect(sets().map(({ kg, reps }) => [kg, reps])).toEqual([
+      [40, 8],
+      [42.5, 6],
+    ])
+    expect(Date.parse(sets()[0].timestamp)).not.toBeNaN()
+
+    state = appReducer(state, editSet('e1', 1, { kg: 42.5, reps: 7 }))
+    expect(sets()[1]).toMatchObject({ kg: 42.5, reps: 7 })
+
+    state = appReducer(state, removeSet('e1', 0))
+    expect(sets().map(({ kg }) => kg)).toEqual([42.5])
+  })
+
+  it('ignores sets when no workout is in progress', () => {
+    const state = createInitialData()
+    expect(appReducer(state, logSet('e1', { kg: 40, reps: 8 }))).toBe(state)
   })
 })

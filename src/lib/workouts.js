@@ -116,3 +116,59 @@ export function templateNeedsUpdate(template, workout) {
     ids.some((id, index) => id !== template.exerciseIds[index])
   )
 }
+
+/**
+ * Changes the sets of one exercise in the workout.
+ *
+ * @param {import('./model.js').WorkoutSession} workout
+ * @param {string} exerciseId
+ * @param {(sets: import('./model.js').WorkoutSet[]) => import('./model.js').WorkoutSet[]} change
+ * @returns {import('./model.js').WorkoutSession}
+ */
+function updateSets(workout, exerciseId, change) {
+  return {
+    ...workout,
+    entries: workout.entries.map((entry) =>
+      entry.exerciseId === exerciseId ? { ...entry, sets: change(entry.sets) } : entry,
+    ),
+  }
+}
+
+/**
+ * Adds a set to an exercise. The exercise is added to the workout first if it isn't in it.
+ *
+ * @param {import('./model.js').WorkoutSession} workout
+ * @param {string} exerciseId
+ * @param {import('./model.js').WorkoutSet} set
+ * @returns {import('./model.js').WorkoutSession}
+ */
+export function addSet(workout, exerciseId, set) {
+  return updateSets(addEntry(workout, exerciseId), exerciseId, (sets) => [...sets, set])
+}
+
+/**
+ * Changes the weight and/or reps of one set, keeping when it was logged.
+ *
+ * @param {import('./model.js').WorkoutSession} workout
+ * @param {string} exerciseId
+ * @param {number} index Position of the set, from 0.
+ * @param {{ kg?: number, reps?: number }} changes
+ * @returns {import('./model.js').WorkoutSession}
+ */
+export function updateSet(workout, exerciseId, index, changes) {
+  return updateSets(workout, exerciseId, (sets) =>
+    sets.map((set, i) => (i === index ? { ...set, ...changes } : set)),
+  )
+}
+
+/**
+ * Deletes one set.
+ *
+ * @param {import('./model.js').WorkoutSession} workout
+ * @param {string} exerciseId
+ * @param {number} index Position of the set, from 0.
+ * @returns {import('./model.js').WorkoutSession}
+ */
+export function deleteSet(workout, exerciseId, index) {
+  return updateSets(workout, exerciseId, (sets) => sets.filter((_, i) => i !== index))
+}

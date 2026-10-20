@@ -9,14 +9,12 @@ export const PROGRESSION_MODES = {
 /** Values pre-filled when the user adds a progression rule to an exercise. */
 export const DEFAULT_PROGRESSION = {
   targetReps: 8,
-  stepKg: 2.5,
   mode: PROGRESSION_MODES.all,
 }
 
 /** How much the − / + buttons change the progression rule fields. */
 export const PROGRESSION_STEPPER = {
   targetReps: { step: 1, min: 1 },
-  stepKg: { step: 0.5, min: 0.5 },
 }
 
 /** Name of a workout started without a template. */
@@ -30,3 +28,9 @@ export const WEEK_STARTS_ON = 1
 
 /** How often the workout timer updates. */
 export const TIMER_TICK_MS = 1000
+
+/** How much the − / + buttons change the set fields, and their lowest values. */
+export const SET_STEPPER = {
+  kg: { step: 2.5, min: 0 },
+  reps: { step: 1, min: 1 },
+}

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { formatNumberInput } from '../../lib/format.js'
 import { stepNumber } from '../../lib/numbers.js'
 import IconButton from '../IconButton/IconButton.jsx'
 import NumberField from '../NumberField/NumberField.jsx'
@@ -35,7 +36,7 @@ function Stepper({
   const [announcement, setAnnouncement] = useState('')
 
   function stepBy(delta) {
-    const next = String(stepNumber(value, delta, { min, max }))
+    const next = formatNumberInput(stepNumber(value, delta, { min, max }))
     onChange(next)
     setAnnouncement(`${label}: ${next}`)
   }

@@ -1,0 +1,31 @@
+@use 'styles/variables' as *;
+
+.row {
+  flex-direction: row;
+  gap: $space-1;
+  align-items: center;
+  padding: $space-2 $space-2 $space-2 $space-4;
+}
+
+.text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: $space-1;
+  min-width: 0;
+}
+
+.value {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  font-variant-numeric: tabular-nums;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-2;
+  align-items: center;
+  font-size: $font-size-sm;
+  color: var(--color-text-muted);
+}
