@@ -2,6 +2,7 @@
 // Add new icons here; the name becomes a valid `<Icon name="…">`.
 export const ICONS = {
   arrowLeft: <path d="M19 12H5M12 19l-7-7 7-7" />,
+  arrowUp: <path d="M12 19V5M5 12l7-7 7 7" />,
   plus: <path d="M12 5v14M5 12h14" />,
   minus: <path d="M5 12h14" />,
   close: <path d="M18 6 6 18M6 6l12 12" />,

@@ -88,10 +88,10 @@ The full feature spec lives in `docs/SPEC.md`.
 
 ## 7. `feature/exercises`
 
-- [ ] Create exercise form (name + optional collapsible progression rule)
-- [ ] Case-insensitive duplicate name check with an accessible error message
-- [ ] Exercises page: alphabetical list, search, latest best set, ⬆ marker (with text alternative)
-- [ ] Empty state when no exercises exist (no preset exercises anywhere)
+- [x] Create exercise form (name + optional collapsible progression rule)
+- [x] Case-insensitive duplicate name check with an accessible error message
+- [x] Exercises page: alphabetical list, search, latest best set, ⬆ marker (with text alternative)
+- [x] Empty state when no exercises exist (no preset exercises anywhere)
 
 **Done when:** I can create, search and list my own exercises.
 

@@ -10,6 +10,9 @@ import { ACTION_TYPES } from './actions.js'
  */
 export function appReducer(state, action) {
   switch (action.type) {
+    case ACTION_TYPES.exerciseAdded:
+      return { ...state, exercises: [...state.exercises, action.exercise] }
+
     case ACTION_TYPES.settingsUpdated:
       return { ...state, settings: { ...state.settings, ...action.changes } }
 
