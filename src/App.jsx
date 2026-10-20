@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { ROUTES } from './constants/routes.js'
 import PlaceholderNav from './components/PlaceholderNav/PlaceholderNav.jsx'
@@ -11,6 +12,11 @@ import ExerciseDetail from './pages/ExerciseDetail/ExerciseDetail.jsx'
 import History from './pages/History/History.jsx'
 import WorkoutDetails from './pages/WorkoutDetails/WorkoutDetails.jsx'
 import Settings from './pages/Settings/Settings.jsx'
+
+// Dev-only page. Loaded lazily so production builds leave it out entirely.
+const DesignPreview = import.meta.env.DEV
+  ? lazy(() => import('./pages/DesignPreview/DesignPreview.jsx'))
+  : null
 
 function App() {
   return (
@@ -28,6 +34,16 @@ function App() {
           <Route path={ROUTES.history} element={<History />} />
           <Route path={ROUTES.workoutDetails} element={<WorkoutDetails />} />
           <Route path={ROUTES.settings} element={<Settings />} />
+          {DesignPreview && (
+            <Route
+              path={ROUTES.designPreview}
+              element={
+                <Suspense>
+                  <DesignPreview />
+                </Suspense>
+              }
+            />
+          )}
           {/* Unknown paths go back to Home instead of showing a blank page. */}
           <Route path="*" element={<Navigate to={ROUTES.home} replace />} />
         </Routes>

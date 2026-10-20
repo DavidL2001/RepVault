@@ -15,6 +15,7 @@ const LINKS = [
   { label: 'History', to: ROUTES.history },
   { label: 'Workout details', to: generatePath(ROUTES.workoutDetails, { id: EXAMPLE_ID }) },
   { label: 'Settings', to: ROUTES.settings },
+  ...(import.meta.env.DEV ? [{ label: 'Design preview (dev)', to: ROUTES.designPreview }] : []),
 ]
 
 /**

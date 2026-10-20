@@ -31,19 +31,19 @@ The full feature spec lives in `docs/SPEC.md`.
 ## 2. `setup/deploy-pipeline`
 
 - [x] Add `.github/workflows/deploy.yml` (build on push to `main`, deploy `dist` with `actions/upload-pages-artifact` + `actions/deploy-pages`)
-- [ ] In repo settings: Pages → Source → "GitHub Actions"
+- [x] In repo settings: Pages → Source → "GitHub Actions"
 - [x] README: short "Deploy" section
 
 **Done when:** the placeholder app is live on `https://davidl2001.github.io/RepVault/` and refreshing a deep link works.
 
 ## 3. `setup/design-system`
 
-- [ ] `styles/_variables.scss`: spacing scale, radii, font sizes, font weights, z-index scale, breakpoints, transition durations
-- [ ] `styles/_colors.scss`: raw color palette (the only place hex values exist)
-- [ ] `styles/_themes.scss`: semantic CSS custom properties (`--color-bg`, `--color-surface`, `--color-text`, `--color-primary`, `--color-danger`, `--color-success`, `--color-focus`, …) for dark and light themes via `[data-theme]`
-- [ ] `styles/_mixins.scss`: breakpoint mixins, `tap-target`, `focus-ring`, `visually-hidden`, `truncate`, `safe-area-padding`
-- [ ] `styles/global.scss`: reset, base typography (system fonts, min 16px inputs), visible focus styles, `prefers-reduced-motion` handling, `100dvh` app shell
-- [ ] Check text and UI color contrast meets WCAG AA in both themes
+- [x] `styles/_variables.scss`: spacing scale, radii, font sizes, font weights, z-index scale, breakpoints, transition durations
+- [x] `styles/_colors.scss`: raw color palette (the only place hex values exist)
+- [x] `styles/_themes.scss`: semantic CSS custom properties (`--color-bg`, `--color-surface`, `--color-text`, `--color-primary`, `--color-danger`, `--color-success`, `--color-focus`, …) for dark and light themes via `[data-theme]`
+- [x] `styles/_mixins.scss`: breakpoint mixins, `tap-target`, `focus-ring`, `visually-hidden`, `truncate`, `safe-area-padding`
+- [x] `styles/global.scss`: reset, base typography (system fonts, min 16px inputs), visible focus styles, `prefers-reduced-motion` handling, `100dvh` app shell
+- [x] Check text and UI color contrast meets WCAG AA in both themes
 
 **Done when:** a test page shows text, buttons and inputs correctly in both themes, using only tokens.
 
