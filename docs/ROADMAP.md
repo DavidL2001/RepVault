@@ -136,11 +136,11 @@ The full feature spec lives in `docs/SPEC.md`.
 
 ## 12. `feature/progress-charts`
 
-- [ ] Reusable `ProgressChart` component (responsive, ~220px tall on phones, theme-aware colors from tokens)
-- [ ] Metric toggle: heaviest weight / estimated 1RM / volume (accessible toggle group)
-- [ ] Text alternative for the chart (summary sentence + optional data table)
-- [ ] Exercise Detail page: chart, PR stats, progression rule edit, session history, rename / delete
-- [ ] Small chart in the Set Logger
+- [x] Reusable `ProgressChart` component (responsive, ~220px tall on phones, theme-aware colors from tokens)
+- [x] Metric toggle: heaviest weight / estimated 1RM / volume (accessible toggle group)
+- [x] Text alternative for the chart (summary sentence + optional data table)
+- [x] Exercise Detail page: chart, PR stats, progression rule edit, session history, rename / delete
+- [x] Small chart in the Set Logger
 
 **Done when:** progress is visible and also understandable without seeing the chart.
 

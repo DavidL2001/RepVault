@@ -1,0 +1,38 @@
+@use 'styles/variables' as *;
+@use 'styles/mixins' as *;
+
+// Meant for a few short columns: cells wrap instead of making the page scroll sideways.
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+
+  th,
+  td {
+    padding: $space-2 $space-3;
+    text-align: left;
+    overflow-wrap: anywhere;
+    border-bottom: $border-width solid var(--color-border-subtle);
+  }
+
+  th {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    color: var(--color-text-muted);
+  }
+
+  .numeric {
+    text-align: right;
+    white-space: nowrap;
+  }
+}
+
+.caption {
+  padding-bottom: $space-2;
+  font-weight: $font-weight-semibold;
+  text-align: left;
+}
+
+.hiddenCaption {
+  @include visually-hidden;
+}

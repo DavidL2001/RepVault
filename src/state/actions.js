@@ -10,6 +10,9 @@ import { createWorkout } from '../lib/workouts.js'
 
 export const ACTION_TYPES = {
   exerciseAdded: 'exercises/added',
+  exerciseRenamed: 'exercises/renamed',
+  exerciseProgressionUpdated: 'exercises/progressionUpdated',
+  exerciseDeleted: 'exercises/deleted',
   templateAdded: 'templates/added',
   templateRenamed: 'templates/renamed',
   templateDeleted: 'templates/deleted',
@@ -34,6 +37,33 @@ export const ACTION_TYPES = {
  */
 export function addExercise(fields) {
   return { type: ACTION_TYPES.exerciseAdded, exercise: createExercise(fields) }
+}
+
+/**
+ * @param {string} id
+ * @param {string} name
+ */
+export function renameExercise(id, name) {
+  return { type: ACTION_TYPES.exerciseRenamed, id, name: normalizeName(name) }
+}
+
+/**
+ * Adds, changes or (with `null`) removes an exercise's progression rule.
+ *
+ * @param {string} id
+ * @param {import('../lib/model.js').Progression|null} progression
+ */
+export function updateExerciseProgression(id, progression) {
+  return { type: ACTION_TYPES.exerciseProgressionUpdated, id, progression }
+}
+
+/**
+ * Deletes an exercise and its whole history (see `removeExerciseEverywhere`).
+ *
+ * @param {string} id
+ */
+export function deleteExercise(id) {
+  return { type: ACTION_TYPES.exerciseDeleted, id }
 }
 
 /**

@@ -76,6 +76,9 @@ $tap-target-lg: 3.5rem; // 56px, for the main action on a page
 $content-max-width: 37.5rem; // 600px column on tablet/desktop
 $dialog-max-width: 28rem;
 $field-label-gap: $space-1;
+// Progress charts: tall enough to read on a phone, small in the Set Logger.
+$chart-height: 13.75rem; // 220px
+$chart-height-sm: 10rem; // 160px
 // Below this width a row's text and its buttons wrap onto two lines.
 $row-text-min-width: 12rem;
 

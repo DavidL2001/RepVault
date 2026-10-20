@@ -31,6 +31,17 @@ export function formatDate(value, locale) {
 }
 
 /**
+ * Short date without weekday or year, for chart axes: "11 Oct", or "11 okt." in Swedish.
+ *
+ * @param {Date|string} value
+ * @param {string} [locale] Defaults to the browser locale.
+ * @returns {string}
+ */
+export function formatShortDate(value, locale) {
+  return new Intl.DateTimeFormat(locale, { day: 'numeric', month: 'short' }).format(toDate(value))
+}
+
+/**
  * Time in 24h format, e.g. "18:05".
  *
  * @param {Date|string} value

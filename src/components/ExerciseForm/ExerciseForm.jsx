@@ -1,15 +1,8 @@
-import { PROGRESSION_MODES, PROGRESSION_STEPPER } from '../../constants/defaults.js'
 import { useExerciseForm } from '../../hooks/useExerciseForm.js'
 import Checkbox from '../Checkbox/Checkbox.jsx'
-import RadioGroup from '../RadioGroup/RadioGroup.jsx'
-import Stepper from '../Stepper/Stepper.jsx'
+import ProgressionFields from '../ProgressionFields/ProgressionFields.jsx'
 import TextField from '../TextField/TextField.jsx'
 import styles from './ExerciseForm.module.scss'
-
-const MODE_OPTIONS = [
-  { value: PROGRESSION_MODES.all, label: 'All sets at the heaviest weight' },
-  { value: PROGRESSION_MODES.any, label: 'Any set at the heaviest weight' },
-]
 
 /**
  * Form to create an exercise: a name, plus an optional progression rule that
@@ -52,21 +45,11 @@ function ExerciseForm({ id, exercises, onSubmit, nameRef }) {
 
       {values.hasRule && (
         <div className={styles.rule}>
-          <Stepper
-            ref={targetRepsRef}
-            label="Target reps"
-            hint="Go heavier once you hit this many reps."
-            inputMode="numeric"
-            value={values.targetReps}
-            onChange={setField('targetReps')}
-            error={errors.targetReps}
-            {...PROGRESSION_STEPPER.targetReps}
-          />
-          <RadioGroup
-            legend="Applies to"
-            options={MODE_OPTIONS}
-            value={values.mode}
-            onChange={setField('mode')}
+          <ProgressionFields
+            values={values}
+            errors={errors}
+            setField={setField}
+            targetRepsRef={targetRepsRef}
           />
         </div>
       )}

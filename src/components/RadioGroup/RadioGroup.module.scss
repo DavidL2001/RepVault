@@ -15,10 +15,69 @@
   font-weight: $font-weight-medium;
 }
 
+// ---- List (default) ----
+
 .row {
   @include choice-row;
 }
 
 .input {
   @include choice-input;
+}
+
+// ---- Segmented: a toggle bar ----
+
+.segmentedGroup {
+  gap: $space-2;
+}
+
+.segments {
+  display: flex;
+  padding: $space-1;
+  background-color: var(--color-surface);
+  border: $border-width solid var(--color-border);
+  border-radius: $radius-md;
+}
+
+.segment {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  cursor: pointer;
+}
+
+// The radio stays focusable for keyboard and screen readers; its label shows the state.
+.segmentInput {
+  @include visually-hidden;
+}
+
+.segmentLabel {
+  @include tap-target;
+  @include truncate;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  padding: $space-2;
+  color: var(--color-text);
+  border-radius: $radius-sm;
+
+  @include motion-safe {
+    transition: background-color $duration-fast $easing-standard;
+  }
+
+  .segment:hover & {
+    background-color: var(--color-surface-hover);
+  }
+
+  // Selected: filled and bold, so it isn't shown by color alone.
+  .segmentInput:checked + & {
+    font-weight: $font-weight-bold;
+    color: var(--color-text-on-primary);
+    background-color: var(--color-primary);
+  }
+
+  .segmentInput:focus-visible + & {
+    @include focus-ring;
+  }
 }

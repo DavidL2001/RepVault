@@ -1,3 +1,4 @@
+import { removeExerciseEverywhere } from '../lib/exercises.js'
 import { createInitialData } from '../lib/model.js'
 import {
   addEntry,
@@ -12,19 +13,16 @@ import {
 import { ACTION_TYPES } from './actions.js'
 
 /**
- * Applies changes to one template.
+ * Applies changes to the item with this id, in a new list.
  *
- * @param {import('../lib/model.js').AppData} state
+ * @template {{ id: string }} T
+ * @param {T[]} items
  * @param {string} id
- * @param {Partial<import('../lib/model.js').Template>} changes
+ * @param {Partial<T>} changes
+ * @returns {T[]}
  */
-function updateTemplate(state, id, changes) {
-  return {
-    ...state,
-    templates: state.templates.map((template) =>
-      template.id === id ? { ...template, ...changes } : template,
-    ),
-  }
+function updateById(items, id, changes) {
+  return items.map((item) => (item.id === id ? { ...item, ...changes } : item))
 }
 
 /**
@@ -50,14 +48,29 @@ export function appReducer(state, action) {
     case ACTION_TYPES.exerciseAdded:
       return { ...state, exercises: [...state.exercises, action.exercise] }
 
+    case ACTION_TYPES.exerciseRenamed:
+      return { ...state, exercises: updateById(state.exercises, action.id, { name: action.name }) }
+
+    case ACTION_TYPES.exerciseProgressionUpdated:
+      return {
+        ...state,
+        exercises: updateById(state.exercises, action.id, { progression: action.progression }),
+      }
+
+    case ACTION_TYPES.exerciseDeleted:
+      return removeExerciseEverywhere(state, action.id)
+
     case ACTION_TYPES.templateAdded:
       return { ...state, templates: [...state.templates, action.template] }
 
     case ACTION_TYPES.templateRenamed:
-      return updateTemplate(state, action.id, { name: action.name })
+      return { ...state, templates: updateById(state.templates, action.id, { name: action.name }) }
 
     case ACTION_TYPES.templateExercisesUpdated:
-      return updateTemplate(state, action.id, { exerciseIds: action.exerciseIds })
+      return {
+        ...state,
+        templates: updateById(state.templates, action.id, { exerciseIds: action.exerciseIds }),
+      }
 
     case ACTION_TYPES.templateDeleted:
       return {
