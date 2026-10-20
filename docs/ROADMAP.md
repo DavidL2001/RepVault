@@ -129,10 +129,10 @@ The full feature spec lives in `docs/SPEC.md`.
 
 ## 11. `feature/workout-summary`
 
-- [ ] Duration, exercises, sets, total volume
-- [ ] New PRs
-- [ ] "Next time" step-ups
-- [ ] "Done" returns to Home
+- [x] Duration, exercises, sets, total volume
+- [x] New PRs
+- [x] "Next time" step-ups
+- [x] "Done" returns to Home
 
 ## 12. `feature/progress-charts`
 

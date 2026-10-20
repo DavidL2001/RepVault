@@ -4,6 +4,7 @@ import { bestSet } from './calculations.js'
 const MS_PER_SECOND = 1000
 const SECONDS_PER_MINUTE = 60
 const SECONDS_PER_HOUR = 3600
+const MINUTES_PER_HOUR = 60
 
 // Turning values into display text in the browser locale (pass `locale` only in tests).
 
@@ -12,13 +13,14 @@ const SECONDS_PER_HOUR = 3600
  *
  * @param {number} kg
  * @param {string} [locale] Defaults to the browser locale.
+ * @param {number} [decimals] Most decimals to show, e.g. `ONE_REP_MAX_DECIMALS` for estimates.
  * @returns {string}
  */
-export function formatKg(kg, locale) {
+export function formatKg(kg, locale, decimals = MAX_DECIMALS) {
   return new Intl.NumberFormat(locale, {
     style: 'unit',
     unit: 'kilogram',
-    maximumFractionDigits: MAX_DECIMALS,
+    maximumFractionDigits: decimals,
   }).format(kg)
 }
 
@@ -106,4 +108,19 @@ export function formatSetsShort(sets, locale) {
   return groups
     .map(({ kg, reps, count }) => `${count}×${reps} @ ${formatKg(kg, locale)}`)
     .join(', ')
+}
+
+/**
+ * Workout length for the summary: "45 min", "1 h 5 min", or "Under 1 min".
+ *
+ * @param {number} ms
+ * @returns {string}
+ */
+export function formatDuration(ms) {
+  const totalMinutes = Math.round(ms / (MS_PER_SECOND * SECONDS_PER_MINUTE))
+  if (totalMinutes < 1) return 'Under 1 min'
+  const hours = Math.floor(totalMinutes / MINUTES_PER_HOUR)
+  const minutes = totalMinutes % MINUTES_PER_HOUR
+  if (hours === 0) return `${minutes} min`
+  return minutes === 0 ? `${hours} h` : `${hours} h ${minutes} min`
 }

@@ -79,13 +79,14 @@ export function useActiveWorkout() {
         dispatch(updateTemplateExercises(template.id, workoutExerciseIds(workout)))
       }
       dispatch(endWorkout())
-      navigate(generatePath(ROUTES.workoutSummary, { workoutId: workout.id }))
+      // Replace, so Back from the summary doesn't return to an empty workout page.
+      navigate(generatePath(ROUTES.workoutSummary, { workoutId: workout.id }), { replace: true })
     },
 
     /** Throws the workout away and goes Home. */
     discard() {
       dispatch(discardWorkout())
-      navigate(ROUTES.home)
+      navigate(ROUTES.home, { replace: true })
     },
   }
 }
