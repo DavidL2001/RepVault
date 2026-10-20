@@ -28,3 +28,14 @@
 .truncate {
   @include truncate;
 }
+
+// Wraps long lines so the page never scrolls sideways at 320px.
+.code {
+  padding: $space-3;
+  font-size: $font-size-sm;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  background-color: var(--color-surface);
+  border: $border-width solid var(--color-border-subtle);
+  border-radius: $radius-sm;
+}
