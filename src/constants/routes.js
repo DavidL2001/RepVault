@@ -14,4 +14,6 @@ export const ROUTES = {
   history: '/history',
   workoutDetails: '/history/:id',
   settings: '/settings',
+  // Dev only: not registered in production builds.
+  designPreview: '/dev/design',
 }

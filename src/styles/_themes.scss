@@ -1,0 +1,99 @@
+// Semantic theme colors as CSS custom properties.
+// Dark is the default; `data-theme="light"` on <html> (or any element) switches to light.
+// Only global.scss loads this file. Components just use `var(--color-…)`.
+//
+// Contrast (WCAG 2.1 AA), checked for both themes:
+// - text, text-muted, link, and the status colors used as text: at least 4.5:1
+//   on bg, surface, surface-raised and the matching status surface
+// - text-on-primary / text-on-danger: at least 4.5:1 on primary(-hover) / danger(-hover)
+// - border, focus, and primary/danger/success/warning as UI colors: at least 3:1 on bg and surfaces
+// - border-subtle and text-disabled are decorative / disabled, so they have no contrast requirement
+@use 'colors' as c;
+
+@mixin dark {
+  color-scheme: dark;
+
+  --color-bg: #{c.$gray-950};
+  --color-surface: #{c.$gray-900};
+  --color-surface-raised: #{c.$gray-850};
+  --color-surface-hover: #{c.$gray-800};
+  --color-surface-disabled: #{c.$gray-800};
+
+  --color-border: #{c.$gray-500};
+  --color-border-subtle: #{c.$gray-800};
+
+  --color-text: #{c.$gray-50};
+  --color-text-muted: #{c.$gray-400};
+  --color-text-disabled: #{c.$gray-600};
+  --color-link: #{c.$blue-300};
+
+  --color-primary: #{c.$blue-400};
+  --color-primary-hover: #{c.$blue-300};
+  --color-text-on-primary: #{c.$gray-950};
+
+  --color-danger: #{c.$red-400};
+  --color-danger-hover: #{c.$red-300};
+  --color-text-on-danger: #{c.$gray-950};
+
+  --color-success: #{c.$green-400};
+  --color-warning: #{c.$amber-400};
+  --color-info: #{c.$blue-400};
+
+  // Tinted backgrounds for banners; text on them uses --color-text.
+  --color-success-surface: #{c.$green-950};
+  --color-warning-surface: #{c.$amber-950};
+  --color-danger-surface: #{c.$red-950};
+  --color-info-surface: #{c.$blue-950};
+
+  --color-focus: #{c.$blue-300};
+  --color-shadow: #{c.$black-alpha-50};
+  --color-overlay: #{c.$black-alpha-60};
+}
+
+@mixin light {
+  color-scheme: light;
+
+  --color-bg: #{c.$gray-50};
+  --color-surface: #{c.$gray-0};
+  --color-surface-raised: #{c.$gray-0};
+  --color-surface-hover: #{c.$gray-100};
+  --color-surface-disabled: #{c.$gray-100};
+
+  --color-border: #{c.$gray-500};
+  --color-border-subtle: #{c.$gray-200};
+
+  --color-text: #{c.$gray-900};
+  --color-text-muted: #{c.$gray-600};
+  --color-text-disabled: #{c.$gray-400};
+  --color-link: #{c.$blue-700};
+
+  --color-primary: #{c.$blue-700};
+  --color-primary-hover: #{c.$blue-600};
+  --color-text-on-primary: #{c.$gray-0};
+
+  --color-danger: #{c.$red-700};
+  --color-danger-hover: #{c.$red-600};
+  --color-text-on-danger: #{c.$gray-0};
+
+  --color-success: #{c.$green-800};
+  --color-warning: #{c.$amber-800};
+  --color-info: #{c.$blue-700};
+
+  --color-success-surface: #{c.$green-50};
+  --color-warning-surface: #{c.$amber-50};
+  --color-danger-surface: #{c.$red-50};
+  --color-info-surface: #{c.$blue-50};
+
+  --color-focus: #{c.$blue-700};
+  --color-shadow: #{c.$black-alpha-15};
+  --color-overlay: #{c.$black-alpha-50};
+}
+
+:root,
+[data-theme='dark'] {
+  @include dark;
+}
+
+[data-theme='light'] {
+  @include light;
+}

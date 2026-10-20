@@ -1,0 +1,190 @@
+// Uses only tokens, so it shows whether the design system works on its own.
+// Button and input styles here are temporary; step 4 replaces them with components.
+@use 'styles/variables' as *;
+@use 'styles/mixins' as *;
+
+.page {
+  width: 100%;
+  max-width: $content-max-width;
+  margin-inline: auto;
+  padding-block: $space-5;
+  @include safe-area-padding((left, right), $space-gutter);
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-4;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $space-5;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  padding-block: $space-5;
+  border-top: $border-width solid var(--color-border-subtle);
+}
+
+.muted {
+  color: var(--color-text-muted);
+}
+
+.small {
+  font-size: $font-size-sm;
+  color: var(--color-text-muted);
+}
+
+.truncate {
+  @include truncate;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-3;
+}
+
+// ---- Buttons ----
+
+.button {
+  @include tap-target;
+  padding: $space-3 $space-5;
+  font-weight: $font-weight-semibold;
+  text-transform: capitalize;
+  border: $border-width-thick solid transparent;
+  border-radius: $radius-md;
+
+  @include motion-safe {
+    transition: background-color $duration-fast $easing-standard;
+  }
+
+  &:disabled {
+    color: var(--color-text-disabled);
+    background-color: var(--color-surface-disabled);
+    cursor: not-allowed;
+  }
+}
+
+.primary:not(:disabled) {
+  color: var(--color-text-on-primary);
+  background-color: var(--color-primary);
+
+  &:hover {
+    background-color: var(--color-primary-hover);
+  }
+}
+
+.secondary {
+  color: var(--color-text);
+  background-color: var(--color-surface);
+  border-color: var(--color-border);
+
+  &:hover {
+    background-color: var(--color-surface-hover);
+  }
+}
+
+.danger {
+  color: var(--color-text-on-danger);
+  background-color: var(--color-danger);
+
+  &:hover {
+    background-color: var(--color-danger-hover);
+  }
+}
+
+.ghost {
+  color: var(--color-primary);
+  background-color: transparent;
+
+  &:hover {
+    background-color: var(--color-surface-hover);
+  }
+}
+
+// ---- Inputs ----
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+
+  label {
+    font-weight: $font-weight-medium;
+  }
+}
+
+.input {
+  @include tap-target;
+  width: 100%;
+  padding: $space-2 $space-3;
+  color: var(--color-text);
+  background-color: var(--color-surface);
+  border: $border-width solid var(--color-border);
+  border-radius: $radius-sm;
+
+  &[aria-invalid='true'] {
+    border: $border-width-thick solid var(--color-danger);
+  }
+}
+
+.error {
+  font-size: $font-size-sm;
+  color: var(--color-danger);
+}
+
+// ---- Status ----
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  padding: 0;
+  list-style: none;
+}
+
+.status {
+  padding: $space-3 $space-4;
+  border-left: $border-width-thick * 2 solid;
+  border-radius: $radius-sm;
+
+  &.statusSuccess {
+    background-color: var(--color-success-surface);
+    border-color: var(--color-success);
+  }
+
+  &.statusWarning {
+    background-color: var(--color-warning-surface);
+    border-color: var(--color-warning);
+  }
+
+  &.statusDanger {
+    background-color: var(--color-danger-surface);
+    border-color: var(--color-danger);
+  }
+
+  &.statusInfo {
+    background-color: var(--color-info-surface);
+    border-color: var(--color-info);
+  }
+}
+
+.statusLabel {
+  font-weight: $font-weight-bold;
+}
+
+// ---- Surfaces ----
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  padding: $space-4;
+  background-color: var(--color-surface-raised);
+  border: $border-width solid var(--color-border-subtle);
+  border-radius: $radius-lg;
+  box-shadow: $shadow-md;
+}

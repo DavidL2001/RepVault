@@ -1,0 +1,51 @@
+// Raw color palette. The ONLY file in the project with hex/rgb values.
+// Never use these directly in components: use the semantic theme variables
+// from _themes.scss instead (`var(--color-primary)`, …).
+
+// ---- Neutrals ----
+$gray-0: #ffffff;
+$gray-50: #f6f7f9;
+$gray-100: #eceef2;
+$gray-200: #d9dde4;
+$gray-300: #b9c0cb;
+$gray-400: #8d96a5;
+$gray-500: #6b7480;
+$gray-600: #4f5763;
+$gray-700: #363c46;
+$gray-800: #23272e;
+$gray-850: #1a1d23;
+$gray-900: #121418;
+$gray-950: #0b0c0f;
+
+// ---- Blue (primary, info) ----
+$blue-50: #eaf2ff;
+$blue-300: #8bb8ff;
+$blue-400: #5c9bff;
+$blue-600: #2563eb;
+$blue-700: #1d4ed8;
+$blue-950: #0f1d33;
+
+// ---- Green (success) ----
+$green-50: #e8f8ee;
+$green-400: #34d27b;
+$green-800: #166534;
+$green-950: #0c2418;
+
+// ---- Amber (warning) ----
+$amber-50: #fff6e0;
+$amber-400: #fbbf24;
+$amber-800: #92400e;
+$amber-950: #2a1d06;
+
+// ---- Red (danger) ----
+$red-50: #fdecec;
+$red-300: #ff9b9b;
+$red-400: #ff6b6b;
+$red-600: #dc2626;
+$red-700: #b91c1c;
+$red-950: #2d1012;
+
+// ---- Translucent ----
+$black-alpha-15: rgb(0 0 0 / 15%);
+$black-alpha-50: rgb(0 0 0 / 50%);
+$black-alpha-60: rgb(0 0 0 / 60%);

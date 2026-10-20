@@ -1,0 +1,133 @@
+// Global styles: theme variables, reset, base typography, focus, motion and the app shell.
+// Imported once, in main.jsx.
+@use 'themes';
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// ---- Reset ----
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  // Stop mobile browsers from resizing text on rotation.
+  text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100dvh;
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  line-height: $line-height-base;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+svg,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+// Form controls don't inherit fonts by default.
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+// At least 16px so iOS doesn't zoom in when an input gets focus.
+input,
+textarea,
+select {
+  font-size: max(#{$font-size-base}, #{$font-size-input-min});
+}
+
+button {
+  cursor: pointer;
+}
+
+// Long words (exercise names) wrap instead of causing horizontal scroll.
+p,
+li,
+h1,
+h2,
+h3,
+h4 {
+  overflow-wrap: break-word;
+}
+
+// ---- Typography ----
+
+h1,
+h2,
+h3,
+h4 {
+  line-height: $line-height-tight;
+  font-weight: $font-weight-bold;
+}
+
+h1 {
+  font-size: $font-size-2xl;
+}
+
+h2 {
+  font-size: $font-size-xl;
+}
+
+h3 {
+  font-size: $font-size-lg;
+}
+
+h4 {
+  font-size: $font-size-md;
+}
+
+a {
+  color: var(--color-link);
+  text-underline-offset: 0.15em;
+}
+
+// ---- Focus ----
+
+// Only for keyboard focus, so taps don't leave a ring behind.
+:focus-visible {
+  @include focus-ring;
+}
+
+// Headings get focus on route change; they don't need a ring for that.
+[tabindex='-1']:focus {
+  outline: none;
+}
+
+// ---- Reduced motion ----
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: $duration-none !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: $duration-none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+// ---- App shell ----
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
