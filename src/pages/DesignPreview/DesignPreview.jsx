@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { generatePath } from 'react-router-dom'
 import { ROUTES } from '../../constants/routes.js'
-import { THEMES, DEFAULT_THEME } from '../../constants/themes.js'
-import { useDocumentTheme } from '../../hooks/useDocumentTheme.js'
+import { THEMES } from '../../constants/themes.js'
+import { useAppState } from '../../hooks/useAppState.js'
+import { updateSettings } from '../../state/actions.js'
 import Banner from '../../components/Banner/Banner.jsx'
 import Button from '../../components/Button/Button.jsx'
 import Card from '../../components/Card/Card.jsx'
@@ -39,13 +40,13 @@ const ALL_ROUTES = [
 ]
 
 /**
- * DEV ONLY: every UI component in its variants, with a theme switch,
+ * DEV ONLY: every UI component in its variants, a (saved) theme switch and the saved data,
  * to check both themes, keyboard use and 320px width in one place.
  */
 function DesignPreview() {
-  const [theme, setTheme] = useState(DEFAULT_THEME)
-  useDocumentTheme(theme)
-  const nextTheme = theme === THEMES.dark ? THEMES.light : THEMES.dark
+  // The theme is saved app state, so switching it here and reloading shows that state persists.
+  const { state, dispatch } = useAppState()
+  const nextTheme = state.settings.theme === THEMES.dark ? THEMES.light : THEMES.dark
 
   const [name, setName] = useState('')
   const [kg, setKg] = useState('40')
@@ -69,7 +70,7 @@ function DesignPreview() {
         actions={<IconButton icon="plus" label="Example header action" onClick={() => {}} />}
       />
 
-      <Button variant="secondary" onClick={() => setTheme(nextTheme)}>
+      <Button variant="secondary" onClick={() => dispatch(updateSettings({ theme: nextTheme }))}>
         Switch to {nextTheme} theme
       </Button>
 
@@ -200,6 +201,14 @@ function DesignPreview() {
         <p aria-live="polite" className={styles.muted}>
           {dialogResult && `Last result: ${dialogResult}`}
         </p>
+      </section>
+
+      <section className={styles.section} aria-labelledby="preview-state">
+        <h2 id="preview-state">Saved data</h2>
+        <p className={styles.muted}>
+          Everything in localStorage, updated on every change. Reload the page to see it stay.
+        </p>
+        <pre className={styles.code}>{JSON.stringify(state, null, 2)}</pre>
       </section>
 
       <section className={styles.section} aria-labelledby="preview-routes">

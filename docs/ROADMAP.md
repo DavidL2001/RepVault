@@ -67,13 +67,13 @@ The full feature spec lives in `docs/SPEC.md`.
 
 ## 5. `feature/state-storage`
 
-- [ ] `constants/`: storage key, schema version, default progression values, backup reminder days
-- [ ] Data model shapes (Exercise, Template, Workout session, Entry, Set) documented with JSDoc
-- [ ] Context + `useReducer` with named action types
-- [ ] `lib/storage.js`: load / save with try/catch, `schemaVersion`, migration hook, corrupted-data fallback
-- [ ] Call `navigator.storage.persist()` on first load
-- [ ] Persist on every state change; in-progress workout survives reload
-- [ ] `lib/ids.js`, `lib/dates.js` (Intl formatting, 24h, week helpers)
+- [x] `constants/`: storage key, schema version, default progression values, backup reminder days
+- [x] Data model shapes (Exercise, Template, Workout session, Entry, Set) documented with JSDoc
+- [x] Context + `useReducer` with named action types
+- [x] `lib/storage.js`: load / save with try/catch, `schemaVersion`, migration hook, corrupted-data fallback
+- [x] Call `navigator.storage.persist()` on first load
+- [x] Persist on every state change; in-progress workout survives reload
+- [x] `lib/ids.js`, `lib/dates.js` (Intl formatting, 24h, week helpers)
 
 **Done when:** state changes survive a page reload.
 
