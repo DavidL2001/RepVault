@@ -152,10 +152,10 @@ The full feature spec lives in `docs/SPEC.md`.
 
 ## 14. `feature/home`
 
-- [ ] "Start workout" / "Resume workout"
-- [ ] Workouts this week
-- [ ] Recent workouts (last 5)
-- [ ] Backup reminder after 14 days (dismissible)
+- [x] "Start workout" / "Resume workout"
+- [x] Workouts this week
+- [x] Recent workouts (last 5)
+- [x] Backup reminder after 14 days (dismissible)
 
 ## 15. `feature/settings-backup`
 

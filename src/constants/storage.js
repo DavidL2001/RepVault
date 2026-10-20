@@ -5,7 +5,7 @@ export const STORAGE_KEY = 'repvault:data'
  * Version of the saved data shape. Bump it whenever the shape changes,
  * and add a migration for the old version in `lib/migrations.js`.
  */
-export const SCHEMA_VERSION = 2
+export const SCHEMA_VERSION = 3
 
 /** Result of reading saved data. */
 export const STORAGE_STATUS = {

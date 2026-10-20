@@ -51,3 +51,25 @@ describe('migration 1 → 2: no weight step in progression rules', () => {
     expect(migrate(v1).schemaVersion).toBe(SCHEMA_VERSION)
   })
 })
+
+describe('migration 2 → 3: backup reminder dismissal', () => {
+  const v2 = {
+    ...createInitialData(),
+    schemaVersion: 2,
+    settings: { theme: 'light', lastExportAt: '2026-10-01T10:00:00.000Z' },
+  }
+
+  it('adds backupReminderDismissedAt and keeps the other settings', () => {
+    expect(MIGRATIONS[2](v2).settings).toEqual({
+      theme: 'light',
+      lastExportAt: '2026-10-01T10:00:00.000Z',
+      backupReminderDismissedAt: null,
+    })
+  })
+
+  it('loads saved v2 data as the current version', () => {
+    const result = parseStoredData(JSON.stringify(v2))
+    expect(result.status).toBe(STORAGE_STATUS.ok)
+    expect(result.data.settings.backupReminderDismissedAt).toBeNull()
+  })
+})

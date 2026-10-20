@@ -1,15 +1,13 @@
-import { generatePath } from 'react-router-dom'
 import { ROUTES } from '../../constants/routes.js'
 import { useHistory } from '../../hooks/useHistory.js'
-import { formatDate, formatMonth } from '../../lib/dates.js'
-import { formatKg, pluralize } from '../../lib/format.js'
+import { formatMonth } from '../../lib/dates.js'
+import { pluralize } from '../../lib/format.js'
 import Button from '../../components/Button/Button.jsx'
-import DateBadge from '../../components/DateBadge/DateBadge.jsx'
 import EmptyState from '../../components/EmptyState/EmptyState.jsx'
 import List from '../../components/List/List.jsx'
-import ListItem from '../../components/ListItem/ListItem.jsx'
 import PageHeader from '../../components/PageHeader/PageHeader.jsx'
 import TrainingCalendar from '../../components/TrainingCalendar/TrainingCalendar.jsx'
+import WorkoutListItem from '../../components/WorkoutListItem/WorkoutListItem.jsx'
 import styles from './History.module.scss'
 
 /** Every finished workout, by month, with a calendar of training days on top. */
@@ -51,14 +49,8 @@ function History() {
               <span className={styles.count}> · {pluralize(month.workouts.length, 'workout')}</span>
             </h2>
             <List>
-              {month.workouts.map(({ workout, exerciseCount, volume }) => (
-                <ListItem
-                  key={workout.id}
-                  leading={<DateBadge date={workout.startedAt} />}
-                  title={workout.name}
-                  meta={`${formatDate(workout.startedAt)} · ${pluralize(exerciseCount, 'exercise')} · ${formatKg(volume)}`}
-                  to={generatePath(ROUTES.workoutDetails, { id: workout.id })}
-                />
+              {month.workouts.map((workout) => (
+                <WorkoutListItem key={workout.id} workout={workout} />
               ))}
             </List>
           </section>
