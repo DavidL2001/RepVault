@@ -1,0 +1,26 @@
+@use 'styles/variables' as *;
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  align-items: center;
+  padding: $space-6 $space-4;
+  text-align: center;
+}
+
+.icon {
+  color: var(--color-text-muted);
+}
+
+.title {
+  font-size: $font-size-lg;
+}
+
+.text {
+  color: var(--color-text-muted);
+}
+
+.action {
+  margin-top: $space-2;
+}

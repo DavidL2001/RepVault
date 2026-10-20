@@ -1,0 +1,49 @@
+@use 'styles/variables' as *;
+@use 'styles/mixins' as *;
+
+.shell {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+// Hidden until it gets keyboard focus.
+.skipLink {
+  position: absolute;
+  top: $space-2;
+  left: $space-2;
+  z-index: $z-toast;
+  padding: $space-3 $space-4;
+  font-weight: $font-weight-semibold;
+  color: var(--color-text-on-primary);
+  background-color: var(--color-primary);
+  border-radius: $radius-md;
+
+  &:not(:focus) {
+    @include visually-hidden;
+  }
+}
+
+// Flex column so a StickyActionBar (margin-top: auto) ends up at the bottom.
+.main {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: $space-4;
+  width: 100%;
+  max-width: $content-max-width;
+  margin-inline: auto;
+  @include safe-area-padding(top, $space-page-block);
+  @include safe-area-padding((left, right), $space-gutter);
+  padding-bottom: $space-page-block;
+}
+
+// Without the nav below, content must clear the home indicator itself.
+.withoutNav {
+  @include safe-area-padding(bottom, $space-page-block);
+}
+
+// A StickyActionBar handles the bottom spacing and safe area on its own.
+.main:has([data-sticky-action-bar]) {
+  padding-bottom: $space-0;
+}

@@ -15,6 +15,8 @@ $space-8: 4rem; // 64px
 
 // Side padding of the page: a bit roomier on wider phones.
 $space-gutter: clamp(#{$space-4}, 4vw, #{$space-5});
+// Space above and below the page content.
+$space-page-block: $space-5;
 
 // ---- Typography ----
 $font-family-base:
@@ -52,6 +54,12 @@ $radius-full: 9999px;
 
 $border-width: 1px;
 $border-width-thick: 2px;
+$border-width-accent: 4px; // colored edge on banners
+
+// ---- Icons ----
+$icon-size-sm: 1rem;
+$icon-size-md: 1.5rem;
+$icon-size-lg: 3rem;
 
 // ---- Shadows (color comes from the theme) ----
 $shadow-sm: 0 1px 2px var(--color-shadow);
@@ -64,7 +72,10 @@ $focus-ring-offset: 2px;
 
 // ---- Layout ----
 $tap-target-min: 3rem; // 48px
+$tap-target-lg: 3.5rem; // 56px, for the main action on a page
 $content-max-width: 37.5rem; // 600px column on tablet/desktop
+$dialog-max-width: 28rem;
+$field-label-gap: $space-1;
 
 // ---- Z-index scale ----
 $z-base: 0;

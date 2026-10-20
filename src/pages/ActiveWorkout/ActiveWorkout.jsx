@@ -1,8 +1,10 @@
+import PageHeader from '../../components/PageHeader/PageHeader.jsx'
+
 /** Active workout page. Placeholder until roadmap step 9. */
 function ActiveWorkout() {
   return (
     <>
-      <h1>Active workout</h1>
+      <PageHeader title="Active workout" />
       <p>Coming in roadmap step 9.</p>
     </>
   )

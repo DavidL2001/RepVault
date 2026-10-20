@@ -1,0 +1,57 @@
+@use 'styles/variables' as *;
+@use 'styles/mixins' as *;
+
+// The native dialog sits in the browser's top layer, so it needs no z-index.
+.dialog {
+  width: calc(100% - 2 * #{$space-gutter});
+  max-width: $dialog-max-width;
+  max-height: calc(100dvh - 2 * #{$space-gutter});
+  padding: $space-0;
+  color: var(--color-text);
+  background-color: var(--color-surface-raised);
+  border: $border-width solid var(--color-border-subtle);
+  border-radius: $radius-lg;
+  box-shadow: $shadow-lg;
+
+  &::backdrop {
+    background-color: var(--color-overlay);
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+  padding: $space-4 $space-5 $space-5;
+}
+
+.header {
+  display: flex;
+  gap: $space-2;
+  align-items: center;
+  justify-content: space-between;
+  // The close button has its own padding; pull it to the edge.
+  margin-right: -$space-3;
+}
+
+.title {
+  min-width: 0;
+  font-size: $font-size-lg;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+// Buttons stack on narrow phones and sit side by side when there is room.
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-3;
+
+  > * {
+    flex: 1 1 auto;
+  }
+}

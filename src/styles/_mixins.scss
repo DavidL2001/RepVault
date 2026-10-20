@@ -36,6 +36,16 @@
   }
 }
 
+// ---- Lists ----
+
+/// Removes bullets and indent. Add `role="list"` to the element too:
+/// Safari stops announcing it as a list once `list-style` is removed.
+@mixin list-reset {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
 // ---- Text ----
 
 /// Hide visually but keep available to screen readers.

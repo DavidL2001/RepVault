@@ -1,4 +1,5 @@
 import { useParams } from 'react-router-dom'
+import PageHeader from '../../components/PageHeader/PageHeader.jsx'
 
 /** Exercise detail page. Placeholder until roadmap step 12. */
 function ExerciseDetail() {
@@ -6,7 +7,7 @@ function ExerciseDetail() {
 
   return (
     <>
-      <h1>Exercise detail</h1>
+      <PageHeader title="Exercise detail" />
       <p>Coming in roadmap step 12.</p>
       <p>id: {id}</p>
     </>

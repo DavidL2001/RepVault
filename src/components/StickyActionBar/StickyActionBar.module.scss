@@ -1,0 +1,23 @@
+@use 'styles/variables' as *;
+@use 'styles/mixins' as *;
+
+.bar {
+  position: sticky;
+  bottom: 0;
+  z-index: $z-sticky;
+  display: flex;
+  gap: $space-3;
+  // Pushes the bar to the bottom when the page content is short.
+  margin-top: auto;
+  // Stretch across the page's side padding, so content doesn't show beside the bar.
+  margin-inline: calc(-1 * #{$space-gutter});
+  padding-top: $space-3;
+  padding-inline: $space-gutter;
+  @include safe-area-padding(bottom, $space-3);
+  background-color: var(--color-bg);
+  border-top: $border-width solid var(--color-border-subtle);
+
+  > * {
+    flex: 1;
+  }
+}

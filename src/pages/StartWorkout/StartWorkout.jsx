@@ -1,8 +1,10 @@
+import PageHeader from '../../components/PageHeader/PageHeader.jsx'
+
 /** Start workout page. Placeholder until roadmap step 8. */
 function StartWorkout() {
   return (
     <>
-      <h1>Start workout</h1>
+      <PageHeader title="Start workout" />
       <p>Coming in roadmap step 8.</p>
     </>
   )
