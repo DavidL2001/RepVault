@@ -1,0 +1,9 @@
+@use 'styles/variables' as *;
+@use 'styles/mixins' as *;
+
+.list {
+  @include list-reset;
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}

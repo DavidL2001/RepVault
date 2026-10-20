@@ -1,0 +1,7 @@
+@use 'styles/variables' as *;
+
+// Square: the tap-target min width and height with no side padding.
+.iconButton {
+  flex-shrink: 0;
+  padding: $space-0;
+}

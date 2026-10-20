@@ -1,0 +1,62 @@
+@use 'styles/variables' as *;
+@use 'styles/mixins' as *;
+
+.nav {
+  position: sticky;
+  bottom: 0;
+  z-index: $z-sticky;
+  @include safe-area-padding((left, right, bottom));
+  background-color: var(--color-surface);
+  border-top: $border-width solid var(--color-border-subtle);
+}
+
+.list {
+  @include list-reset;
+  display: flex;
+  max-width: $content-max-width;
+  margin-inline: auto;
+}
+
+.item {
+  flex: 1;
+  min-width: 0;
+}
+
+.link {
+  @include tap-target;
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+  align-items: center;
+  justify-content: center;
+  padding: $space-2 $space-1;
+  font-size: $font-size-sm;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  // Reserves space for the active line, so items don't shift.
+  border-top: $border-width-accent solid transparent;
+
+  &:hover {
+    color: var(--color-text);
+  }
+
+  // Inset ring: an outline would be cut off at the screen edge.
+  &:focus-visible {
+    outline-offset: calc(-1 * #{$focus-ring-width});
+  }
+}
+
+.active {
+  font-weight: $font-weight-bold;
+  color: var(--color-primary);
+  border-top-color: var(--color-primary);
+
+  &:hover {
+    color: var(--color-primary);
+  }
+}
+
+.label {
+  @include truncate;
+  max-width: 100%;
+}

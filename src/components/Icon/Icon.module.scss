@@ -1,0 +1,20 @@
+@use 'styles/variables' as *;
+
+.icon {
+  flex-shrink: 0;
+}
+
+.sm {
+  width: $icon-size-sm;
+  height: $icon-size-sm;
+}
+
+.md {
+  width: $icon-size-md;
+  height: $icon-size-md;
+}
+
+.lg {
+  width: $icon-size-lg;
+  height: $icon-size-lg;
+}

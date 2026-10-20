@@ -1,0 +1,51 @@
+@use 'styles/variables' as *;
+@use 'styles/mixins' as *;
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: $field-label-gap;
+  min-width: 0;
+}
+
+.label {
+  font-weight: $font-weight-medium;
+}
+
+.hint {
+  font-size: $font-size-sm;
+  color: var(--color-text-muted);
+}
+
+.control {
+  display: flex;
+  gap: $space-2;
+  align-items: center;
+}
+
+.input {
+  @include tap-target;
+  flex: 1;
+  // Lets the input shrink next to buttons at 320px instead of overflowing.
+  min-width: 0;
+  padding: $space-2 $space-3;
+  color: var(--color-text);
+  background-color: var(--color-surface);
+  border: $border-width solid var(--color-border);
+  border-radius: $radius-sm;
+
+  &[aria-invalid='true'] {
+    border: $border-width-thick solid var(--color-danger);
+  }
+
+  &:disabled {
+    color: var(--color-text-disabled);
+    background-color: var(--color-surface-disabled);
+  }
+}
+
+.error {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: var(--color-danger);
+}

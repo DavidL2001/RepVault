@@ -1,7 +1,7 @@
 import { lazy, Suspense } from 'react'
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes, useMatch } from 'react-router-dom'
 import { ROUTES } from './constants/routes.js'
-import PlaceholderNav from './components/PlaceholderNav/PlaceholderNav.jsx'
+import AppShell from './components/AppShell/AppShell.jsx'
 import Home from './pages/Home/Home.jsx'
 import StartWorkout from './pages/StartWorkout/StartWorkout.jsx'
 import ActiveWorkout from './pages/ActiveWorkout/ActiveWorkout.jsx'
@@ -19,36 +19,37 @@ const DesignPreview = import.meta.env.DEV
   : null
 
 function App() {
+  // The preview shows a StickyActionBar, which would overlap the nav.
+  // Step 9 hides the nav during workouts too.
+  const isDesignPreview = useMatch(ROUTES.designPreview)
+
   return (
-    <>
-      <PlaceholderNav />
-      <main>
-        <Routes>
-          <Route path={ROUTES.home} element={<Home />} />
-          <Route path={ROUTES.startWorkout} element={<StartWorkout />} />
-          <Route path={ROUTES.activeWorkout} element={<ActiveWorkout />} />
-          <Route path={ROUTES.setLogger} element={<SetLogger />} />
-          <Route path={ROUTES.workoutSummary} element={<WorkoutSummary />} />
-          <Route path={ROUTES.exercises} element={<Exercises />} />
-          <Route path={ROUTES.exerciseDetail} element={<ExerciseDetail />} />
-          <Route path={ROUTES.history} element={<History />} />
-          <Route path={ROUTES.workoutDetails} element={<WorkoutDetails />} />
-          <Route path={ROUTES.settings} element={<Settings />} />
-          {DesignPreview && (
-            <Route
-              path={ROUTES.designPreview}
-              element={
-                <Suspense>
-                  <DesignPreview />
-                </Suspense>
-              }
-            />
-          )}
-          {/* Unknown paths go back to Home instead of showing a blank page. */}
-          <Route path="*" element={<Navigate to={ROUTES.home} replace />} />
-        </Routes>
-      </main>
-    </>
+    <AppShell showNav={!isDesignPreview}>
+      <Routes>
+        <Route path={ROUTES.home} element={<Home />} />
+        <Route path={ROUTES.startWorkout} element={<StartWorkout />} />
+        <Route path={ROUTES.activeWorkout} element={<ActiveWorkout />} />
+        <Route path={ROUTES.setLogger} element={<SetLogger />} />
+        <Route path={ROUTES.workoutSummary} element={<WorkoutSummary />} />
+        <Route path={ROUTES.exercises} element={<Exercises />} />
+        <Route path={ROUTES.exerciseDetail} element={<ExerciseDetail />} />
+        <Route path={ROUTES.history} element={<History />} />
+        <Route path={ROUTES.workoutDetails} element={<WorkoutDetails />} />
+        <Route path={ROUTES.settings} element={<Settings />} />
+        {DesignPreview && (
+          <Route
+            path={ROUTES.designPreview}
+            element={
+              <Suspense>
+                <DesignPreview />
+              </Suspense>
+            }
+          />
+        )}
+        {/* Unknown paths go back to Home instead of showing a blank page. */}
+        <Route path="*" element={<Navigate to={ROUTES.home} replace />} />
+      </Routes>
+    </AppShell>
   )
 }
 

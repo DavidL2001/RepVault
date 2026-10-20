@@ -1,0 +1,81 @@
+@use 'styles/variables' as *;
+@use 'styles/mixins' as *;
+
+.button {
+  @include tap-target;
+  display: inline-flex;
+  gap: $space-2;
+  align-items: center;
+  justify-content: center;
+  padding: $space-2 $space-5;
+  font-weight: $font-weight-semibold;
+  line-height: $line-height-tight;
+  text-align: center;
+  text-decoration: none;
+  // Transparent border keeps every variant the same size, and turns into a
+  // visible border in Windows high contrast (forced colors) mode.
+  border: $border-width-thick solid transparent;
+  border-radius: $radius-md;
+  cursor: pointer;
+
+  @include motion-safe {
+    transition: background-color $duration-fast $easing-standard;
+  }
+
+  &:disabled {
+    color: var(--color-text-disabled);
+    background-color: var(--color-surface-disabled);
+    border-color: var(--color-surface-disabled);
+    cursor: not-allowed;
+  }
+}
+
+// ---- Sizes ----
+
+.lg {
+  min-height: $tap-target-lg;
+  font-size: $font-size-md;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+// ---- Variants (not applied while disabled) ----
+
+.primary:not(:disabled) {
+  color: var(--color-text-on-primary);
+  background-color: var(--color-primary);
+
+  &:hover {
+    background-color: var(--color-primary-hover);
+  }
+}
+
+.secondary:not(:disabled) {
+  color: var(--color-text);
+  background-color: var(--color-surface);
+  border-color: var(--color-border);
+
+  &:hover {
+    background-color: var(--color-surface-hover);
+  }
+}
+
+.danger:not(:disabled) {
+  color: var(--color-text-on-danger);
+  background-color: var(--color-danger);
+
+  &:hover {
+    background-color: var(--color-danger-hover);
+  }
+}
+
+.ghost:not(:disabled) {
+  color: var(--color-link);
+  background-color: transparent;
+
+  &:hover {
+    background-color: var(--color-surface-hover);
+  }
+}

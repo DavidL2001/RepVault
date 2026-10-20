@@ -1,0 +1,24 @@
+@use 'styles/variables' as *;
+
+.header {
+  display: flex;
+  gap: $space-2;
+  align-items: center;
+  min-height: $tap-target-min;
+}
+
+// Line the arrow up with the page edge instead of the button's padding.
+.back {
+  margin-left: calc(-1 * #{$space-3});
+}
+
+// Long titles wrap instead of pushing the actions off screen.
+.title {
+  flex: 1;
+  min-width: 0;
+}
+
+.actions {
+  display: flex;
+  gap: $space-1;
+}

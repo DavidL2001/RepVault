@@ -1,0 +1,67 @@
+@use 'styles/variables' as *;
+
+.banner {
+  display: flex;
+  gap: $space-3;
+  align-items: flex-start;
+  padding: $space-3 $space-4;
+  color: var(--color-text);
+  border-left: $border-width-accent solid;
+  border-radius: $radius-sm;
+}
+
+// The icon is as tall as one line of text, so they line up.
+.text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: $space-1;
+  min-width: 0;
+}
+
+.title {
+  font-weight: $font-weight-bold;
+}
+
+// Pull the 48px button into the banner's padding so it doesn't make the banner taller.
+.dismiss {
+  margin: (-$space-3) (-$space-3) (-$space-3) $space-0;
+}
+
+// ---- Variants: tinted surface, plus icon and edge in the variant color ----
+
+.info {
+  background-color: var(--color-info-surface);
+  border-color: var(--color-info);
+
+  .icon {
+    color: var(--color-info);
+  }
+}
+
+.success {
+  background-color: var(--color-success-surface);
+  border-color: var(--color-success);
+
+  .icon {
+    color: var(--color-success);
+  }
+}
+
+.warning {
+  background-color: var(--color-warning-surface);
+  border-color: var(--color-warning);
+
+  .icon {
+    color: var(--color-warning);
+  }
+}
+
+.danger {
+  background-color: var(--color-danger-surface);
+  border-color: var(--color-danger);
+
+  .icon {
+    color: var(--color-danger);
+  }
+}

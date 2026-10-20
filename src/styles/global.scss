@@ -131,3 +131,8 @@ a {
   flex-direction: column;
   min-height: 100dvh;
 }
+
+// The page behind an open modal shouldn't scroll.
+html:has(dialog[open]) {
+  overflow: hidden;
+}

@@ -49,19 +49,19 @@ The full feature spec lives in `docs/SPEC.md`.
 
 ## 4. `feature/ui-components`
 
-- [ ] `AppShell` (layout, safe areas, max-width column, skip link)
-- [ ] `PageHeader` (title as `<h1>`, optional back button)
-- [ ] `BottomNav` (with `aria-current` on the active item)
-- [ ] `Button` and `IconButton` (variants: primary, secondary, danger, ghost; icon buttons require an accessible label)
-- [ ] `TextField` and `NumberField` (always with a visible `<label>`, error message linked via `aria-describedby`)
-- [ ] `Stepper` (− / + with labels like "Decrease weight")
-- [ ] `Card` and `ListItem`
-- [ ] `Modal` and `ConfirmDialog` (focus trap, Escape closes, focus returns to the trigger)
-- [ ] `Banner` (info / success / warning variants, never color-only)
-- [ ] `StickyActionBar`
-- [ ] `EmptyState`
-- [ ] `useDocumentTitle` + focus the page `<h1>` on route change
-- [ ] Simple component preview page (dev only) to view them all
+- [x] `AppShell` (layout, safe areas, max-width column, skip link)
+- [x] `PageHeader` (title as `<h1>`, optional back button)
+- [x] `BottomNav` (with `aria-current` on the active item)
+- [x] `Button` and `IconButton` (variants: primary, secondary, danger, ghost; icon buttons require an accessible label)
+- [x] `TextField` and `NumberField` (always with a visible `<label>`, error message linked via `aria-describedby`)
+- [x] `Stepper` (− / + with labels like "Decrease weight")
+- [x] `Card` and `ListItem`
+- [x] `Modal` and `ConfirmDialog` (focus trap, Escape closes, focus returns to the trigger)
+- [x] `Banner` (info / success / warning variants, never color-only)
+- [x] `StickyActionBar`
+- [x] `EmptyState`
+- [x] `useDocumentTitle` + focus the page `<h1>` on route change
+- [x] Simple component preview page (dev only) to view them all
 
 **Done when:** every component works by keyboard only and at 320px width.
 

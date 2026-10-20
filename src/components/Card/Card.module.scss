@@ -1,0 +1,13 @@
+@use 'styles/variables' as *;
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  min-width: 0;
+  padding: $space-4;
+  background-color: var(--color-surface-raised);
+  border: $border-width solid var(--color-border-subtle);
+  border-radius: $radius-lg;
+  box-shadow: $shadow-sm;
+}
