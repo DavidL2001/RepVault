@@ -12,13 +12,15 @@ import styles from './ListItem.module.scss'
  * @param {object} props
  * @param {import('react').ReactNode} props.title
  * @param {import('react').ReactNode} [props.meta] Secondary line, e.g. "3 sets · best 40 kg × 8".
+ * @param {import('react').ReactNode} [props.leading] Content on the left, e.g. a DateBadge.
  * @param {import('react').ReactNode} [props.trailing] Content on the right, e.g. a badge or buttons.
  * @param {string} [props.to] Route the row links to.
  * @param {() => void} [props.onClick] Action when the row is pressed.
  */
-function ListItem({ title, meta, trailing, to, onClick }) {
+function ListItem({ title, meta, leading, trailing, to, onClick }) {
   const content = (
     <>
+      {leading}
       <span className={styles.text}>
         <span className={styles.title}>{title}</span>
         {meta && <span className={styles.meta}>{meta}</span>}

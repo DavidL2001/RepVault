@@ -120,3 +120,58 @@ export function daysBetween(from, to) {
   // Rounding absorbs the hour lost or gained when daylight saving time changes.
   return Math.round((startOfDay(to) - startOfDay(from)) / MS_PER_DAY)
 }
+
+/**
+ * The same time of day, a number of calendar days later (or earlier when negative).
+ * Works across daylight saving changes, unlike adding 24 hours.
+ *
+ * @param {Date|string} value
+ * @param {number} days
+ * @returns {Date}
+ */
+export function addDays(value, days) {
+  const date = new Date(toDate(value))
+  date.setDate(date.getDate() + days)
+  return date
+}
+
+/**
+ * Month and year as a heading, e.g. "October 2026", or "Oktober 2026" in Swedish
+ * (capitalized, since some locales write month names in lowercase).
+ *
+ * @param {Date|string} value
+ * @param {string} [locale] Defaults to the browser locale.
+ * @returns {string}
+ */
+export function formatMonth(value, locale) {
+  const text = new Intl.DateTimeFormat(locale, { month: 'long', year: 'numeric' }).format(
+    toDate(value),
+  )
+  return text.charAt(0).toLocaleUpperCase(locale) + text.slice(1)
+}
+
+/**
+ * The weekday's initial for a calendar row label, e.g. "M", or "M" for "måndag".
+ *
+ * @param {Date|string} value
+ * @param {string} [locale] Defaults to the browser locale.
+ * @returns {string}
+ */
+export function formatWeekdayInitial(value, locale) {
+  return new Intl.DateTimeFormat(locale, { weekday: 'narrow' }).format(toDate(value))
+}
+
+/**
+ * Day of the month and short weekday, for a date badge: `{ day: '20', weekday: 'Tue' }`.
+ *
+ * @param {Date|string} value
+ * @param {string} [locale] Defaults to the browser locale.
+ * @returns {{ day: string, weekday: string }}
+ */
+export function dateBadgeParts(value, locale) {
+  const date = toDate(value)
+  return {
+    day: new Intl.DateTimeFormat(locale, { day: 'numeric' }).format(date),
+    weekday: new Intl.DateTimeFormat(locale, { weekday: 'short' }).format(date),
+  }
+}

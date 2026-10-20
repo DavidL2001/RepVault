@@ -1,7 +1,11 @@
 import { describe, expect, it } from 'vitest'
 import {
+  addDays,
+  dateBadgeParts,
   daysBetween,
   formatDate,
+  formatMonth,
+  formatWeekdayInitial,
   formatShortDate,
   formatTime,
   isSameWeek,
@@ -24,6 +28,34 @@ describe('formatDate', () => {
     expect(formatDate(SUNDAY_11_OCT.toISOString(), 'en-GB')).toBe(
       formatDate(SUNDAY_11_OCT, 'en-GB'),
     )
+  })
+})
+
+describe('addDays', () => {
+  it('moves by calendar days, keeping the time, across daylight saving changes', () => {
+    const before = new Date(2026, 2, 28, 18, 0) // the night before summer time in Europe
+    const after = addDays(before, 2)
+    expect([after.getDate(), after.getHours()]).toEqual([30, 18])
+    expect(addDays(before, -28).getMonth()).toBe(1)
+  })
+})
+
+describe('formatMonth', () => {
+  it('shows month and year, capitalized', () => {
+    expect(formatMonth(SUNDAY_11_OCT, 'en-GB')).toBe('October 2026')
+    expect(formatMonth(SUNDAY_11_OCT, 'sv-SE')).toBe('Oktober 2026')
+  })
+})
+
+describe('formatWeekdayInitial', () => {
+  it('shows a one-letter weekday', () => {
+    expect(formatWeekdayInitial(SUNDAY_11_OCT, 'en-GB')).toBe('S')
+  })
+})
+
+describe('dateBadgeParts', () => {
+  it('splits day number and short weekday', () => {
+    expect(dateBadgeParts(SUNDAY_11_OCT, 'en-GB')).toEqual({ day: '11', weekday: 'Sun' })
   })
 })
 

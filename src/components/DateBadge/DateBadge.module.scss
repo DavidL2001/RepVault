@@ -1,0 +1,26 @@
+@use 'styles/variables' as *;
+
+.badge {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: $tap-target-min;
+  min-height: $tap-target-min;
+  line-height: $line-height-tight;
+  background-color: var(--color-surface-raised);
+  border: $border-width solid var(--color-border-subtle);
+  border-radius: $radius-sm;
+}
+
+.day {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-bold;
+  font-variant-numeric: tabular-nums;
+}
+
+.weekday {
+  font-size: $font-size-sm;
+  color: var(--color-text-muted);
+}

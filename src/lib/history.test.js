@@ -1,6 +1,12 @@
 import { describe, expect, it } from 'vitest'
 import { makeSet, makeWorkout } from '../test/factories.js'
-import { exerciseSessions, exerciseSets, lastSession, workoutsThisWeek } from './history.js'
+import {
+  exerciseSessions,
+  exerciseSets,
+  lastSession,
+  workoutsBefore,
+  workoutsThisWeek,
+} from './history.js'
 
 // Listed out of order on purpose: the helpers must sort by date.
 const workouts = [
@@ -57,6 +63,13 @@ describe('lastSession', () => {
 describe('exerciseSets', () => {
   it('returns every set, oldest workout first', () => {
     expect(exerciseSets(workouts, 'squat').map((set) => set.kg)).toEqual([95, 100, 105])
+  })
+})
+
+describe('workoutsBefore', () => {
+  it('returns the workouts started earlier, leaving out the workout itself', () => {
+    const mid = workouts.find((workout) => workout.id === 'mid')
+    expect(workoutsBefore(mid, workouts).map((workout) => workout.id)).toEqual(['old'])
   })
 })
 
