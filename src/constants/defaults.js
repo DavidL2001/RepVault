@@ -23,6 +23,9 @@ export const DEFAULT_WORKOUT_NAME = 'Workout'
 /** Show the backup reminder when the last export is older than this. */
 export const BACKUP_REMINDER_DAYS = 14
 
+/** Weeks shown in the History training calendar (fits 320px: one column per week). */
+export const CALENDAR_WEEKS = 12
+
 /** First day of the week for "this week" counts: 1 = Monday (ISO 8601). */
 export const WEEK_STARTS_ON = 1
 

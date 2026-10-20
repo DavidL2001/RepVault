@@ -65,6 +65,20 @@ export function exerciseSets(workouts, exerciseId) {
 }
 
 /**
+ * The finished workouts started before this one: what its records are measured against.
+ *
+ * @param {import('./model.js').WorkoutSession} workout
+ * @param {import('./model.js').WorkoutSession[]} workouts
+ * @returns {import('./model.js').WorkoutSession[]}
+ */
+export function workoutsBefore(workout, workouts) {
+  const startedAt = Date.parse(workout.startedAt)
+  return workouts.filter(
+    (other) => other.id !== workout.id && Date.parse(other.startedAt) < startedAt,
+  )
+}
+
+/**
  * Number of workouts started in the same week as `now` (weeks start on Monday).
  *
  * @param {import('./model.js').WorkoutSession[]} workouts

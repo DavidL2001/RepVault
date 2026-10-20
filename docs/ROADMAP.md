@@ -146,9 +146,9 @@ The full feature spec lives in `docs/SPEC.md`.
 
 ## 13. `feature/history`
 
-- [ ] History page grouped by month with date markers
-- [ ] Training heatmap / calendar strip (fits 320px, has accessible labels)
-- [ ] Workout Details page: view, edit sets, delete workout
+- [x] History page grouped by month with date markers
+- [x] Training heatmap / calendar strip (fits 320px, has accessible labels)
+- [x] Workout Details page: view, edit sets, delete workout
 
 ## 14. `feature/home`
 

@@ -25,6 +25,9 @@ export const ACTION_TYPES = {
   setLogged: 'sets/logged',
   setUpdated: 'sets/updated',
   setDeleted: 'sets/deleted',
+  pastSetUpdated: 'history/setUpdated',
+  pastSetDeleted: 'history/setDeleted',
+  pastWorkoutDeleted: 'history/workoutDeleted',
   templateExercisesUpdated: 'templates/exercisesUpdated',
   settingsUpdated: 'settings/updated',
   dataReset: 'data/reset',
@@ -163,6 +166,39 @@ export function editSet(exerciseId, index, changes) {
  */
 export function removeSet(exerciseId, index) {
   return { type: ACTION_TYPES.setDeleted, exerciseId, index }
+}
+
+/**
+ * Fixes a set in a finished workout (e.g. a typo), keeping when it was logged.
+ *
+ * @param {string} workoutId
+ * @param {string} exerciseId
+ * @param {number} index Position of the set within the exercise, from 0.
+ * @param {{ kg: number, reps: number }} changes
+ */
+export function editPastSet(workoutId, exerciseId, index, changes) {
+  return { type: ACTION_TYPES.pastSetUpdated, workoutId, exerciseId, index, changes }
+}
+
+/**
+ * Deletes a set from a finished workout. An exercise left without sets is removed
+ * from the workout, and a workout left without exercises is deleted.
+ *
+ * @param {string} workoutId
+ * @param {string} exerciseId
+ * @param {number} index Position of the set within the exercise, from 0.
+ */
+export function removePastSet(workoutId, exerciseId, index) {
+  return { type: ACTION_TYPES.pastSetDeleted, workoutId, exerciseId, index }
+}
+
+/**
+ * Deletes a finished workout from the history.
+ *
+ * @param {string} workoutId
+ */
+export function deletePastWorkout(workoutId) {
+  return { type: ACTION_TYPES.pastWorkoutDeleted, workoutId }
 }
 
 /** Throws away the workout in progress without saving it. */

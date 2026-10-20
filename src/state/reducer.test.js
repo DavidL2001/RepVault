@@ -1,18 +1,21 @@
 import { describe, expect, it } from 'vitest'
 import { THEMES } from '../constants/themes.js'
 import { createInitialData } from '../lib/model.js'
-import { makeSet } from '../test/factories.js'
+import { makeSet, makeWorkout } from '../test/factories.js'
 import {
   addExercise,
   addTemplate,
   addWorkoutExercise,
   deleteExercise,
+  deletePastWorkout,
   deleteTemplate,
   discardWorkout,
+  editPastSet,
   editSet,
   endWorkout,
   logSet,
   moveWorkoutExercise,
+  removePastSet,
   removeSet,
   removeWorkoutExercise,
   renameExercise,
@@ -24,6 +27,50 @@ import {
   updateTemplateExercises,
 } from './actions.js'
 import { appReducer } from './reducer.js'
+
+describe('appReducer: finished workouts', () => {
+  const withHistory = () => ({
+    ...createInitialData(),
+    workouts: [
+      makeWorkout({
+        id: 'w1',
+        startedAt: '2026-10-13T17:00:00.000Z',
+        entries: {
+          lat: [
+            [40, 8],
+            [40, 8],
+          ],
+          curl: [[12.5, 10]],
+        },
+      }),
+      makeWorkout({ id: 'w2', startedAt: '2026-10-20T17:00:00.000Z', entries: { lat: [[45, 8]] } }),
+    ],
+  })
+  const w1 = (state) => state.workouts.find((workout) => workout.id === 'w1')
+
+  it('fixes a set and keeps when it was logged', () => {
+    const state = appReducer(withHistory(), editPastSet('w1', 'lat', 1, { kg: 42.5, reps: 7 }))
+    expect(w1(state).entries[0].sets[1]).toEqual({ ...makeSet(42.5, 7) })
+    expect(w1(state).entries[0].sets[0]).toEqual(makeSet(40, 8))
+  })
+
+  it('deletes a set, and an exercise left without sets', () => {
+    let state = appReducer(withHistory(), removePastSet('w1', 'lat', 0))
+    expect(w1(state).entries[0].sets).toEqual([makeSet(40, 8)])
+    state = appReducer(state, removePastSet('w1', 'curl', 0))
+    expect(w1(state).entries.map((entry) => entry.exerciseId)).toEqual(['lat'])
+  })
+
+  it('deletes a workout once its last set is deleted', () => {
+    const state = appReducer(withHistory(), removePastSet('w2', 'lat', 0))
+    expect(state.workouts.map((workout) => workout.id)).toEqual(['w1'])
+  })
+
+  it('deletes a whole workout', () => {
+    const state = appReducer(withHistory(), deletePastWorkout('w1'))
+    expect(state.workouts.map((workout) => workout.id)).toEqual(['w2'])
+  })
+})
 
 describe('appReducer: exercises', () => {
   const add = addExercise({ name: 'Lat pulldown', progression: null })

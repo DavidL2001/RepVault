@@ -7,6 +7,7 @@ import {
   deleteSet,
   finishWorkout,
   moveEntry,
+  removeEmptyEntries,
   removeEntry,
   updateSet,
 } from '../lib/workouts.js'
@@ -34,6 +35,23 @@ function updateById(items, id, changes) {
 function updateActiveWorkout(state, change) {
   if (!state.activeWorkout) return state
   return { ...state, activeWorkout: change(state.activeWorkout) }
+}
+
+/**
+ * Changes one finished workout. A workout left without exercises is deleted,
+ * like a workout that ends without sets.
+ *
+ * @param {import('../lib/model.js').AppData} state
+ * @param {string} workoutId
+ * @param {(workout: import('../lib/model.js').WorkoutSession) => import('../lib/model.js').WorkoutSession} change
+ */
+function updatePastWorkout(state, workoutId, change) {
+  return {
+    ...state,
+    workouts: state.workouts
+      .map((workout) => (workout.id === workoutId ? change(workout) : workout))
+      .filter((workout) => workout.entries.length > 0),
+  }
 }
 
 /**
@@ -117,6 +135,22 @@ export function appReducer(state, action) {
 
     case ACTION_TYPES.workoutDiscarded:
       return { ...state, activeWorkout: null }
+
+    case ACTION_TYPES.pastSetUpdated:
+      return updatePastWorkout(state, action.workoutId, (workout) =>
+        updateSet(workout, action.exerciseId, action.index, action.changes),
+      )
+
+    case ACTION_TYPES.pastSetDeleted:
+      return updatePastWorkout(state, action.workoutId, (workout) =>
+        removeEmptyEntries(deleteSet(workout, action.exerciseId, action.index)),
+      )
+
+    case ACTION_TYPES.pastWorkoutDeleted:
+      return {
+        ...state,
+        workouts: state.workouts.filter((workout) => workout.id !== action.workoutId),
+      }
 
     case ACTION_TYPES.settingsUpdated:
       return { ...state, settings: { ...state.settings, ...action.changes } }

@@ -79,6 +79,9 @@ $field-label-gap: $space-1;
 // Progress charts: tall enough to read on a phone, small in the Set Logger.
 $chart-height: 13.75rem; // 220px
 $chart-height-sm: 10rem; // 160px
+// Training calendar: gap between day squares, and how faded future days are.
+$calendar-gap: 3px;
+$opacity-faded: 0.35;
 // Below this width a row's text and its buttons wrap onto two lines.
 $row-text-min-width: 12rem;
 

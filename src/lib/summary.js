@@ -1,6 +1,6 @@
 import { PR_TYPES } from '../constants/calculations.js'
 import { sessionRecords, setOneRepMax, workoutVolume } from './calculations.js'
-import { exerciseSets } from './history.js'
+import { exerciseSets, workoutsBefore } from './history.js'
 import { evaluateProgression } from './progression.js'
 import { countSets } from './workouts.js'
 
@@ -31,10 +31,7 @@ import { countSets } from './workouts.js'
  * }} `records` and `nextTime` follow the workout's exercise order.
  */
 export function workoutSummary(workout, workouts, exercises) {
-  const startedAt = Date.parse(workout.startedAt)
-  const earlier = workouts.filter(
-    (other) => other.id !== workout.id && Date.parse(other.startedAt) < startedAt,
-  )
+  const earlier = workoutsBefore(workout, workouts)
   const byId = new Map(exercises.map((exercise) => [exercise.id, exercise]))
   const records = []
   const nextTime = []
@@ -57,7 +54,7 @@ export function workoutSummary(workout, workouts, exercises) {
   }
 
   return {
-    durationMs: Math.max(0, Date.parse(workout.endedAt) - startedAt),
+    durationMs: Math.max(0, Date.parse(workout.endedAt) - Date.parse(workout.startedAt)),
     exerciseCount: workout.entries.filter((entry) => entry.sets.length > 0).length,
     setCount: countSets(workout),
     volume: workoutVolume(workout),

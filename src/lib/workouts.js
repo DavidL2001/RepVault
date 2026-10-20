@@ -93,11 +93,18 @@ export function countSets(workout) {
  * @returns {import('./model.js').WorkoutSession}
  */
 export function finishWorkout(workout, now = new Date()) {
-  return {
-    ...workout,
-    endedAt: now.toISOString(),
-    entries: workout.entries.filter((entry) => entry.sets.length > 0),
-  }
+  return { ...removeEmptyEntries(workout), endedAt: now.toISOString() }
+}
+
+/**
+ * The workout without exercises that have no sets. Finished workouts only keep
+ * what was done, also after a set is deleted later.
+ *
+ * @param {import('./model.js').WorkoutSession} workout
+ * @returns {import('./model.js').WorkoutSession}
+ */
+export function removeEmptyEntries(workout) {
+  return { ...workout, entries: workout.entries.filter((entry) => entry.sets.length > 0) }
 }
 
 /**

@@ -1,0 +1,28 @@
+@use 'styles/variables' as *;
+
+// Sits right under the h1, so pull it up into the gap.
+.meta {
+  margin-top: calc(-1 * #{$space-3});
+  color: var(--color-text-muted);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
+}
+
+.heading {
+  font-size: $font-size-lg;
+}
+
+.exercise {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.exerciseName {
+  font-size: $font-size-md;
+  overflow-wrap: anywhere;
+}
