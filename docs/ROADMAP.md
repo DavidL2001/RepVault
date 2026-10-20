@@ -30,9 +30,9 @@ The full feature spec lives in `docs/SPEC.md`.
 
 ## 2. `setup/deploy-pipeline`
 
-- [ ] Add `.github/workflows/deploy.yml` (build on push to `main`, deploy `dist` with `actions/upload-pages-artifact` + `actions/deploy-pages`)
+- [x] Add `.github/workflows/deploy.yml` (build on push to `main`, deploy `dist` with `actions/upload-pages-artifact` + `actions/deploy-pages`)
 - [ ] In repo settings: Pages → Source → "GitHub Actions"
-- [ ] README: short "Deploy" section
+- [x] README: short "Deploy" section
 
 **Done when:** the placeholder app is live on `https://davidl2001.github.io/RepVault/` and refreshing a deep link works.
 
