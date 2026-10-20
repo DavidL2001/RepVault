@@ -1,5 +1,16 @@
 import { describe, expect, it } from 'vitest'
-import { clamp, parseDecimal, roundNumber, stepNumber } from './numbers.js'
+import { clamp, formatKg, parseDecimal, roundNumber, stepNumber } from './numbers.js'
+
+describe('formatKg', () => {
+  it('uses the locale decimal separator', () => {
+    expect(formatKg(42.5, 'en-GB')).toBe('42.5 kg')
+    expect(formatKg(42.5, 'sv-SE')).toBe('42,5 kg')
+  })
+
+  it('shows whole numbers without decimals', () => {
+    expect(formatKg(40, 'en-GB')).toBe('40 kg')
+  })
+})
 
 describe('parseDecimal', () => {
   it('parses whole numbers', () => {
