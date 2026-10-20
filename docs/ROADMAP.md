@@ -79,10 +79,10 @@ The full feature spec lives in `docs/SPEC.md`.
 
 ## 6. `feature/calculations`
 
-- [ ] `lib/calculations.js`: set volume, session volume, Epley 1RM, best set, PR detection
-- [ ] `lib/progression.js`: evaluate rule (`all` / `any` sets at heaviest weight), suggested next weight, "stay" message
-- [ ] `lib/history.js`: last session for an exercise, sessions per exercise, workouts this week
-- [ ] Unit tests with Vitest for all of the above
+- [x] `lib/calculations.js`: set volume, session volume, Epley 1RM, best set, PR detection
+- [x] `lib/progression.js`: evaluate rule (`all` / `any` sets at heaviest weight), suggested next weight, "stay" message
+- [x] `lib/history.js`: last session for an exercise, sessions per exercise, workouts this week
+- [x] Unit tests with Vitest for all of the above
 
 **Done when:** `npm run test` passes.
 
