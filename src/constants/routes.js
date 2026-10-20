@@ -20,6 +20,11 @@ export const ROUTES = {
 
 /**
  * Routes without the BottomNav: during a workout it can't be tapped by accident,
- * and the sticky action bars would overlap it.
+ * and the sticky action bars (Log set, End workout, Done) would overlap it.
  */
-export const ROUTES_WITHOUT_NAV = [ROUTES.activeWorkout, ROUTES.setLogger, ROUTES.designPreview]
+export const ROUTES_WITHOUT_NAV = [
+  ROUTES.activeWorkout,
+  ROUTES.setLogger,
+  ROUTES.workoutSummary,
+  ROUTES.designPreview,
+]

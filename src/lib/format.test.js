@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { makeSet } from '../test/factories.js'
 import {
+  formatDuration,
   formatElapsed,
   formatKg,
   formatNumberInput,
@@ -87,5 +88,30 @@ describe('formatSetsShort', () => {
     expect(formatSetsShort([makeSet(40, 10), makeSet(40, 10), makeSet(42.5, 6)], 'sv-SE')).toBe(
       '2×10 @ 40 kg, 1×6 @ 42,5 kg',
     )
+  })
+})
+
+describe('formatKg decimals', () => {
+  it('can show fewer decimals', () => {
+    expect(formatKg(116.667, 'en-GB', 1)).toBe('116.7 kg')
+  })
+})
+
+describe('formatDuration', () => {
+  it('shows minutes under an hour', () => {
+    expect(formatDuration(45 * 60_000)).toBe('45 min')
+  })
+
+  it('shows hours and minutes', () => {
+    expect(formatDuration(65 * 60_000)).toBe('1 h 5 min')
+    expect(formatDuration(120 * 60_000)).toBe('2 h')
+  })
+
+  it('rounds to the nearest minute', () => {
+    expect(formatDuration(44 * 60_000 + 31_000)).toBe('45 min')
+  })
+
+  it('says when it was under a minute', () => {
+    expect(formatDuration(20_000)).toBe('Under 1 min')
   })
 })

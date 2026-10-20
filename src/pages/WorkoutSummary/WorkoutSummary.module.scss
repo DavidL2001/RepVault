@@ -1,0 +1,21 @@
+@use 'styles/variables' as *;
+
+// Sits right under the h1, so pull it up into the gap.
+.meta {
+  margin-top: calc(-1 * #{$space-3});
+  color: var(--color-text-muted);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.heading {
+  font-size: $font-size-lg;
+}
+
+.muted {
+  color: var(--color-text-muted);
+}

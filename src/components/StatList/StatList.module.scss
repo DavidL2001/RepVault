@@ -1,0 +1,33 @@
+@use 'styles/variables' as *;
+
+// Two tiles per row, even at 320px; long values wrap inside their tile.
+.list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: $space-3;
+  margin: $space-0;
+}
+
+.item {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: $space-1;
+  padding: $space-3 $space-4;
+  background-color: var(--color-surface-raised);
+  border: $border-width solid var(--color-border-subtle);
+  border-radius: $radius-lg;
+}
+
+// The value sits on top visually (column-reverse) but comes after its label for screen readers.
+.value {
+  margin: $space-0;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-bold;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+.label {
+  font-size: $font-size-sm;
+  color: var(--color-text-muted);
+}
