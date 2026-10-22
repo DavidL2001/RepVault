@@ -1,0 +1,25 @@
+@use 'styles/variables' as *;
+
+.section {
+  display: flex;
+  flex-direction: column;
+}
+
+.md {
+  gap: $space-3;
+}
+
+.lg {
+  gap: $space-5;
+}
+
+.header {
+  display: flex;
+  gap: $space-3;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.heading {
+  font-size: $font-size-lg;
+}

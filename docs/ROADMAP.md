@@ -173,12 +173,12 @@ The full feature spec lives in `docs/SPEC.md`.
 
 ## 17. `chore/a11y-responsive-audit`
 
-- [ ] Keyboard-only walkthrough of every page
+- [x] Keyboard-only walkthrough of every page
 - [ ] Screen reader check (VoiceOver on iPhone)
-- [ ] Contrast check in both themes
-- [ ] Lighthouse accessibility score 95+ on every page
-- [ ] Every page at 320 / 375 / 390 / 430px, portrait + landscape: no horizontal scroll, no overlap
-- [ ] Remove dead code, unused styles and any hardcoded values that slipped in
+- [x] Contrast check in both themes
+- [x] Lighthouse accessibility score 95+ on every page
+- [x] Every page at 320 / 375 / 390 / 430px, portrait + landscape: no horizontal scroll, no overlap
+- [x] Remove dead code, unused styles and any hardcoded values that slipped in
 
 ## 18. `release/v1.0`
 

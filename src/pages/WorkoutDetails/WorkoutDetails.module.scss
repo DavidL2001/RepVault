@@ -1,19 +1,10 @@
 @use 'styles/variables' as *;
+@use 'styles/mixins' as *;
 
 // Sits right under the h1, so pull it up into the gap.
 .meta {
   margin-top: calc(-1 * #{$space-3});
   color: var(--color-text-muted);
-}
-
-.section {
-  display: flex;
-  flex-direction: column;
-  gap: $space-5;
-}
-
-.heading {
-  font-size: $font-size-lg;
 }
 
 .exercise {
@@ -25,4 +16,11 @@
 .exerciseName {
   font-size: $font-size-md;
   overflow-wrap: anywhere;
+}
+
+// A heading link, but with a 48px tap area.
+.exerciseLink {
+  @include tap-target;
+  display: inline-flex;
+  align-items: center;
 }

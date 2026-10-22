@@ -15,6 +15,7 @@ import ConfirmDialog from '../../components/ConfirmDialog/ConfirmDialog.jsx'
 import List from '../../components/List/List.jsx'
 import Modal from '../../components/Modal/Modal.jsx'
 import PageHeader from '../../components/PageHeader/PageHeader.jsx'
+import Section from '../../components/Section/Section.jsx'
 import SetForm from '../../components/SetForm/SetForm.jsx'
 import SetRow from '../../components/SetRow/SetRow.jsx'
 import StatList from '../../components/StatList/StatList.jsx'
@@ -81,14 +82,14 @@ function WorkoutDetails() {
         ]}
       />
 
-      <section className={styles.section} aria-labelledby="sets-heading">
-        <h2 id="sets-heading" ref={setsHeadingRef} tabIndex={-1} className={styles.heading}>
-          Sets
-        </h2>
+      <Section title="Sets" headingRef={setsHeadingRef} spacing="lg">
         {entries.map(({ exercise, sets, records }) => (
           <div key={exercise.id} className={styles.exercise}>
             <h3 className={styles.exerciseName}>
-              <Link to={generatePath(ROUTES.exerciseDetail, { id: exercise.id })}>
+              <Link
+                to={generatePath(ROUTES.exerciseDetail, { id: exercise.id })}
+                className={styles.exerciseLink}
+              >
                 {exercise.name}
               </Link>
             </h3>
@@ -106,7 +107,7 @@ function WorkoutDetails() {
             </List>
           </div>
         ))}
-      </section>
+      </Section>
 
       <Button variant="danger" icon="trash" onClick={() => setIsDeletingWorkout(true)}>
         Delete workout

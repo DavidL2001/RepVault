@@ -1,15 +1,5 @@
 @use 'styles/variables' as *;
 
-.section {
-  display: flex;
-  flex-direction: column;
-  gap: $space-3;
-}
-
-.heading {
-  font-size: $font-size-lg;
-}
-
 .muted {
   color: var(--color-text-muted);
 }

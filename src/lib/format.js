@@ -1,10 +1,11 @@
 import { MAX_DECIMALS } from '../constants/numbers.js'
+import {
+  MINUTES_PER_HOUR,
+  MS_PER_SECOND,
+  SECONDS_PER_HOUR,
+  SECONDS_PER_MINUTE,
+} from '../constants/time.js'
 import { bestSet } from './calculations.js'
-
-const MS_PER_SECOND = 1000
-const SECONDS_PER_MINUTE = 60
-const SECONDS_PER_HOUR = 3600
-const MINUTES_PER_HOUR = 60
 
 // Turning values into display text in the browser locale (pass `locale` only in tests).
 

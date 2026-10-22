@@ -23,6 +23,11 @@
   font-weight: $font-weight-bold;
 }
 
+// Extra space so the button reads as a separate step after the message.
+.action {
+  margin-top: $space-2;
+}
+
 // Pull the 48px button into the banner's padding so it doesn't make the banner taller.
 .dismiss {
   margin: (-$space-3) (-$space-3) (-$space-3) $space-0;

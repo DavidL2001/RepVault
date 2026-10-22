@@ -1,8 +1,7 @@
 import { CALENDAR_WEEKS } from '../constants/defaults.js'
+import { DAYS_PER_WEEK } from '../constants/time.js'
 import { addDays, formatDate, startOfDay, startOfWeek, toDateKey } from './dates.js'
 import { pluralize } from './format.js'
-
-const DAYS_PER_WEEK = 7
 
 // The History page: workouts grouped by month, and the training calendar.
 

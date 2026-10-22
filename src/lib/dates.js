@@ -1,10 +1,8 @@
 import { WEEK_STARTS_ON } from '../constants/defaults.js'
+import { DAYS_PER_WEEK, MS_PER_DAY } from '../constants/time.js'
 
 // Date helpers. Formatting uses the browser locale (pass `locale` only in tests)
 // and always 24h time. Inputs can be Date objects or ISO strings.
-
-const DAYS_PER_WEEK = 7
-const MS_PER_DAY = 24 * 60 * 60 * 1000
 
 /**
  * @param {Date|string|number} value

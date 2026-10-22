@@ -1,5 +1,7 @@
+import { useRef } from 'react'
 import { Link, matchPath, useLocation } from 'react-router-dom'
 import { ROUTES } from '../../constants/routes.js'
+import { useBottomBarHeight } from '../../hooks/useBottomBarHeight.js'
 import { cx } from '../../lib/classNames.js'
 import Icon from '../Icon/Icon.jsx'
 import styles from './BottomNav.module.scss'
@@ -29,9 +31,11 @@ const ITEMS = [
  */
 function BottomNav() {
   const { pathname } = useLocation()
+  const navRef = useRef(null)
+  useBottomBarHeight(navRef)
 
   return (
-    <nav aria-label="Main" className={styles.nav}>
+    <nav ref={navRef} aria-label="Main" className={styles.nav}>
       {/* eslint-disable-next-line jsx-a11y/no-redundant-roles -- Safari drops list semantics without it */}
       <ul role="list" className={styles.list}>
         {ITEMS.map(({ label, icon, to, activeOn }) => {
