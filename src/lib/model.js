@@ -1,4 +1,5 @@
-import { DEFAULT_THEME } from '../constants/themes.js'
+import { PROGRESSION_MODES } from '../constants/defaults.js'
+import { DEFAULT_THEME, THEMES } from '../constants/themes.js'
 import { SCHEMA_VERSION } from '../constants/storage.js'
 
 // Shapes of the app data. All dates are ISO 8601 strings (`new Date().toISOString()`),
@@ -102,7 +103,7 @@ export function isPlainObject(value) {
 
 /**
  * Checks that data has the top-level AppData shape of the current schema version.
- * It doesn't check every exercise and set; import validation (step 15) can build on this.
+ * It doesn't check every exercise and set; `hasValidRecords` does that for imports.
  *
  * @param {unknown} data
  * @returns {data is AppData}
@@ -116,5 +117,115 @@ export function isValidData(data) {
     Array.isArray(data.workouts) &&
     (data.activeWorkout === null || isPlainObject(data.activeWorkout)) &&
     isPlainObject(data.settings)
+  )
+}
+
+// ---- Record checks, for data from outside the app (an imported backup) ----
+
+const isNonEmptyString = (value) => typeof value === 'string' && value.trim() !== ''
+const isDateString = (value) => typeof value === 'string' && !Number.isNaN(Date.parse(value))
+const isOptionalDateString = (value) => value === null || isDateString(value)
+const hasUniqueIds = (items) => new Set(items.map((item) => item.id)).size === items.length
+
+/** @param {unknown} progression */
+function isValidProgression(progression) {
+  return (
+    progression === null ||
+    (isPlainObject(progression) &&
+      Number.isInteger(progression.targetReps) &&
+      progression.targetReps >= 1 &&
+      Object.values(PROGRESSION_MODES).includes(progression.mode))
+  )
+}
+
+/** @param {unknown} exercise */
+function isValidExercise(exercise) {
+  return (
+    isPlainObject(exercise) &&
+    isNonEmptyString(exercise.id) &&
+    isNonEmptyString(exercise.name) &&
+    isDateString(exercise.createdAt) &&
+    isValidProgression(exercise.progression)
+  )
+}
+
+/** @param {unknown} template */
+function isValidTemplate(template) {
+  return (
+    isPlainObject(template) &&
+    isNonEmptyString(template.id) &&
+    isNonEmptyString(template.name) &&
+    Array.isArray(template.exerciseIds) &&
+    template.exerciseIds.every(isNonEmptyString)
+  )
+}
+
+/** Same rules as the set form: weight 0 kg or more, whole reps of at least 1. */
+function isValidSet(set) {
+  return (
+    isPlainObject(set) &&
+    Number.isFinite(set.kg) &&
+    set.kg >= 0 &&
+    Number.isInteger(set.reps) &&
+    set.reps >= 1 &&
+    isDateString(set.timestamp)
+  )
+}
+
+/** @param {unknown} entry */
+function isValidEntry(entry) {
+  return (
+    isPlainObject(entry) &&
+    isNonEmptyString(entry.exerciseId) &&
+    Array.isArray(entry.sets) &&
+    entry.sets.every(isValidSet)
+  )
+}
+
+/** @param {unknown} workout */
+function isValidWorkout(workout) {
+  return (
+    isPlainObject(workout) &&
+    isNonEmptyString(workout.id) &&
+    (workout.templateId === null || isNonEmptyString(workout.templateId)) &&
+    isNonEmptyString(workout.name) &&
+    isDateString(workout.startedAt) &&
+    isOptionalDateString(workout.endedAt) &&
+    Array.isArray(workout.entries) &&
+    workout.entries.every(isValidEntry)
+  )
+}
+
+/** @param {unknown} settings */
+function isValidSettings(settings) {
+  return (
+    isPlainObject(settings) &&
+    Object.values(THEMES).includes(settings.theme) &&
+    isOptionalDateString(settings.lastExportAt) &&
+    isOptionalDateString(settings.backupReminderDismissedAt)
+  )
+}
+
+/**
+ * Checks every record inside the data, not just the top level: data from a file
+ * could have been edited or come from somewhere else, and one broken set would
+ * otherwise break pages later. Finished workouts must have ended, the workout in
+ * progress must not have, and ids must be unique per list.
+ *
+ * @param {unknown} data
+ * @returns {data is AppData}
+ */
+export function hasValidRecords(data) {
+  return (
+    isValidData(data) &&
+    data.exercises.every(isValidExercise) &&
+    hasUniqueIds(data.exercises) &&
+    data.templates.every(isValidTemplate) &&
+    hasUniqueIds(data.templates) &&
+    data.workouts.every((workout) => isValidWorkout(workout) && workout.endedAt !== null) &&
+    hasUniqueIds(data.workouts) &&
+    (data.activeWorkout === null ||
+      (isValidWorkout(data.activeWorkout) && data.activeWorkout.endedAt === null)) &&
+    isValidSettings(data.settings)
   )
 }

@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { makeSet } from '../test/factories.js'
 import {
+  formatDaysAgo,
   formatDuration,
   formatElapsed,
   formatKg,
@@ -113,5 +114,13 @@ describe('formatDuration', () => {
 
   it('says when it was under a minute', () => {
     expect(formatDuration(20_000)).toBe('Under 1 min')
+  })
+})
+
+describe('formatDaysAgo', () => {
+  it('says today, yesterday, or how many days ago', () => {
+    expect(formatDaysAgo(0)).toBe('today')
+    expect(formatDaysAgo(1)).toBe('yesterday')
+    expect(formatDaysAgo(3)).toBe('3 days ago')
   })
 })
