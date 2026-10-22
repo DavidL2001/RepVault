@@ -46,14 +46,11 @@
   }
 }
 
+// Bold text plus the red line on top (primary is too dark for text on black).
 .active {
   font-weight: $font-weight-bold;
-  color: var(--color-primary);
+  color: var(--color-text);
   border-top-color: var(--color-primary);
-
-  &:hover {
-    color: var(--color-primary);
-  }
 }
 
 .label {

@@ -1,12 +1,12 @@
 import { readFileSync } from 'node:fs'
 
-// Build-time access to the raw palette, so the manifest and the generated icons use
-// the same colors as the app without repeating hex values outside `_colors.scss`.
+// Build-time access to the raw palette, so the manifest uses the same colors as the app
+// without repeating hex values outside `_colors.scss`.
 
 const COLORS_FILE = new URL('../src/styles/_colors.scss', import.meta.url)
 
 /**
- * Reads the hex colors from `_colors.scss`, e.g. `{ 'gray-950': '#0b0c0f', … }`.
+ * Reads the hex colors from `_colors.scss`, e.g. `{ 'gray-950': '#0a0a0a', … }`.
  *
  * @returns {Record<string, string>}
  */
@@ -17,11 +17,10 @@ export function readPalette() {
 }
 
 /**
- * Colors outside the app's CSS: the manifest, the browser bar and the icons.
- * `background` matches `--color-bg` of the default (dark) theme, so the splash screen
- * and status bar blend into the app; `accent` matches its `--color-primary`.
+ * Colors outside the app's CSS, for the web app manifest. `background` matches `--color-bg`
+ * of the default (dark) theme, so the splash screen and status bar blend into the app.
  */
 export function brandColors() {
   const palette = readPalette()
-  return { background: palette['gray-950'], accent: palette['blue-400'] }
+  return { background: palette['gray-950'] }
 }

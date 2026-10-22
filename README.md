@@ -38,4 +38,4 @@ RepVault is a PWA, so it can be installed and works offline.
 - **iPhone (Safari):** Share → **Add to Home Screen**.
 - **Android (Chrome):** menu → **Install app** (or **Add to Home screen**).
 
-New versions install themselves: the app reloads once the update is ready. The icons are generated from the color palette with `npm run icons`.
+New versions install themselves: the app reloads once the update is ready. The icons are made from the logo in `scripts/icon-source.png` with `npm run icons`.

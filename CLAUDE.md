@@ -13,7 +13,7 @@ Personal gym tracking app. React + SCSS, built with Vite, hosted on GitHub Pages
 - `npm run lint` – ESLint, including jsx-a11y
 - `npm run format` – format all files with Prettier
 - `npm run test` – Vitest unit tests
-- `npm run icons` – regenerate the app icons in `public/` (after changing `scripts/generate-icons.js` or the palette)
+- `npm run icons` – regenerate the app icons in `public/` from the logo in `scripts/icon-source.png` (after replacing it)
 
 ## Workflow
 
