@@ -13,6 +13,7 @@ import {
   editPastSet,
   editSet,
   endWorkout,
+  importData,
   logSet,
   moveWorkoutExercise,
   removePastSet,
@@ -250,5 +251,16 @@ describe('appReducer: sets', () => {
   it('ignores sets when no workout is in progress', () => {
     const state = createInitialData()
     expect(appReducer(state, logSet('e1', { kg: 40, reps: 8 }))).toBe(state)
+  })
+})
+
+describe('appReducer: importing', () => {
+  it('replaces all data with the imported data', () => {
+    const imported = {
+      ...createInitialData(),
+      workouts: [makeWorkout({ id: 'w1', startedAt: '2026-10-20T17:00:00.000Z' })],
+    }
+    const current = appReducer(createInitialData(), startWorkout({ name: 'Now' }))
+    expect(appReducer(current, importData(imported))).toBe(imported)
   })
 })

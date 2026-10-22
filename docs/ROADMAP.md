@@ -159,11 +159,11 @@ The full feature spec lives in `docs/SPEC.md`.
 
 ## 15. `feature/settings-backup`
 
-- [ ] Theme toggle (saved)
-- [ ] Export JSON + "Last backup: X days ago"
-- [ ] Import with validation + confirm
-- [ ] Delete all data (double confirm)
-- [ ] Note about data living in this browser only
+- [x] Theme toggle (saved)
+- [x] Export JSON + "Last backup: X days ago"
+- [x] Import with validation + confirm
+- [x] Delete all data (double confirm)
+- [x] Note about data living in this browser only
 
 ## 16. `feature/pwa`
 

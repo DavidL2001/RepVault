@@ -37,6 +37,8 @@ export const ICONS = {
     <path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4ZM17 6h3v2a3 3 0 0 1-3 3M7 6H4v2a3 3 0 0 0 3 3" />
   ),
   trash: <path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6M10 11v6M14 11v6" />,
+  download: <path d="M12 4v11M7 10l5 5 5-5M4 20h16" />,
+  upload: <path d="M12 15V4M7 9l5-5 5 5M4 20h16" />,
   success: (
     <>
       <circle cx="12" cy="12" r="9" />

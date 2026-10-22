@@ -124,3 +124,15 @@ export function formatDuration(ms) {
   if (hours === 0) return `${minutes} min`
   return minutes === 0 ? `${hours} h` : `${hours} h ${minutes} min`
 }
+
+/**
+ * How long ago something was, in calendar days: "today", "yesterday", "3 days ago".
+ *
+ * @param {number} days Whole days, from `daysBetween`.
+ * @returns {string}
+ */
+export function formatDaysAgo(days) {
+  if (days <= 0) return 'today'
+  if (days === 1) return 'yesterday'
+  return `${pluralize(days, 'day')} ago`
+}

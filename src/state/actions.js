@@ -31,6 +31,7 @@ export const ACTION_TYPES = {
   templateExercisesUpdated: 'templates/exercisesUpdated',
   settingsUpdated: 'settings/updated',
   dataReset: 'data/reset',
+  dataImported: 'data/imported',
 }
 
 /**
@@ -228,4 +229,13 @@ export function updateSettings(changes) {
 /** Deletes all data and starts fresh, as on a first visit. */
 export function resetData() {
   return { type: ACTION_TYPES.dataReset }
+}
+
+/**
+ * Replaces all data with an imported backup, including settings and any workout in progress.
+ *
+ * @param {import('../lib/model.js').AppData} data Checked with `parseBackup` first.
+ */
+export function importData(data) {
+  return { type: ACTION_TYPES.dataImported, data }
 }

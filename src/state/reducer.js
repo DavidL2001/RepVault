@@ -158,6 +158,9 @@ export function appReducer(state, action) {
     case ACTION_TYPES.dataReset:
       return createInitialData()
 
+    case ACTION_TYPES.dataImported:
+      return action.data
+
     default:
       // Fail loudly: a typo in an action type would otherwise silently do nothing.
       throw new Error(`Unknown action type: ${action.type}`)
