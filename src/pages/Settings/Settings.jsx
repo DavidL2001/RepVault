@@ -8,8 +8,8 @@ import Button from '../../components/Button/Button.jsx'
 import ConfirmDialog from '../../components/ConfirmDialog/ConfirmDialog.jsx'
 import FileButton from '../../components/FileButton/FileButton.jsx'
 import PageHeader from '../../components/PageHeader/PageHeader.jsx'
-import RadioGroup from '../../components/RadioGroup/RadioGroup.jsx'
 import Section from '../../components/Section/Section.jsx'
+import ToggleGroup from '../../components/ToggleGroup/ToggleGroup.jsx'
 import styles from './Settings.module.scss'
 
 const THEME_OPTIONS = Object.values(THEMES).map((theme) => ({
@@ -97,9 +97,8 @@ function Settings() {
       <PageHeader title="Settings" />
 
       <Section title="Appearance">
-        <RadioGroup
-          legend="Theme"
-          variant="segmented"
+        <ToggleGroup
+          label="Theme"
           options={THEME_OPTIONS}
           value={settings.theme}
           onChange={settings.setTheme}
