@@ -31,8 +31,8 @@ export default defineConfig([
     },
   },
   {
-    // Config files run in Node, not the browser.
-    files: ['*.config.js'],
+    // Config files and build scripts run in Node, not the browser.
+    files: ['*.config.js', 'scripts/**/*.js'],
     languageOptions: { globals: globals.node },
   },
   // Must come last: turns off rules that would conflict with Prettier's formatting.

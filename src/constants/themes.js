@@ -14,3 +14,6 @@ export const THEME_LABELS = {
   [THEMES.dark]: 'Dark',
   [THEMES.light]: 'Light',
 }
+
+/** Token the browser bar (`<meta name="theme-color">`) takes its color from, so it blends into the page. */
+export const THEME_COLOR_TOKEN = '--color-bg'

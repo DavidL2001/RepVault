@@ -21,6 +21,7 @@ npm run dev
 | `npm run lint`    | Lint with ESLint (including jsx-a11y)              |
 | `npm run format`  | Format all files with Prettier                     |
 | `npm run test`    | Run unit tests with Vitest                         |
+| `npm run icons`   | Regenerate the app icons in `public/`              |
 
 ## Deploy
 
@@ -29,3 +30,12 @@ Every push to `main` runs [.github/workflows/deploy.yml](.github/workflows/deplo
 - Live: https://davidl2001.github.io/RepVault/
 - One-time setup: repo **Settings → Pages → Source → "GitHub Actions"**.
 - The Vite `base` is `/RepVault/` (the repo name). Routing uses `HashRouter`, so refreshing a deep link like `/RepVault/#/exercises` works without a 404 fallback.
+
+## Install on a phone
+
+RepVault is a PWA, so it can be installed and works offline.
+
+- **iPhone (Safari):** Share → **Add to Home Screen**.
+- **Android (Chrome):** menu → **Install app** (or **Add to Home screen**).
+
+New versions install themselves: the app reloads once the update is ready. The icons are generated from the color palette with `npm run icons`.
