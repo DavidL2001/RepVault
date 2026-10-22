@@ -5,6 +5,9 @@
   width: calc(100% - 2 * #{$space-gutter});
   max-width: $dialog-max-width;
   max-height: calc(100dvh - 2 * #{$space-gutter});
+  // The browser centers a modal dialog with `margin: auto`; the global reset sets every
+  // margin to 0, which would pin it to the top-left corner.
+  margin: auto;
   padding: $space-0;
   color: var(--color-text);
   background-color: var(--color-surface-raised);
