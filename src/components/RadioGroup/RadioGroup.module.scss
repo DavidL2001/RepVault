@@ -32,11 +32,7 @@
 }
 
 .segments {
-  display: flex;
-  padding: $space-1;
-  background-color: var(--color-surface);
-  border: $border-width solid var(--color-border);
-  border-radius: $radius-md;
+  @include segmented-bar;
 }
 
 .segment {
@@ -52,29 +48,14 @@
 }
 
 .segmentLabel {
-  @include tap-target;
-  @include truncate;
-  display: flex;
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-  padding: $space-2;
-  color: var(--color-text);
-  border-radius: $radius-sm;
-
-  @include motion-safe {
-    transition: background-color $duration-fast $easing-standard;
-  }
+  @include segment;
 
   .segment:hover & {
     background-color: var(--color-surface-hover);
   }
 
-  // Selected: filled and bold, so it isn't shown by color alone.
   .segmentInput:checked + & {
-    font-weight: $font-weight-bold;
-    color: var(--color-text-on-primary);
-    background-color: var(--color-primary);
+    @include segment-selected;
   }
 
   .segmentInput:focus-visible + & {

@@ -1,0 +1,36 @@
+@use 'styles/variables' as *;
+@use 'styles/mixins' as *;
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  min-width: 0;
+}
+
+.label {
+  font-weight: $font-weight-medium;
+}
+
+.segments {
+  @include segmented-bar;
+}
+
+.segment {
+  @include segment;
+  font-weight: $font-weight-regular;
+  background-color: transparent;
+  border: none;
+
+  &:hover {
+    background-color: var(--color-surface-hover);
+  }
+
+  &[aria-pressed='true'] {
+    @include segment-selected;
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+}

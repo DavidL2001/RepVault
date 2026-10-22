@@ -58,6 +58,41 @@
   cursor: pointer;
 }
 
+// ---- Segmented bar (options side by side, one selected) ----
+
+/// The bar around the options. Used by RadioGroup `segmented` and ToggleGroup.
+@mixin segmented-bar {
+  display: flex;
+  padding: $space-1;
+  background-color: var(--color-surface);
+  border: $border-width solid var(--color-border);
+  border-radius: $radius-md;
+}
+
+/// One option in the bar, a 48px tap target sharing the width equally.
+@mixin segment {
+  @include tap-target;
+  @include truncate;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  padding: $space-2;
+  color: var(--color-text);
+  border-radius: $radius-sm;
+
+  @include motion-safe {
+    transition: background-color $duration-fast $easing-standard;
+  }
+}
+
+/// The selected option: filled and bold, so it isn't shown by color alone.
+@mixin segment-selected {
+  font-weight: $font-weight-bold;
+  color: var(--color-text-on-primary);
+  background-color: var(--color-primary);
+}
+
 // ---- Lists ----
 
 /// Removes bullets and indent. Add `role="list"` to the element too:
