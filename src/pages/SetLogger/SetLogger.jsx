@@ -13,6 +13,7 @@ import List from '../../components/List/List.jsx'
 import Modal from '../../components/Modal/Modal.jsx'
 import PageHeader from '../../components/PageHeader/PageHeader.jsx'
 import ProgressChart from '../../components/ProgressChart/ProgressChart.jsx'
+import Section from '../../components/Section/Section.jsx'
 import SetForm from '../../components/SetForm/SetForm.jsx'
 import SetRow from '../../components/SetRow/SetRow.jsx'
 import StickyActionBar from '../../components/StickyActionBar/StickyActionBar.jsx'
@@ -98,10 +99,7 @@ function SetLogger() {
         kgRef={kgRef}
       />
 
-      <section className={styles.section} aria-labelledby="sets-heading">
-        <h2 id="sets-heading" className={styles.heading}>
-          This workout
-        </h2>
+      <Section title="This workout">
         {sessionSets.length > 0 ? (
           <List>
             {sessionSets.map((set, index) => (
@@ -118,15 +116,12 @@ function SetLogger() {
         ) : (
           <p className={styles.muted}>No sets yet.</p>
         )}
-      </section>
+      </Section>
 
       {logger.points.length > 0 && (
-        <section className={styles.section} aria-labelledby="progress-heading">
-          <h2 id="progress-heading" className={styles.heading}>
-            Progress
-          </h2>
+        <Section title="Progress">
           <ProgressChart points={logger.points} metric={CHART_METRICS.heaviest} size="sm" />
-        </section>
+        </Section>
       )}
 
       <VisuallyHidden aria-live="polite">{message}</VisuallyHidden>

@@ -13,6 +13,7 @@ import ConfirmDialog from '../../components/ConfirmDialog/ConfirmDialog.jsx'
 import List from '../../components/List/List.jsx'
 import NameDialog from '../../components/NameDialog/NameDialog.jsx'
 import PageHeader from '../../components/PageHeader/PageHeader.jsx'
+import Section from '../../components/Section/Section.jsx'
 import TemplateCard from '../../components/TemplateCard/TemplateCard.jsx'
 import VisuallyHidden from '../../components/VisuallyHidden/VisuallyHidden.jsx'
 import styles from './StartWorkout.module.scss'
@@ -56,14 +57,16 @@ function StartWorkout() {
       <PageHeader title="Start workout" backTo={ROUTES.home} backLabel="Back to home" />
 
       {inProgress && (
-        <Banner variant="warning" title={`${activeWorkout.name} is in progress`}>
-          <p className={styles.bannerText}>End it before you start a new workout.</p>
-          <Button to={ROUTES.activeWorkout}>Resume workout</Button>
+        <Banner
+          variant="warning"
+          title={`${activeWorkout.name} is in progress`}
+          action={<Button to={ROUTES.activeWorkout}>Resume workout</Button>}
+        >
+          End it before you start a new workout.
         </Banner>
       )}
 
-      <section className={styles.section} aria-labelledby="templates-heading">
-        <h2 id="templates-heading">Templates</h2>
+      <Section title="Templates">
         {templates.length > 0 ? (
           <List>
             {templates.map(({ template, exerciseCount, lastUsedAt }) => (
@@ -92,7 +95,7 @@ function StartWorkout() {
         >
           New template
         </Button>
-      </section>
+      </Section>
 
       <Button variant="secondary" fullWidth disabled={inProgress} onClick={startEmpty}>
         Empty workout

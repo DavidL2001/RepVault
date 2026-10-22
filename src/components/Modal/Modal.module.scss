@@ -1,5 +1,4 @@
 @use 'styles/variables' as *;
-@use 'styles/mixins' as *;
 
 // The native dialog sits in the browser's top layer, so it needs no z-index.
 .dialog {

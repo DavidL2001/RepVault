@@ -9,6 +9,7 @@ import ConfirmDialog from '../../components/ConfirmDialog/ConfirmDialog.jsx'
 import FileButton from '../../components/FileButton/FileButton.jsx'
 import PageHeader from '../../components/PageHeader/PageHeader.jsx'
 import RadioGroup from '../../components/RadioGroup/RadioGroup.jsx'
+import Section from '../../components/Section/Section.jsx'
 import styles from './Settings.module.scss'
 
 const THEME_OPTIONS = Object.values(THEMES).map((theme) => ({
@@ -22,6 +23,13 @@ const SECTIONS = {
   delete: 'delete',
 }
 
+/** "Delete all data" asks twice: the first question, then a final "Are you sure?". */
+const DELETE_STEPS = {
+  closed: 'closed',
+  first: 'first',
+  final: 'final',
+}
+
 /** Theme, backup export and import, deleting all data, and where the data lives. */
 function Settings() {
   const settings = useSettings()
@@ -29,8 +37,7 @@ function Settings() {
 
   // Feedback on the last action: `{ section, variant, title, text }`.
   const [notice, setNotice] = useState(null)
-  // Deleting asks twice: 1 = first question, 2 = "Are you sure?".
-  const [deleteStep, setDeleteStep] = useState(0)
+  const [deleteStep, setDeleteStep] = useState(DELETE_STEPS.closed)
 
   const workoutInProgressNote = hasActiveWorkout ? ', including the workout in progress' : ''
 
@@ -65,7 +72,7 @@ function Settings() {
 
   function handleDelete() {
     settings.deleteAllData()
-    setDeleteStep(0)
+    setDeleteStep(DELETE_STEPS.closed)
     setNotice({
       section: SECTIONS.delete,
       variant: 'success',
@@ -89,10 +96,7 @@ function Settings() {
     <>
       <PageHeader title="Settings" />
 
-      <section className={styles.section} aria-labelledby="appearance-heading">
-        <h2 id="appearance-heading" className={styles.heading}>
-          Appearance
-        </h2>
+      <Section title="Appearance">
         <RadioGroup
           legend="Theme"
           variant="segmented"
@@ -100,12 +104,9 @@ function Settings() {
           value={settings.theme}
           onChange={settings.setTheme}
         />
-      </section>
+      </Section>
 
-      <section className={styles.section} aria-labelledby="backup-heading">
-        <h2 id="backup-heading" className={styles.heading}>
-          Backup
-        </h2>
+      <Section title="Backup">
         <Banner title="Your data stays on this device">
           RepVault saves everything in this browser only. Clearing browser data, or switching phones
           or browsers, loses it, so export a backup regularly.
@@ -128,12 +129,9 @@ function Settings() {
           </FileButton>
         </div>
         {noticeFor(SECTIONS.backup)}
-      </section>
+      </Section>
 
-      <section className={styles.section} aria-labelledby="delete-heading">
-        <h2 id="delete-heading" className={styles.heading}>
-          Delete data
-        </h2>
+      <Section title="Delete data">
         <p className={styles.muted}>
           Deletes every exercise, template and workout from this browser. Export a backup first if
           you want to keep them.
@@ -143,14 +141,14 @@ function Settings() {
           icon="trash"
           onClick={() => {
             setNotice(null)
-            setDeleteStep(1)
+            setDeleteStep(DELETE_STEPS.first)
           }}
           fullWidth
         >
           Delete all data
         </Button>
         {noticeFor(SECTIONS.delete)}
-      </section>
+      </Section>
 
       <ConfirmDialog
         open={Boolean(pendingImport)}
@@ -166,23 +164,23 @@ function Settings() {
       />
 
       <ConfirmDialog
-        open={deleteStep === 1}
+        open={deleteStep === DELETE_STEPS.first}
         title="Delete all data?"
         message={`Every exercise, template and workout is deleted from this browser${workoutInProgressNote}.`}
         confirmLabel="Delete all data"
         variant="danger"
-        onConfirm={() => setDeleteStep(2)}
-        onCancel={() => setDeleteStep(0)}
+        onConfirm={() => setDeleteStep(DELETE_STEPS.final)}
+        onCancel={() => setDeleteStep(DELETE_STEPS.closed)}
       />
 
       <ConfirmDialog
-        open={deleteStep === 2}
+        open={deleteStep === DELETE_STEPS.final}
         title="Are you sure?"
         message="This can’t be undone. Without a backup, your data is gone for good."
         confirmLabel="Yes, delete everything"
         variant="danger"
         onConfirm={handleDelete}
-        onCancel={() => setDeleteStep(0)}
+        onCancel={() => setDeleteStep(DELETE_STEPS.closed)}
       />
     </>
   )

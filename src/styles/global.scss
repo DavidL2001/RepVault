@@ -19,6 +19,9 @@
 html {
   // Stop mobile browsers from resizing text on rotation.
   text-size-adjust: 100%;
+  // When focus moves to an element near an edge, the browser scrolls it fully into view,
+  // focus ring included, and clear of the bottom bar (its height is set by `useBottomBarHeight`).
+  scroll-padding-block: $space-3 calc(var(--bottom-bar-height, #{$space-0}) + #{$space-3});
 }
 
 body {

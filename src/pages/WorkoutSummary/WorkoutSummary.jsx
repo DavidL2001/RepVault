@@ -10,6 +10,7 @@ import List from '../../components/List/List.jsx'
 import ListItem from '../../components/ListItem/ListItem.jsx'
 import PageHeader from '../../components/PageHeader/PageHeader.jsx'
 import PrBadge from '../../components/PrBadge/PrBadge.jsx'
+import Section from '../../components/Section/Section.jsx'
 import StatList from '../../components/StatList/StatList.jsx'
 import StickyActionBar from '../../components/StickyActionBar/StickyActionBar.jsx'
 import styles from './WorkoutSummary.module.scss'
@@ -68,10 +69,7 @@ function WorkoutSummary() {
         ]}
       />
 
-      <section className={styles.section} aria-labelledby="records-heading">
-        <h2 id="records-heading" className={styles.heading}>
-          New personal records
-        </h2>
+      <Section title="New personal records">
         {summary.records.length > 0 ? (
           <List>
             {summary.records.map((record) => (
@@ -86,12 +84,9 @@ function WorkoutSummary() {
         ) : (
           <p className={styles.muted}>No new records this time.</p>
         )}
-      </section>
+      </Section>
 
-      <section className={styles.section} aria-labelledby="next-heading">
-        <h2 id="next-heading" className={styles.heading}>
-          Next time
-        </h2>
+      <Section title="Next time">
         {summary.nextTime.length > 0 ? (
           <List>
             {summary.nextTime.map((exercise) => (
@@ -106,7 +101,7 @@ function WorkoutSummary() {
         ) : (
           <p className={styles.muted}>No exercise is due for a heavier weight yet.</p>
         )}
-      </section>
+      </Section>
 
       {done}
     </>

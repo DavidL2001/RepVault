@@ -1,3 +1,5 @@
+import { useRef } from 'react'
+import { useBottomBarHeight } from '../../hooks/useBottomBarHeight.js'
 import styles from './StickyActionBar.module.scss'
 
 /**
@@ -9,9 +11,12 @@ import styles from './StickyActionBar.module.scss'
  * @param {import('react').ReactNode} props.children Usually one or two full-width Buttons.
  */
 function StickyActionBar({ children }) {
+  const barRef = useRef(null)
+  useBottomBarHeight(barRef)
+
   // The data attribute lets AppShell drop its bottom padding, so the bar sits flush at the bottom.
   return (
-    <div className={styles.bar} data-sticky-action-bar>
+    <div ref={barRef} className={styles.bar} data-sticky-action-bar>
       {children}
     </div>
   )

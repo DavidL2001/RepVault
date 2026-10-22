@@ -20,6 +20,7 @@ const VARIANT_LABELS = {
  * @param {'info'|'success'|'warning'|'danger'} [props.variant='info']
  * @param {import('react').ReactNode} [props.title] Bold first line.
  * @param {import('react').ReactNode} [props.children] Message text, links, etc.
+ * @param {import('react').ReactNode} [props.action] A Button under the message, e.g. "Resume workout".
  * @param {() => void} [props.onDismiss] Shows a dismiss button when set.
  * @param {string} [props.dismissLabel='Dismiss']
  * @param {string} [props.icon] Icon name, instead of the variant's icon.
@@ -30,6 +31,7 @@ function Banner({
   variant = 'info',
   title,
   children,
+  action,
   onDismiss,
   dismissLabel = 'Dismiss',
   icon = variant,
@@ -43,6 +45,7 @@ function Banner({
         <VisuallyHidden>{srLabel}: </VisuallyHidden>
         {title && <p className={styles.title}>{title}</p>}
         {children && <div>{children}</div>}
+        {action && <div className={styles.action}>{action}</div>}
       </div>
       {onDismiss && (
         <IconButton

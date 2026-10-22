@@ -18,6 +18,7 @@ import PageHeader from '../../components/PageHeader/PageHeader.jsx'
 import ProgressChart from '../../components/ProgressChart/ProgressChart.jsx'
 import ProgressionRuleDialog from '../../components/ProgressionRuleDialog/ProgressionRuleDialog.jsx'
 import RadioGroup from '../../components/RadioGroup/RadioGroup.jsx'
+import Section from '../../components/Section/Section.jsx'
 import StatList from '../../components/StatList/StatList.jsx'
 import VisuallyHidden from '../../components/VisuallyHidden/VisuallyHidden.jsx'
 import styles from './ExerciseDetail.module.scss'
@@ -87,10 +88,7 @@ function ExerciseDetail() {
     <>
       <PageHeader title={exercise.name} backTo={ROUTES.exercises} backLabel="Back to exercises" />
 
-      <section className={styles.section} aria-labelledby="progress-heading">
-        <h2 id="progress-heading" className={styles.heading}>
-          Progress
-        </h2>
+      <Section title="Progress">
         {points.length > 1 && (
           <RadioGroup
             legend="Show"
@@ -101,12 +99,9 @@ function ExerciseDetail() {
           />
         )}
         <ProgressChart points={points} metric={metric} />
-      </section>
+      </Section>
 
-      <section className={styles.section} aria-labelledby="bests-heading">
-        <h2 id="bests-heading" className={styles.heading}>
-          Personal bests
-        </h2>
+      <Section title="Personal bests">
         {bests.heaviestKg === null ? (
           <p className={styles.muted}>No sets logged yet.</p>
         ) : (
@@ -131,12 +126,9 @@ function ExerciseDetail() {
             />
           </>
         )}
-      </section>
+      </Section>
 
-      <section className={styles.section} aria-labelledby="rule-heading">
-        <h2 id="rule-heading" className={styles.heading}>
-          Progression rule
-        </h2>
+      <Section title="Progression rule">
         <p>
           {exercise.progression
             ? describeProgression(exercise.progression)
@@ -153,12 +145,9 @@ function ExerciseDetail() {
         >
           {exercise.progression ? 'Edit rule' : 'Add rule'}
         </Button>
-      </section>
+      </Section>
 
-      <section className={styles.section} aria-labelledby="history-heading">
-        <h2 id="history-heading" className={styles.heading}>
-          History
-        </h2>
+      <Section title="History">
         {sessions.length > 0 ? (
           <List>
             {sessions.map((session) => (
@@ -173,12 +162,9 @@ function ExerciseDetail() {
         ) : (
           <p className={styles.muted}>Not done in a finished workout yet.</p>
         )}
-      </section>
+      </Section>
 
-      <section className={styles.section} aria-labelledby="manage-heading">
-        <h2 id="manage-heading" className={styles.heading}>
-          Manage
-        </h2>
+      <Section title="Manage">
         <div className={styles.actions}>
           <Button variant="secondary" icon="edit" onClick={() => setIsRenaming(true)}>
             Rename
@@ -187,7 +173,7 @@ function ExerciseDetail() {
             Delete exercise
           </Button>
         </div>
-      </section>
+      </Section>
 
       <VisuallyHidden aria-live="polite">{message}</VisuallyHidden>
 
