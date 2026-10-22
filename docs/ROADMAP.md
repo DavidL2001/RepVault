@@ -167,8 +167,8 @@ The full feature spec lives in `docs/SPEC.md`.
 
 ## 16. `feature/pwa`
 
-- [ ] `vite-plugin-pwa` with auto-update, correct base path
-- [ ] Manifest: name, icons, theme color, standalone
+- [x] `vite-plugin-pwa` with auto-update, correct base path
+- [x] Manifest: name, icons, theme color, standalone
 - [ ] Verify "Add to Home Screen" on iPhone and Android
 
 ## 17. `chore/a11y-responsive-audit`

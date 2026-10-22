@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "format": "prettier --write .",
-    "test": "vitest run --passWithNoTests"
+    "test": "vitest run --passWithNoTests",
+    "icons": "node scripts/generate-icons.js"
   },
   "dependencies": {
     "chart.js": "^4.5.1",
@@ -30,6 +31,7 @@
     "prettier": "^3.9.10",
     "sass": "^1.105.2",
     "vite": "^8.3.4",
+    "vite-plugin-pwa": "^2.0.0",
     "vitest": "^5.0.5"
   }
 }
