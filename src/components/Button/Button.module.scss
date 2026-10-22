@@ -62,17 +62,20 @@
   }
 }
 
+// Outlined, so destructive actions look different from the (also red) primary ones.
 .danger:not(:disabled) {
-  color: var(--color-text-on-danger);
-  background-color: var(--color-danger);
+  color: var(--color-danger);
+  background-color: transparent;
+  border-color: var(--color-danger);
 
   &:hover {
-    background-color: var(--color-danger-hover);
+    background-color: var(--color-danger-surface);
   }
 }
 
+// Plain text color: icon buttons (edit, move, close) stay calm next to the red actions.
 .ghost:not(:disabled) {
-  color: var(--color-link);
+  color: var(--color-text);
   background-color: transparent;
 
   &:hover {
